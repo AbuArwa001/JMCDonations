@@ -95,3 +95,82 @@ Once the server is running, you can access the interactive API documentation at:
 -   `users/`: Handles user authentication, profiles, and management.
 -   `donations/`: Manages donation logic, models, and history.
 -   `analytics/`: Provides administrative insights and reporting tools.
+
+## Database Schema
+
+```mermaid
+erDiagram
+    Users ||--o{ Transactions : "makes"
+    Users ||--o{ SavedDonations : "saves"
+    Users ||--o{ Ratings : "gives"
+    Roles ||--o{ Users : "assigned to"
+    Donations ||--o{ Transactions : "receives"
+    Donations ||--o{ SavedDonations : "is saved"
+    Donations ||--o{ Ratings : "receives"
+    Categories ||--o{ Donations : "categorizes"
+
+    Users {
+        string id PK
+        string full_name
+        string email
+        string phone_number
+        string password_hash
+        boolean is_admin
+        datetime date_joined
+        datetime last_login
+        string role_id FK
+    }
+
+    Roles {
+        string id PK
+        string role_name
+    }
+
+    Donations {
+        string id PK
+        string title
+        string description
+        string paybill_number
+        string account_name
+        string category_id FK
+        decimal target_amount
+        datetime start_date
+        datetime end_date
+        string status
+        string created_by FK
+        datetime created_at
+        datetime updated_at
+    }
+
+    Categories {
+        string id PK
+        string category_name
+    }
+
+    Transactions {
+        string id PK
+        string donation_id FK
+        string user_id FK
+        string recorded_by_admin_id FK
+        decimal amount
+        string transaction_reference
+        string payment_method
+        string payment_status
+        datetime donated_at
+        datetime completed_at
+    }
+
+    Ratings {
+        string id PK
+        string user_id FK
+        double rating
+        string donation_id FK
+    }
+
+    SavedDonations {
+        datetime saved_at
+        string donation_id FK
+        string user_id FK
+    }
+```
+
