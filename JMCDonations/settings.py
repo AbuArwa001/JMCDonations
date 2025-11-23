@@ -45,6 +45,9 @@ INSTALLED_APPS = [
     'users',
     'donations',
     'analytics',
+    'ratings',
+    'categories',
+    'transactions',
 ]
 
 MIDDLEWARE = [
@@ -186,3 +189,11 @@ SWAGGER_SETTINGS = {
         }
     }
 }
+
+# Daraja API Settings
+MPESA_CONSUMER_KEY = 'your_consumer_key'
+MPESA_CONSUMER_SECRET = 'your_consumer_secret'
+MPESA_API_URL = 'https://sandbox.safaricom.co.ke' # Use 'https://api.safaricom.co.ke' for production
+MPESA_PASSKEY = 'your_passkey'
+MPESA_SHORTCODE = '174379' # Sandbox shortcode
+MPESA_CALLBACK_URL = 'https://yourdomain.com/api/transactions/callback/'

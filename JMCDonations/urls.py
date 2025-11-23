@@ -22,8 +22,11 @@ urlpatterns = [
     path('auth/', include('djoser.urls')),
     path('auth/', include('djoser.urls.jwt')),
     path('auth/', include('drf_social_oauth2.urls', namespace='drf')),
-    path('api/', include('donations.urls')),
+    path('api/donations/', include('donations.urls')),
     path('api/analytics/', include('analytics.urls')),
+    path('api/ratings/', include('ratings.urls')),
+    path('api/categories/', include('categories.urls')),
+    path('api/transactions/', include('transactions.urls')),
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
 ]

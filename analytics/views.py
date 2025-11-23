@@ -4,7 +4,9 @@ from rest_framework import permissions, status
 from django.db import models
 from django.db.models import Sum, Count, Q
 from django.http import HttpResponse
-from donations.models import Donations, Transactions, Categories
+from donations.models import Donations
+from transactions.models import Transactions
+from categories.models import Categories
 import openpyxl
 from datetime import datetime
 
