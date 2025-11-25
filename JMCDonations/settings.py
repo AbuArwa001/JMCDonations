@@ -174,7 +174,7 @@ AUTHENTICATION_BACKENDS = (
 )
 
 # Social Auth Config (Stubs)
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = 'your-google-client-id'
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = 'google-client-id'
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'your-google-client-secret'
 SOCIAL_AUTH_FACEBOOK_KEY = 'your-facebook-app-id'
 SOCIAL_AUTH_FACEBOOK_SECRET = 'your-facebook-app-secret'
