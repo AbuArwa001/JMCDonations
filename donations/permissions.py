@@ -23,3 +23,14 @@ class IsAdminUser(permissions.BasePermission):
 
     def has_permission(self, request, view):
         return request.user and request.user.is_authenticated and request.user.is_admin
+    
+class IsAuthenticatedOrReadOnly(permissions.BasePermission):
+    """
+    Custom permission to allow authenticated users to create/edit,
+    but allow read-only access to unauthenticated users.
+    """
+
+    def has_permission(self, request, view):
+        if request.method in permissions.SAFE_METHODS:
+            return True
+        return request.user and request.user.is_authenticated

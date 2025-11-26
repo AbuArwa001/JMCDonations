@@ -17,7 +17,7 @@ class Users(AbstractUser):
     full_name = models.CharField(max_length=255)
     email = models.EmailField(unique=True)
     phone_number = models.CharField(max_length=20, blank=True, null=True)
-    role = models.ForeignKey(Roles, on_delete=models.SET_NULL, null=True, blank=True)
+    role = models.ForeignKey(Roles, on_delete=models.SET_NULL, null=True, blank=True, default=Roles.objects.get_or_create(role_name='User')[0].id)
     is_admin = models.BooleanField(default=False)
     ss_login = models.DateTimeField(null=True, blank=True)
     

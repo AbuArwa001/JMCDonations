@@ -1,4 +1,5 @@
-from rest_framework import viewsets, generics, views, status, permissions
+from rest_framework import viewsets, generics, views, status
+from .permissions import IsOwnerOrReadOnly, IsAdminUser, IsAuthenticatedOrReadOnly
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponse
@@ -9,9 +10,18 @@ from transactions.serializers import TransactionSerializer
 from reportlab.pdfgen import canvas
 import io
 
+from donations import permissions
+
 class DonationViewSet(viewsets.ModelViewSet):
     queryset = Donations.objects.all()
     serializer_class = DonationSerializer
+
+    def get_permissions(self):
+        if self.action in ['create', 'update', 'partial_update', 'destroy']:
+            permission_classes = [IsAdminUser]
+        else:
+            permission_classes = [permissions.AllowAny]
+        return [permission() for permission in permission_classes]
 
 class SavedDonationView(generics.ListCreateAPIView):
     serializer_class = SavedDonationSerializer
