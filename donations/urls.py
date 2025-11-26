@@ -3,7 +3,7 @@ from rest_framework.routers import DefaultRouter
 from .views import DonationViewSet, SavedDonationView, UnsaveDonationView, DonationHistoryView, ReceiptView
 
 router = DefaultRouter()
-router.register(r'donations', DonationViewSet)
+router.register(r'', DonationViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
