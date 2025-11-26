@@ -1,5 +1,6 @@
 from django.shortcuts import get_object_or_404
 from rest_framework.views import APIView
+from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
@@ -45,6 +46,22 @@ class UserProfileView(APIView):
     def get(self, request):
         serializer = UserSerializer(request.user)
         return Response(serializer.data)
+    
+class UserViewSet(viewsets.ModelViewSet):
+    """ViewSet for user-related operations"""
+    queryset = Users.objects.all()
+    serializer_class = UserSerializer
+    permission_classes = [IsAuthenticated]
+    
+    def get(self, request, pk=None):
+        if pk:
+            user = get_object_or_404(Users, pk=pk)
+            serializer = UserSerializer(user)
+            return Response(serializer.data)
+        else:
+            users = Users.objects.all()
+            serializer = UserSerializer(users, many=True)
+            return Response(serializer.data)
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])

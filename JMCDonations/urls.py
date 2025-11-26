@@ -4,6 +4,42 @@ from rest_framework import permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 
+from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView, SpectacularRedocView
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    
+    # Authentication
+    path('auth/', include('djoser.urls')),
+    path('auth/', include('djoser.urls.jwt')),
+    path('auth/', include('drf_social_oauth2.urls', namespace='drf')),
+    
+    # API with versioning and clear prefixes
+    path('api/v1/', include([
+        path('users/', include('users.urls'), name='users'),
+        path('donations/', include('donations.urls'), name='donations'),
+        path('analytics/', include('analytics.urls'), name='analytics'),
+        path('ratings/', include('ratings.urls'), name='ratings'),
+        path('categories/', include('categories.urls'), name='categories'),
+        path('transactions/', include('transactions.urls'), name='transactions'),
+    ])),
+    
+    # Schema
+    path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
+    
+    # Documentation with tags
+    path('swagger/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
+    path('redoc/', SpectacularRedocView.as_view(url_name='schema'), name='redoc'),
+    
+    path('silk/', include('silk.urls', namespace='silk'))
+]
+
+""" from django.contrib import admin
+from django.urls import path, include
+from rest_framework import permissions
+from drf_yasg.views import get_schema_view
+from drf_yasg import openapi
+
 schema_view = get_schema_view(
    openapi.Info(
       title="FDR API",
@@ -22,13 +58,14 @@ urlpatterns = [
     path('auth/', include('djoser.urls')),
     path('auth/', include('djoser.urls.jwt')),
     path('auth/', include('drf_social_oauth2.urls', namespace='drf')),
-    path('api/users/', include('users.urls')),
-    path('api/donations/', include('donations.urls')),
-    path('api/analytics/', include('analytics.urls')),
-    path('api/ratings/', include('ratings.urls')),
-    path('api/categories/', include('categories.urls')),
-    path('api/transactions/', include('transactions.urls')),
+    path('api/', include('users.urls')),
+    path('api/', include('donations.urls')),
+    path('api/', include('analytics.urls')),
+    path('api/', include('ratings.urls')),
+    path('api/', include('categories.urls')),
+    path('api/', include('transactions.urls')),
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
     path('silk/', include('silk.urls', namespace='silk'))
 ]
+ """

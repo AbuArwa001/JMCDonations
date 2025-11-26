@@ -1,5 +1,5 @@
 from rest_framework import viewsets, generics, views, status
-from .permissions import IsOwnerOrReadOnly, IsAdminUser, IsAuthenticatedOrReadOnly
+from .permissions import IsOwnerOrReadOnly, IsAdminUser, IsAuthenticatedOrReadOnly, IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponse
@@ -20,12 +20,12 @@ class DonationViewSet(viewsets.ModelViewSet):
         if self.action in ['create', 'update', 'partial_update', 'destroy']:
             permission_classes = [IsAdminUser]
         else:
-            permission_classes = [permissions.AllowAny]
+            permission_classes = [AllowAny]
         return [permission() for permission in permission_classes]
 
 class SavedDonationView(generics.ListCreateAPIView):
     serializer_class = SavedDonationSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
         return SavedDonations.objects.filter(user=self.request.user)

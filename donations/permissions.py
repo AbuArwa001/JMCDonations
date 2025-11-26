@@ -34,3 +34,19 @@ class IsAuthenticatedOrReadOnly(permissions.BasePermission):
         if request.method in permissions.SAFE_METHODS:
             return True
         return request.user and request.user.is_authenticated
+
+class IsAuthenticated(permissions.BasePermission):
+    """
+    Custom permission to only allow authenticated users to access the view.
+    """
+
+    def has_permission(self, request, view):
+        return request.user and request.user.is_authenticated
+    
+class AllowAny(permissions.BasePermission):
+    """
+    Custom permission to allow any user (authenticated or not) to access the view.
+    """
+
+    def has_permission(self, request, view):
+        return True

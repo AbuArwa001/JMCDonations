@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'social_django',
     'drf_social_oauth2',
     'silk',
+    'drf_spectacular',
+    'drf_spectacular_sidecar',
 
     # Local apps
     'users',
@@ -152,6 +154,7 @@ REST_FRAMEWORK = {
     ),
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 10,
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 }
 
 # Djoser Configuration
@@ -164,7 +167,13 @@ DJOSER = {
         'current_user': 'users.serializers.UserSerializer',
     },
 }
-
+# Spectacular Settings
+SPECTACULAR_SETTINGS = {
+    'SWAGGER_UI_DIST': 'SIDECAR',
+    'SWAGGER_UI_FAVICON_HREF': 'SIDECAR',
+    'REDOC_DIST': 'SIDECAR',
+   
+}
 # Authentication Backends
 AUTHENTICATION_BACKENDS = (
     # Social Auth

@@ -17,12 +17,12 @@ class Users(AbstractUser):
     full_name = models.CharField(max_length=255)
     email = models.EmailField(unique=True)
     phone_number = models.CharField(max_length=20, blank=True, null=True)
-    role = models.ForeignKey(Roles, on_delete=models.SET_NULL, null=True, blank=True, default=Roles.objects.get_or_create(role_name='User')[0].id)
+    role = models.ForeignKey(Roles, on_delete=models.SET_NULL, null=True, blank=True, default=None)
     is_admin = models.BooleanField(default=False)
     ss_login = models.DateTimeField(null=True, blank=True)
     
     # Add analytics fields
-    firebase_uid = models.CharField(max_length=128, blank=True, null=True)  # If you want to store Firebase UID
+    firebase_uid = models.CharField(max_length=128, blank=True, null=True)  # to store Firebase UID
     last_analytics_sync = models.DateTimeField(null=True, blank=True)
 
     USERNAME_FIELD = 'email'
@@ -35,3 +35,7 @@ class Users(AbstractUser):
     def public_uuid(self):
         """Public UUID for Firebase Analytics user identification"""
         return str(self.id)
+    def save(self, *args, **kwargs):
+        if not self.role:
+            self.role, created = Roles.objects.get_or_create(role_name='User')
+        super().save(*args, **kwargs)
