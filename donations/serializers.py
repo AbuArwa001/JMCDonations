@@ -1,4 +1,6 @@
 from rest_framework import serializers
+
+from categories.serializers import CategorySerializer
 from .models import Donations, SavedDonations
 
 
@@ -23,6 +25,7 @@ class DonationSerializer(serializers.ModelSerializer):
             "created_by": "1b45ac05-5f0a-4c0e-8cec-48592f4cbc62"
         },
     """
+    category = CategorySerializer()
     class Meta:
         model = Donations
         fields = (
