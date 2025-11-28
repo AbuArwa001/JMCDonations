@@ -8,7 +8,7 @@ from .daraja import MpesaClient
 class TransactionViewSet(viewsets.ModelViewSet):
     queryset = Transactions.objects.all()
     serializer_class = TransactionSerializer
-
+        
     @action(detail=False, methods=['post'])
     def stk_push(self, request):
         phone_number = request.data.get('phone_number')
