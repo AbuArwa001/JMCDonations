@@ -186,9 +186,9 @@ AUTHENTICATION_BACKENDS = (
 
 # Social Auth Config (Stubs)
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = 'google-client-id'
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'your-google-client-secret'
-SOCIAL_AUTH_FACEBOOK_KEY = 'your-facebook-app-id'
-SOCIAL_AUTH_FACEBOOK_SECRET = 'your-facebook-app-secret'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'google-client-secret'
+SOCIAL_AUTH_FACEBOOK_KEY = 'facebook-app-id'
+SOCIAL_AUTH_FACEBOOK_SECRET = 'facebook-app-secret'
 
 # Swagger Settings
 SWAGGER_SETTINGS = {
@@ -205,6 +205,6 @@ SWAGGER_SETTINGS = {
 MPESA_CONSUMER_KEY = 'your_consumer_key'
 MPESA_CONSUMER_SECRET = 'your_consumer_secret'
 MPESA_API_URL = 'https://sandbox.safaricom.co.ke' # Use 'https://api.safaricom.co.ke' for production
-MPESA_PASSKEY = 'your_passkey'
+MPESA_PASSKEY = 'passkey'
 MPESA_SHORTCODE = '174379' # Sandbox shortcode
 MPESA_CALLBACK_URL = 'https://yourdomain.com/api/transactions/callback/'

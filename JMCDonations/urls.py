@@ -16,8 +16,8 @@ urlpatterns = [
     
     # API with versioning and clear prefixes
     path('api/v1/', include([
-        path('users/', include('users.urls'), name='users'),
-        path('donations/', include('donations.urls'), name='donations'),
+        path('', include('users.urls'), name='users'),
+        path('', include('donations.urls'), name='donations'),
         path('analytics/', include('analytics.urls'), name='analytics'),
         path('ratings/', include('ratings.urls'), name='ratings'),
         path('categories/', include('categories.urls'), name='categories'),
