@@ -22,6 +22,9 @@ class DonationViewSet(viewsets.ModelViewSet):
         else:
             permission_classes = [AllowAny]
         return [permission() for permission in permission_classes]
+    
+    def perform_create(self, serializer):
+        serializer.save(created_by=self.request.user)
 
 class SavedDonationView(generics.ListCreateAPIView):
     serializer_class = SavedDonationSerializer

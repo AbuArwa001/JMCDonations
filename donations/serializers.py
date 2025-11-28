@@ -39,6 +39,9 @@ class DonationSerializer(serializers.ModelSerializer):
             'paybill_number',
             'category',
         )
+    
+    def perform_create(self, serializer):
+        serializer.save(created_by=self.context['request'].user)
 
 class SavedDonationSerializer(serializers.ModelSerializer):
     class Meta:
