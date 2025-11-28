@@ -24,7 +24,7 @@ class Command(BaseCommand):
 
         # Roles
         admin_role, _ = Roles.objects.get_or_create(role_name='admin')
-        donor_role, _ = Roles.objects.get_or_create(role_name='donor')
+        donor_role, _ = Roles.objects.get_or_create(role_name='User')
 
         # Users (idempotent)
         admin_user, created = User.objects.get_or_create(

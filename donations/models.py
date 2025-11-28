@@ -21,7 +21,8 @@ class Donations(models.Model):
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='created_donations')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-
+    # images = models.ArrayField(models.URLField(), blank=True, default=list)
+    
     def __str__(self):
         return self.title
 
