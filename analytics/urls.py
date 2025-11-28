@@ -1,5 +1,11 @@
 from django.urls import path
 from .views import DashboardSummaryView, CategoryBreakdownView, DriveProgressView, PendingCashView, ExportView
+from rest_framework.routers import DefaultRouter
+
+router = DefaultRouter()
+router.register(r'analytics', DashboardSummaryView, basename='dashboard')
+# router.register(r'analytics', DashboardSummaryView, basename='dashboard')
+
 
 urlpatterns = [
     path('summary/', DashboardSummaryView.as_view(), name='dashboard-summary'),

@@ -18,7 +18,7 @@ urlpatterns = [
     path('api/v1/', include([
         path('', include('users.urls'), name='users'),
         path('', include('donations.urls'), name='donations'),
-        path('analytics/', include('analytics.urls'), name='analytics'),
+        path('', include('analytics.urls'), name='analytics'),
         path('ratings/', include('ratings.urls'), name='ratings'),
         path('categories/', include('categories.urls'), name='categories'),
         path('transactions/', include('transactions.urls'), name='transactions'),
