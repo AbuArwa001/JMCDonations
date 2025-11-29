@@ -1,4 +1,5 @@
 from rest_framework import viewsets, generics, views, status
+import rest_framework_simplejwt
 from .permissions import IsAdminUser, IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
@@ -9,6 +10,8 @@ from transactions.models import Transactions
 from transactions.serializers import TransactionSerializer
 from reportlab.pdfgen import canvas
 import io
+from rest_framework_simplejwt.authentication import JWTAuthentication
+from rest_framework.authentication import SessionAuthentication
 
 from donations import permissions
 
@@ -16,6 +19,7 @@ from donations import permissions
 class DonationViewSet(viewsets.ModelViewSet):
     queryset = Donations.objects.all()
     serializer_class = DonationSerializer
+    authentication_classes = []
 
     def get_permissions(self):
         if self.action in ["create", "update", "partial_update", "destroy"]:
@@ -23,6 +27,18 @@ class DonationViewSet(viewsets.ModelViewSet):
         else:
             permission_classes = [AllowAny]
         return [permission() for permission in permission_classes]
+    
+    def get_authentication_classes(self):
+        # Allow any authentication for GET methods (or none if configured globally)
+        if self.request.method in ['GET', 'HEAD', 'OPTIONS']:
+            # Use only SessionAuthentication to avoid the BasicAuth pop-up, 
+            # or an empty list if you want absolutely no authentication checks at all.
+            # An empty list [] works if you want anonymous access with no login prompt
+            return [] # This explicitly tells DRF to use no authentication
+        
+        # For other methods (POST, PUT, DELETE), use whatever standard auth you have (e.g., Session, Token)
+        return [SessionAuthentication, JWTAuthentication] 
+
 
     def perform_create(self, serializer):
         serializer.save(created_by=self.request.user)
