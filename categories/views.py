@@ -4,12 +4,13 @@ from donations.permissions import AllowAny, IsAdminUser
 from .models import Categories
 from .serializers import CategorySerializer
 
+
 class CategoryViewSet(viewsets.ModelViewSet):
     queryset = Categories.objects.all()
     serializer_class = CategorySerializer
 
     def get_permissions(self):
-        if self.action in ['create', 'update', 'partial_update', 'destroy']:
+        if self.action in ["create", "update", "partial_update", "destroy"]:
             permission_classes = [IsAdminUser]
         else:
             permission_classes = [AllowAny]

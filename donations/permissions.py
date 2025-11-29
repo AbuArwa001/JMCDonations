@@ -1,5 +1,6 @@
 from rest_framework import permissions
 
+
 class IsOwnerOrReadOnly(permissions.BasePermission):
     """
     Custom permission to only allow owners of an object to edit it.
@@ -14,7 +15,8 @@ class IsOwnerOrReadOnly(permissions.BasePermission):
 
         # Write permissions are only allowed to the owner of the object.
         return obj.user == request.user
-    
+
+
 class IsAdminUser(permissions.BasePermission):
     """
     Custom permission to only allow admin users to access certain views.
@@ -23,7 +25,8 @@ class IsAdminUser(permissions.BasePermission):
 
     def has_permission(self, request, view):
         return request.user and request.user.is_authenticated and request.user.is_admin
-    
+
+
 class IsAuthenticatedOrReadOnly(permissions.BasePermission):
     """
     Custom permission to allow authenticated users to create/edit,
@@ -35,6 +38,7 @@ class IsAuthenticatedOrReadOnly(permissions.BasePermission):
             return True
         return request.user and request.user.is_authenticated
 
+
 class IsAuthenticated(permissions.BasePermission):
     """
     Custom permission to only allow authenticated users to access the view.
@@ -42,7 +46,8 @@ class IsAuthenticated(permissions.BasePermission):
 
     def has_permission(self, request, view):
         return request.user and request.user.is_authenticated
-    
+
+
 class AllowAny(permissions.BasePermission):
     """
     Custom permission to allow any user (authenticated or not) to access the view.

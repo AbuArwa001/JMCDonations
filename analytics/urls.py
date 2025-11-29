@@ -1,16 +1,40 @@
-from django.urls import path
-from .views import DashboardSummaryView, CategoryBreakdownView, DriveProgressView, PendingCashView, ExportView
+from django.urls import include, path
+from .views import (
+    DashboardSummaryView,
+    CategoryBreakdownView,
+    DriveProgressView,
+    PendingCashView,
+    ExportView,
+)
 from rest_framework.routers import DefaultRouter
 
 router = DefaultRouter()
-router.register(r'analytics', DashboardSummaryView, basename='dashboard')
+router.register(r"analytics", DashboardSummaryView, basename="dashboard")
 # router.register(r'analytics', DashboardSummaryView, basename='dashboard')
 
 
 urlpatterns = [
-    path('summary/', DashboardSummaryView.as_view(), name='dashboard-summary'),
-    path('categories/', CategoryBreakdownView.as_view(), name='category-breakdown'),
-    path('donations/<uuid:pk>/progress/', DriveProgressView.as_view(), name='drive-progress'),
-    path('cash/pending/', PendingCashView.as_view(), name='pending-cash'),
-    path('export/', ExportView.as_view(), name='data-export'),
+    path(
+        "api/v1/",
+        include(
+            [
+                path(
+                    "summary/", DashboardSummaryView.as_view(), name="dashboard-summary"
+                ),
+                path(
+                    "categories/",
+                    CategoryBreakdownView.as_view(),
+                    name="category-breakdown",
+                ),
+                path(
+                    "donations/<uuid:pk>/progress/",
+                    DriveProgressView.as_view(),
+                    name="drive-progress",
+                ),
+                path("cash/pending/", PendingCashView.as_view(), name="pending-cash"),
+                path("export/", ExportView.as_view(), name="data-export"),
+            ]
+        ),
+    ),
 ]
+# urlpatterns += router.urls

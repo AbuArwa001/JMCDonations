@@ -6,32 +6,43 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
     dependencies = [
-        ('donations', '0001_initial'),
+        ("donations", "0001_initial"),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='donations',
-            name='created_by',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='created_donations', to=settings.AUTH_USER_MODEL),
+            model_name="donations",
+            name="created_by",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="created_donations",
+                to=settings.AUTH_USER_MODEL,
+            ),
         ),
         migrations.AddField(
-            model_name='saveddonations',
-            name='donation',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='saved_by', to='donations.donations'),
+            model_name="saveddonations",
+            name="donation",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="saved_by",
+                to="donations.donations",
+            ),
         ),
         migrations.AddField(
-            model_name='saveddonations',
-            name='user',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='saved_donations', to=settings.AUTH_USER_MODEL),
+            model_name="saveddonations",
+            name="user",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="saved_donations",
+                to=settings.AUTH_USER_MODEL,
+            ),
         ),
         migrations.AlterUniqueTogether(
-            name='saveddonations',
-            unique_together={('user', 'donation')},
+            name="saveddonations",
+            unique_together={("user", "donation")},
         ),
     ]

@@ -19,84 +19,82 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-*bs8v^rm!n^0h3n-3@^m6r2d0u!ag)=z@+f!of)!b2_1pxm0qk'
+SECRET_KEY = "django-insecure-*bs8v^rm!n^0h3n-3@^m6r2d0u!ag)=z@+f!of)!b2_1pxm0qk"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['testserver', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ["testserver", "localhost", "127.0.0.1"]
 
 
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
     # Third-party apps
-    'rest_framework',
-    'djoser',
-    'drf_yasg',
-    'oauth2_provider',
-    'social_django',
-    'drf_social_oauth2',
-    'silk',
-    'drf_spectacular',
-    'drf_spectacular_sidecar',
-
+    "rest_framework",
+    "djoser",
+    "drf_yasg",
+    "oauth2_provider",
+    "social_django",
+    "drf_social_oauth2",
+    "silk",
+    "drf_spectacular",
+    "drf_spectacular_sidecar",
     # Local apps
-    'users',
-    'donations',
-    'analytics',
-    'ratings',
-    'categories',
-    'transactions',
+    "users",
+    "donations",
+    "analytics",
+    "ratings",
+    "categories",
+    "transactions",
 ]
 
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'silk.middleware.SilkyMiddleware',
+    "django.middleware.security.SecurityMiddleware",
+    "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.common.CommonMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django.contrib.messages.middleware.MessageMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "silk.middleware.SilkyMiddleware",
 ]
 
-ROOT_URLCONF = 'JMCDonations.urls'
+ROOT_URLCONF = "JMCDonations.urls"
 
 TEMPLATES = [
     {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
-                'social_django.context_processors.backends',
-                'social_django.context_processors.login_redirect',
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "DIRS": [],
+        "APP_DIRS": True,
+        "OPTIONS": {
+            "context_processors": [
+                "django.template.context_processors.request",
+                "django.contrib.auth.context_processors.auth",
+                "django.contrib.messages.context_processors.messages",
+                "social_django.context_processors.backends",
+                "social_django.context_processors.login_redirect",
             ],
         },
     },
 ]
 
-WSGI_APPLICATION = 'JMCDonations.wsgi.application'
+WSGI_APPLICATION = "JMCDonations.wsgi.application"
 
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
     }
 }
 
@@ -106,16 +104,16 @@ DATABASES = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
 ]
 
@@ -123,9 +121,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = "en-us"
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = "UTC"
 
 USE_I18N = True
 
@@ -135,81 +133,79 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = 'static/'
-STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATIC_URL = "static/"
+STATIC_ROOT = BASE_DIR / "staticfiles"
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR / "media"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # Custom User Model
-AUTH_USER_MODEL = 'users.Users'
+AUTH_USER_MODEL = "users.Users"
 
 # DRF Configuration
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
-        'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
-        'drf_social_oauth2.authentication.SocialAuthentication',
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+        "oauth2_provider.contrib.rest_framework.OAuth2Authentication",
+        "drf_social_oauth2.authentication.SocialAuthentication",
     ),
-    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 1,
-    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
+    "PAGE_SIZE": 1,
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
 }
 
 # Djoser Configuration
 DJOSER = {
-    'LOGIN_FIELD': 'email',
-    'USER_CREATE_PASSWORD_RETYPE': True,
-    'SERIALIZERS': {
-        'user_create': 'users.serializers.UserCreateSerializer',
-        'user': 'users.serializers.UserSerializer',
-        'current_user': 'users.serializers.UserSerializer',
+    "LOGIN_FIELD": "email",
+    "USER_CREATE_PASSWORD_RETYPE": True,
+    "SERIALIZERS": {
+        "user_create": "users.serializers.UserCreateSerializer",
+        "user": "users.serializers.UserSerializer",
+        "current_user": "users.serializers.UserSerializer",
     },
 }
 # Spectacular Settings
 SPECTACULAR_SETTINGS = {
-    'SWAGGER_UI_DIST': 'SIDECAR',
-    'SWAGGER_UI_FAVICON_HREF': 'SIDECAR',
-    'REDOC_DIST': 'SIDECAR',
-   
+    "SWAGGER_UI_DIST": "SIDECAR",
+    "SWAGGER_UI_FAVICON_HREF": "SIDECAR",
+    "REDOC_DIST": "SIDECAR",
 }
 # Authentication Backends
 AUTHENTICATION_BACKENDS = (
     # Social Auth
-    'social_core.backends.google.GoogleOAuth2',
-    'social_core.backends.facebook.FacebookAppOAuth2',
-    'drf_social_oauth2.backends.DjangoOAuth2',
+    "social_core.backends.google.GoogleOAuth2",
+    "social_core.backends.facebook.FacebookAppOAuth2",
+    "drf_social_oauth2.backends.DjangoOAuth2",
     # Django
-    'django.contrib.auth.backends.ModelBackend',
+    "django.contrib.auth.backends.ModelBackend",
 )
 
 # Social Auth Config (Stubs)
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = 'google-client-id'
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'google-client-secret'
-SOCIAL_AUTH_FACEBOOK_KEY = 'facebook-app-id'
-SOCIAL_AUTH_FACEBOOK_SECRET = 'facebook-app-secret'
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = "google-client-id"
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = "google-client-secret"
+SOCIAL_AUTH_FACEBOOK_KEY = "facebook-app-id"
+SOCIAL_AUTH_FACEBOOK_SECRET = "facebook-app-secret"
 
 # Swagger Settings
 SWAGGER_SETTINGS = {
-    'SECURITY_DEFINITIONS': {
-        'Bearer': {
-            'type': 'apiKey',
-            'name': 'Authorization',
-            'in': 'header'
-        }
+    "SECURITY_DEFINITIONS": {
+        "Bearer": {"type": "apiKey", "name": "Authorization", "in": "header"}
     }
 }
 
 # Daraja API Settings
-MPESA_CONSUMER_KEY = os.getenv('MPESA_CONSUMER_KEY', '')
-MPESA_CONSUMER_SECRET = os.getenv('MPESA_CONSUMER_SECRET', '')
-MPESA_API_URL = os.getenv('MPESA_API_URL', 'https://sandbox.safaricom.co.ke') # Use 'https://api.safaricom.co.ke' for production
-MPESA_PASSKEY = os.getenv('MPESA_PASSKEY', '')
-MPESA_SHORTCODE = os.getenv('MPESA_SHORTCODE', '')
-MPESA_CALLBACK_URL = os.getenv('MPESA_CALLBACK_URL', 'https://jmc.com/api/transactions/callback/')
-
+MPESA_CONSUMER_KEY = os.getenv("MPESA_CONSUMER_KEY", "")
+MPESA_CONSUMER_SECRET = os.getenv("MPESA_CONSUMER_SECRET", "")
+MPESA_API_URL = os.getenv(
+    "MPESA_API_URL", "https://sandbox.safaricom.co.ke"
+)  # Use 'https://api.safaricom.co.ke' for production
+MPESA_PASSKEY = os.getenv("MPESA_PASSKEY", "")
+MPESA_SHORTCODE = os.getenv("MPESA_SHORTCODE", "")
+MPESA_CALLBACK_URL = os.getenv(
+    "MPESA_CALLBACK_URL", "https://jmc.com/api/transactions/callback/"
+)

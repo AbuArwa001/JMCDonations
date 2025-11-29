@@ -1,37 +1,42 @@
 from django.contrib import admin
 from django.urls import path, include
-from rest_framework import permissions
-from drf_yasg.views import get_schema_view
-from drf_yasg import openapi
 
-from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView, SpectacularRedocView
+from drf_spectacular.views import (
+    SpectacularAPIView,
+    SpectacularSwaggerView,
+    SpectacularRedocView,
+)
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    
+    path("admin/", admin.site.urls),
     # Authentication
-    path('auth/', include('djoser.urls')),
-    path('auth/', include('djoser.urls.jwt')),
-    path('auth/', include('drf_social_oauth2.urls', namespace='drf')),
-    
+    path("auth/", include("djoser.urls")),
+    path("auth/", include("djoser.urls.jwt")),
+    path("auth/", include("drf_social_oauth2.urls", namespace="drf")),
     # API with versioning and clear prefixes
-    path('api/v1/', include([
-        path('', include('users.urls'), name='users'),
-        path('', include('donations.urls'), name='donations'),
-        path('', include('analytics.urls'), name='analytics'),
-        path('ratings/', include('ratings.urls'), name='ratings'),
-        path('categories/', include('categories.urls'), name='categories'),
-        path('transactions/', include('transactions.urls'), name='transactions'),
-    ])),
-    
+    path(
+        "api/v1/",
+        include(
+            [
+                path("", include("users.urls"), name="users"),
+                path("", include("donations.urls"), name="donations"),
+                path("", include("analytics.urls"), name="analytics"),
+                path("ratings/", include("ratings.urls"), name="ratings"),
+                path("", include("categories.urls"), name="categories"),
+                path(
+                    "transactions/", include("transactions.urls"), name="transactions"
+                ),
+            ]
+        ),
+    ),
     # Schema
-    path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
-    
+    path("api/schema/", SpectacularAPIView.as_view(), name="schema"),
     # Documentation with tags
-    path('swagger/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
-    path('redoc/', SpectacularRedocView.as_view(url_name='schema'), name='redoc'),
-    
-    path('silk/', include('silk.urls', namespace='silk'))
+    path(
+        "swagger/", SpectacularSwaggerView.as_view(url_name="schema"), name="swagger-ui"
+    ),
+    path("redoc/", SpectacularRedocView.as_view(url_name="schema"), name="redoc"),
+    path("silk/", include("silk.urls", namespace="silk")),
 ]
 
 """ from django.contrib import admin

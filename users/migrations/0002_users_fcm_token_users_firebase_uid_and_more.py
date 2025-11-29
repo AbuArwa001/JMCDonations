@@ -6,25 +6,24 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('users', '0001_initial'),
+        ("users", "0001_initial"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='users',
-            name='fcm_token',
+            model_name="users",
+            name="fcm_token",
             field=models.CharField(blank=True, max_length=255, null=True),
         ),
         migrations.AddField(
-            model_name='users',
-            name='firebase_uid',
+            model_name="users",
+            name="firebase_uid",
             field=models.CharField(blank=True, max_length=128, null=True),
         ),
         migrations.AddField(
-            model_name='users',
-            name='last_analytics_sync',
+            model_name="users",
+            name="last_analytics_sync",
             field=models.DateTimeField(blank=True, null=True),
         ),
     ]

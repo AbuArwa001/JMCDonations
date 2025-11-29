@@ -3,8 +3,26 @@ from rest_framework import serializers
 from categories.serializers import CategorySerializer
 from .models import Donations, SavedDonations
 
+class BasicDonationSerializer(serializers.ModelSerializer):
+    """
+    Basic serializer without category details to avoid recursion
+    """
+    class Meta:
+        model = Donations
+        fields = (
+            "id",
+            "title",
+            "description",
+            "target_amount",
+            "start_date",
+            "end_date",
+            "status",
+            "paybill_number",
+            "account_name",
+            "created_at",
+        )
 
- 
+
 class DonationSerializer(serializers.ModelSerializer):
     """
     serializer for Donations model
@@ -25,28 +43,31 @@ class DonationSerializer(serializers.ModelSerializer):
             "created_by": "1b45ac05-5f0a-4c0e-8cec-48592f4cbc62"
         },
     """
+
     category = CategorySerializer()
+
     class Meta:
         model = Donations
         fields = (
-            'id',
-            'title',
-            'description',
+            "id",
+            "title",
+            "description",
             # 'amount',
-            'created_at',
-            'account_name',
-            'target_amount',
-            'start_date',
-            'end_date',
-            'status',
-            'paybill_number',
-            'category',
+            "created_at",
+            "account_name",
+            "target_amount",
+            "start_date",
+            "end_date",
+            "status",
+            "paybill_number",
+            "category",
         )
-    
+
     def perform_create(self, serializer):
-        serializer.save(created_by=self.context['request'].user)
+        serializer.save(created_by=self.context["request"].user)
+
 
 class SavedDonationSerializer(serializers.ModelSerializer):
     class Meta:
         model = SavedDonations
-        fields = '__all__'
+        fields = "__all__"

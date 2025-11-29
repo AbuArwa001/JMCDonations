@@ -6,36 +6,65 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
     dependencies = [
-        ('categories', '0001_initial'),
+        ("categories", "0001_initial"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='SavedDonations',
+            name="SavedDonations",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('saved_at', models.DateTimeField(auto_now_add=True)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("saved_at", models.DateTimeField(auto_now_add=True)),
             ],
         ),
         migrations.CreateModel(
-            name='Donations',
+            name="Donations",
             fields=[
-                ('id', models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True, serialize=False)),
-                ('title', models.CharField(max_length=255)),
-                ('description', models.TextField()),
-                ('paybill_number', models.CharField(max_length=50)),
-                ('account_name', models.CharField(max_length=100)),
-                ('target_amount', models.DecimalField(decimal_places=2, max_digits=12)),
-                ('start_date', models.DateTimeField()),
-                ('end_date', models.DateTimeField()),
-                ('status', models.CharField(choices=[('Active', 'Active'), ('Closed', 'Closed')], default='Active', max_length=20)),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
-                ('category', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='donations', to='categories.categories')),
+                (
+                    "id",
+                    models.UUIDField(
+                        default=uuid.uuid4,
+                        editable=False,
+                        primary_key=True,
+                        serialize=False,
+                    ),
+                ),
+                ("title", models.CharField(max_length=255)),
+                ("description", models.TextField()),
+                ("paybill_number", models.CharField(max_length=50)),
+                ("account_name", models.CharField(max_length=100)),
+                ("target_amount", models.DecimalField(decimal_places=2, max_digits=12)),
+                ("start_date", models.DateTimeField()),
+                ("end_date", models.DateTimeField()),
+                (
+                    "status",
+                    models.CharField(
+                        choices=[("Active", "Active"), ("Closed", "Closed")],
+                        default="Active",
+                        max_length=20,
+                    ),
+                ),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                ("updated_at", models.DateTimeField(auto_now=True)),
+                (
+                    "category",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="donations",
+                        to="categories.categories",
+                    ),
+                ),
             ],
         ),
     ]

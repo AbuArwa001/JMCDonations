@@ -4,6 +4,7 @@ from requests.auth import HTTPBasicAuth
 import base64
 from datetime import datetime
 
+
 class MpesaClient:
     def __init__(self):
         self.consumer_key = settings.MPESA_CONSUMER_KEY
@@ -14,9 +15,11 @@ class MpesaClient:
 
     def get_access_token(self):
         url = f"{self.api_url}/oauth/v1/generate?grant_type=client_credentials"
-        response = requests.get(url, auth=HTTPBasicAuth(self.consumer_key, self.consumer_secret))
+        response = requests.get(
+            url, auth=HTTPBasicAuth(self.consumer_key, self.consumer_secret)
+        )
         if response.status_code == 200:
-            return response.json()['access_token']
+            return response.json()["access_token"]
         return None
 
     def stk_push(self, phone_number, amount, account_reference, transaction_desc):
@@ -24,12 +27,14 @@ class MpesaClient:
         if not access_token:
             return {"error": "Failed to authenticate with Daraja API"}
 
-        timestamp = datetime.now().strftime('%Y%m%d%H%M%S')
-        password = base64.b64encode(f"{self.shortcode}{self.passkey}{timestamp}".encode()).decode('utf-8')
-        
+        timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
+        password = base64.b64encode(
+            f"{self.shortcode}{self.passkey}{timestamp}".encode()
+        ).decode("utf-8")
+
         headers = {
-            'Authorization': f'Bearer {access_token}',
-            'Content-Type': 'application/json'
+            "Authorization": f"Bearer {access_token}",
+            "Content-Type": "application/json",
         }
 
         payload = {
@@ -43,7 +48,7 @@ class MpesaClient:
             "PhoneNumber": phone_number,
             "CallBackURL": settings.MPESA_CALLBACK_URL,
             "AccountReference": account_reference,
-            "TransactionDesc": transaction_desc
+            "TransactionDesc": transaction_desc,
         }
 
         url = f"{self.api_url}/mpesa/stkpush/v1/processrequest"

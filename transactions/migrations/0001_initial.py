@@ -6,25 +6,66 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
     dependencies = [
-        ('donations', '0001_initial'),
+        ("donations", "0001_initial"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Transactions',
+            name="Transactions",
             fields=[
-                ('id', models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True, serialize=False)),
-                ('amount', models.DecimalField(decimal_places=2, max_digits=12)),
-                ('transaction_reference', models.CharField(blank=True, max_length=100, null=True, unique=True)),
-                ('payment_method', models.CharField(choices=[('Cash', 'Cash'), ('Card', 'Card'), ('M-Pesa', 'M-Pesa'), ('Paypal', 'Paypal')], max_length=50)),
-                ('payment_status', models.CharField(choices=[('Pending', 'Pending'), ('Completed', 'Completed'), ('Failed', 'Failed')], default='Pending', max_length=20)),
-                ('donated_at', models.DateTimeField(auto_now_add=True)),
-                ('completed_at', models.DateTimeField(blank=True, null=True)),
-                ('donation', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='transactions', to='donations.donations')),
+                (
+                    "id",
+                    models.UUIDField(
+                        default=uuid.uuid4,
+                        editable=False,
+                        primary_key=True,
+                        serialize=False,
+                    ),
+                ),
+                ("amount", models.DecimalField(decimal_places=2, max_digits=12)),
+                (
+                    "transaction_reference",
+                    models.CharField(
+                        blank=True, max_length=100, null=True, unique=True
+                    ),
+                ),
+                (
+                    "payment_method",
+                    models.CharField(
+                        choices=[
+                            ("Cash", "Cash"),
+                            ("Card", "Card"),
+                            ("M-Pesa", "M-Pesa"),
+                            ("Paypal", "Paypal"),
+                        ],
+                        max_length=50,
+                    ),
+                ),
+                (
+                    "payment_status",
+                    models.CharField(
+                        choices=[
+                            ("Pending", "Pending"),
+                            ("Completed", "Completed"),
+                            ("Failed", "Failed"),
+                        ],
+                        default="Pending",
+                        max_length=20,
+                    ),
+                ),
+                ("donated_at", models.DateTimeField(auto_now_add=True)),
+                ("completed_at", models.DateTimeField(blank=True, null=True)),
+                (
+                    "donation",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="transactions",
+                        to="donations.donations",
+                    ),
+                ),
             ],
         ),
     ]
