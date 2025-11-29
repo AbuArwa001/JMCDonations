@@ -4,7 +4,7 @@ from datetime import timedelta
 from django.utils import timezone
 import uuid
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "fdr.settings")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "JMCDonations.settings")
 django.setup()
 
 from users.models import Users, Roles

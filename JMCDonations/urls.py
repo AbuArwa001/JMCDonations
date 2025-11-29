@@ -47,9 +47,9 @@ from drf_yasg import openapi
 
 schema_view = get_schema_view(
    openapi.Info(
-      title="FDR API",
+      title="JMCDonations API",
       default_version='v1',
-      description="API documentation for FDR Donation Platform",
+      description="API documentation for JMCDonations Donation Platform",
       terms_of_service="https://www.google.com/policies/terms/",
       contact=openapi.Contact(email="contact@donations.local"),
       license=openapi.License(name="BSD License"),
