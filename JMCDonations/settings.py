@@ -31,7 +31,7 @@ DEBUG = config('DEBUG', default=False, cast=bool)
 # the project uses the later sqlite DATABASES default defined further below.
 # To enable DATABASE_URL parsing, install 'python-dj-database-url' and restore this block.
 
-ALLOWED_HOSTS = ["testserver", "localhost", "127.0.0.1"]
+ALLOWED_HOSTS = ["jmcdonations.onrender.com", "localhost", "127.0.0.1"]
 
 
 # Application definition

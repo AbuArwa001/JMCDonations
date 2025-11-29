@@ -63,8 +63,8 @@ class DonationSerializer(serializers.ModelSerializer):
             "category",
         )
 
-    def perform_create(self, serializer):
-        serializer.save(created_by=self.context["request"].user)
+    # def perform_create(self, serializer):
+    #     serializer.save(created_by=self.context["request"].user)
 
 
 class SavedDonationSerializer(serializers.ModelSerializer):
