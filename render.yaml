@@ -1,0 +1,26 @@
+services:
+  - type: web
+    name: jmc-donations
+    env: python
+    plan: free
+    buildCommand: "./build.sh"
+    startCommand: "gunicorn JMCDonations.wsgi:application --bind 0.0.0.0:$PORT"
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: jmc-donations-db
+          property: connectionString
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DEBUG
+        value: "False"
+      - key: ALLOWED_HOSTS
+        value: ".onrender.com"
+      - key: PYTHON_VERSION
+        value: "3.9.13"
+
+databases:
+  - name: jmc-donations-db
+    plan: free
+    databaseName: jmcdonations
+    user: jmcuser
