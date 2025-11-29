@@ -13,3 +13,15 @@ python manage.py migrate
 
 # Seed initial data (if any)
 python manage.py loaddata initial_data.json
+
+
+# Bash
+
+# python manage.py loaddata initial_data.json
+# Login details:
+
+# Admin Email: admin@example.com
+
+# Donor Emails: donor1@example.com through donor9@example.com
+
+# Password for ALL users: password123
