@@ -1,0 +1,52 @@
+type User @table {
+  username: String!
+  email: String!
+  passwordHash: String!
+  role: String!
+  firstName: String
+  lastName: String
+  phoneNumber: String
+  address: String
+  createdAt: Timestamp
+}
+
+type Campaign @table {
+  name: String!
+  goalAmount: Float!
+  startDate: Date!
+  endDate: Date!
+  description: String
+  imageUrl: String
+  currentAmountRaised: Float
+}
+
+type Donation @table {
+  user: User
+  campaign: Campaign
+  amount: Float!
+  currency: String!
+  donationDate: Timestamp!
+  paymentStatus: String!
+  transactionId: String
+  receiptSent: Boolean
+}
+
+type RecurringDonation @table {
+  user: User
+  campaign: Campaign
+  amount: Float!
+  currency: String!
+  frequency: String!
+  startDate: Date!
+  endDate: Date
+  nextPaymentDate: Date
+  isActive: Boolean
+}
+
+type Receipt @table {
+  donation: Donation
+  issueDate: Date!
+  receiptNumber: String!
+  downloadUrl: String
+  sentToEmail: Boolean
+}

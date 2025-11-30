@@ -21,3 +21,12 @@ venv.bak/
 # IDEs
 .vscode/
 .idea/
+
+# Config files & folders
+*.cfg
+*.json
+*.yml
+*.yaml
+*.ini
+*.toml
+config/

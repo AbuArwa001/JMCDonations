@@ -1,0 +1,9 @@
+email,displayName,passwordHash,passwordSalt
+admin@example.com,Super Admin,pbkdf2_sha256$1000000$6vwzKvRRN6kQaxlzXXS4T0$RG1INYp8+loVIyV2Tv4ekXxrYDab6nwdPNqdCKvEzoI=,pbkdf2_sha256
+donor1@example.com,John Doe,pbkdf2_sha256$1000000$6xoGbV0vs4LKj17VCu951G$Ge1HXUI6lkrxn/JHAJPFPrLM5a8LOO6jmi27BXuguGM=,pbkdf2_sha256
+donor2@example.com,Jane Smith,pbkdf2_sha256$1000000$VsjmCC3upX4H3nOTzvAFDL$f6l3pfe6lfUmqpfh10mdBQhqDvOmC3fktVzlCyIvNu8=,pbkdf2_sha256
+donor3@example.com,Alice Johnson,pbkdf2_sha256$1000000$ADhy66IAoBHlVpEhhckEny$TYS86V64uUnqprL0tU7AQ7+kmEtw0NYLCoXWAuQs+7I=,pbkdf2_sha256
+donor4@example.com,Bob Brown,pbkdf2_sha256$1000000$f0uXiSXrQS7csicRTQsLoN$6cpO1vDJrNScBm/WAdol7xTBMcF40SVoapz7fxtq6u8=,pbkdf2_sha256
+accountant@example.com,Michael Wilson,pbkdf2_sha256$1000000$WUC7YQAf9t2w2ByaVgyp7F$ZL+XdSAZ8iPfbAJZ5jLyBECwmg6EVRe8V+AYMIq9QWs=,pbkdf2_sha256
+finance@example.com,Sarah Davis,pbkdf2_sha256$1000000$QrzprX0A8nvNKemQA2bSJn$WOvv+3ZGQI6IGOAVSBTEVnbILxyiVDqrG7rlvbeP11s=,pbkdf2_sha256
+testuser@example.com,Test User,pbkdf2_sha256$1000000$caHhJG2ju6X7sUrYNM9Oxp$hlcUu+G70d1To0pa8sA5i6V8hk98Z9QHxxQVUOhdPso=,pbkdf2_sha256

@@ -1,0 +1,48 @@
+mutation CreateCampaign($name: String!, $description: String!, $imageUrl: String!, $goalAmount: Float!, $startDate: Date!, $endDate: Date!) @auth(level: USER) {
+  campaign_insert(data: {
+    name: $name,
+    description: $description,
+    imageUrl: $imageUrl,
+    goalAmount: $goalAmount,
+    startDate: $startDate,
+    endDate: $endDate
+  })
+}
+
+query ListCampaigns @auth(level: PUBLIC, insecureReason: "This operation is safe to expose to the public") {
+  campaigns {
+    id
+    name
+    description
+    imageUrl
+    goalAmount
+    startDate
+    endDate
+    currentAmountRaised
+  }
+}
+
+mutation MakeDonation($campaignId: UUID!, $amount: Float!, $currency: String!, $paymentStatus: String!, $transactionId: String!) @auth(level: USER) {
+  donation_insert(data: {
+    campaignId: $campaignId,
+    userId_expr: "auth.uid",
+    amount: $amount,
+    currency: $currency,
+    donationDate_expr: "request.time",
+    paymentStatus: $paymentStatus,
+    receiptSent: false,
+    transactionId: $transactionId
+  })
+}
+
+query GetMyDonations @auth(level: USER) {
+  donations(where: {userId_expr: "auth.uid"}) {
+    id
+    campaignId
+    amount
+    currency
+    donationDate
+    paymentStatus
+    transactionId
+  }
+}

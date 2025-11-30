@@ -1,0 +1,9 @@
+uid,email,emailVerified,passwordHash,salt,displayName,photoUrl,disabled
+22222222-2222-2222-2222-222222220001,admin@example.com,true,RG1INYp8+loVIyV2Tv4ekXxrYDab6nwdPNqdCKvEzoI=,NnZ3ekt2UlJONmtRYXhselhYUzRUMA==,Super Admin,,false
+22222222-2222-2222-2222-222222220002,donor1@example.com,true,Ge1HXUI6lkrxn/JHAJPFPrLM5a8LOO6jmi27BXuguGM=,NnhvR2JWMHZzNExLajE3VkN1OTUxRw==,John Doe,,false
+22222222-2222-2222-2222-222222220003,donor2@example.com,true,f6l3pfe6lfUmqpfh10mdBQhqDvOmC3fktVzlCyIvNu8=,VnNqbUNDM3VwWDRIM25PVHp2QUZETA==,Jane Smith,,false
+22222222-2222-2222-2222-222222220004,donor3@example.com,true,TYS86V64uUnqprL0tU7AQ7+kmEtw0NYLCoXWAuQs+7I=,QURoeTY2SUFvQkhsVnBFaGhja0VueQ==,Alice Johnson,,false
+22222222-2222-2222-2222-222222220005,donor4@example.com,true,6cpO1vDJrNScBm/WAdol7xTBMcF40SVoapz7fxtq6u8=,ZjB1WGlTWHJRUzdjc2ljUlRRc0xvTg==,Bob Brown,,false
+22222222-2222-2222-2222-222222220006,accountant@example.com,true,ZL+XdSAZ8iPfbAJZ5jLyBECwmg6EVRe8V+AYMIq9QWs=,V1VDN1lRQWY5dDJ3MkJ5YVZneXA3Rg==,Michael Wilson,,false
+22222222-2222-2222-2222-222222220007,finance@example.com,true,WOvv+3ZGQI6IGOAVSBTEVnbILxyiVDqrG7rlvbeP11s=,UXJ6cHJYMEE4bnZOS2VtUUEyYlNKbg==,Sarah Davis,,false
+8d1b66a6-5c09-45ea-8a7d-29836f39042c,testuser@example.com,true,hlcUu+G70d1To0pa8sA5i6V8hk98Z9QHxxQVUOhdPso=,Y2FIaEpHMmp1Nlg3c1VyWU5NOU94cA==,Test User,,false

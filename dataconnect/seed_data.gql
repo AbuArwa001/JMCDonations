@@ -1,0 +1,56 @@
+mutation CreateSeedData @transaction @auth(level: PUBLIC, insecureReason: "This operation is for seeding data and is safe to expose to the public.") {
+  user_insertMany(data: [
+    {
+      id: "550e8400-e29b-41d4-a716-446655440000",
+      username: "demouser1",
+      email: "demouser1@example.com",
+      passwordHash: "hashed_password_1",
+      role: "member"
+    },
+    {
+      id: "550e8400-e29b-41d4-a716-446655440001",
+      username: "demouser2",
+      email: "demouser2@example.com",
+      passwordHash: "hashed_password_2",
+      role: "member"
+    }
+  ])
+  campaign_insertMany(data: [
+    {
+      id: "660e8400-e29b-41d4-a716-446655440000",
+      name: "Campaign 1",
+      description: "Example campaign 1",
+      goalAmount: 1000.0,
+      startDate: "2024-01-01",
+      endDate: "2024-12-31"
+    },
+    {
+      id: "660e8400-e29b-41d4-a716-446655440001",
+      name: "Campaign 2",
+      description: "Example campaign 2",
+      goalAmount: 2000.0,
+      startDate: "2024-02-01",
+      endDate: "2024-11-30"
+    }
+  ])
+  donation_insertMany(data: [
+    {
+      id: "770e8400-e29b-41d4-a716-446655440000",
+      userId: "550e8400-e29b-41d4-a716-446655440000",
+      campaignId: "660e8400-e29b-41d4-a716-446655440000",
+      amount: 50.0,
+      currency: "USD",
+      donationDate: "2024-03-15T10:00:00Z",
+      paymentStatus: "completed"
+    },
+    {
+      id: "770e8400-e29b-41d4-a716-446655440001",
+      userId: "550e8400-e29b-41d4-a716-446655440001",
+      campaignId: "660e8400-e29b-41d4-a716-446655440001",
+      amount: 100.0,
+      currency: "USD",
+      donationDate: "2024-04-20T14:30:00Z",
+      paymentStatus: "completed"
+    }
+  ])
+}
