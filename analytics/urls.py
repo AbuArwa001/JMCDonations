@@ -9,13 +9,13 @@ from .views import (
 from rest_framework.routers import DefaultRouter
 
 router = DefaultRouter()
-router.register(r"analytics", DashboardSummaryView, basename="dashboard")
+router.register(r"/", DashboardSummaryView, basename="dashboard")
 # router.register(r'analytics', DashboardSummaryView, basename='dashboard')
 
 
 urlpatterns = [
     path(
-        "api/v1/",
+        "analytics/",
         include(
             [
                 path(

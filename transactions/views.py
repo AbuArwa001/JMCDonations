@@ -7,7 +7,7 @@ from .daraja import MpesaClient
 
 
 class TransactionViewSet(viewsets.ModelViewSet):
-    queryset = Transactions.objects.all()
+    queryset = Transactions.objects.order_by("-donated_at")
     serializer_class = TransactionSerializer
 
     @action(detail=False, methods=["post"])

@@ -13,7 +13,7 @@ class TransactionSerializer(serializers.ModelSerializer):
             "user",
             "donation",
             "amount",
-            "transaction_date",
+            "donated_at",
             "payment_method",
-            "status",
+            "payment_status",
         )

@@ -13,6 +13,10 @@ class Ratings(models.Model):
     )
     comment = models.TextField()
     rating = models.FloatField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
+    def __str__(self):
+        return f"{self.rating} stars for {self.donation.title} by {self.user.username}"
     class Meta:
         unique_together = ("user", "donation")

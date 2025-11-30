@@ -5,4 +5,12 @@ from .models import Ratings
 class RatingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Ratings
-        fields = "__all__"
+        fields = (
+            "id",
+            "user",
+            "donation",
+            "comment",
+            "rating",
+            "created_at",
+            "updated_at",
+        )

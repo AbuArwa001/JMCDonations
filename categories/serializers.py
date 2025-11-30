@@ -13,7 +13,7 @@ class CategorySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Categories
-        fields = ("id", "category_name", "donations")
+        fields = ("id", "category_name", "donations", "color")
 
     def get_donations(self, obj):
         from donations.serializers import BasicDonationSerializer

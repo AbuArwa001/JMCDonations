@@ -24,6 +24,7 @@ class BasicDonationSerializer(serializers.ModelSerializer):
 
 
 class DonationSerializer(serializers.ModelSerializer):
+    
     """
     serializer for Donations model
     Example Response:
@@ -43,8 +44,8 @@ class DonationSerializer(serializers.ModelSerializer):
             "created_by": "1b45ac05-5f0a-4c0e-8cec-48592f4cbc62"
         },
     """
-
-    category = CategorySerializer()
+    avg_rating = serializers.SerializerMethodField()
+    # category = CategorySerializer()
 
     class Meta:
         model = Donations
@@ -59,10 +60,12 @@ class DonationSerializer(serializers.ModelSerializer):
             "start_date",
             "end_date",
             "status",
+            "avg_rating",
             "paybill_number",
             "category",
         )
-
+    def get_avg_rating(self, obj):
+        return obj.average_rating()
     # def perform_create(self, serializer):
     #     serializer.save(created_by=self.context["request"].user)
 

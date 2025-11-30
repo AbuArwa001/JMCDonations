@@ -28,7 +28,12 @@ class Donations(models.Model):
     )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    # images = models.ArrayField(models.URLField(), blank=True, default=list)
+
+    def average_rating(self):
+        ratings = self.ratings.all()
+        if ratings.exists():
+            return sum(r.rating for r in ratings) / ratings.count()
+        return 0
 
     def __str__(self):
         return self.title

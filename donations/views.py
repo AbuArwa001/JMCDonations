@@ -17,7 +17,7 @@ from donations import permissions
 
 
 class DonationViewSet(viewsets.ModelViewSet):
-    queryset = Donations.objects.all()
+    queryset = Donations.objects.order_by('-created_at')
     serializer_class = DonationSerializer
     authentication_classes = []
 
