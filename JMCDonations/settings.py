@@ -23,12 +23,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-*bs8v^rm!n^0h3n-3@^m6r2d0u!ag)=z@+f!of)!b2_1pxm0qk"
-SERVICE_ACCOUNT_KEY_PATH = os.path.join(BASE_DIR, 'config/jmcdonations.json')
-cred = credentials.Certificate(SERVICE_ACCOUNT_KEY_PATH)
-firebase_admin.initialize_app(cred, {
-    'projectId': 'jmcdonations-cd458' 
-})
+SECRET_KEY = os.getenv("DJANGO_SECRET_KEY")
+# SERVICE_ACCOUNT_KEY_PATH = os.path.join(BASE_DIR, 'config/jmcdonations.json')
+# cred = credentials.Certificate(SERVICE_ACCOUNT_KEY_PATH)
+# firebase_admin.initialize_app(cred, {
+#     'projectId': 'jmcdonations-cd458' 
+# })
 # Initialize the credentials object
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -179,10 +179,14 @@ AUTH_USER_MODEL = "users.Users"
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "JMCDonations.authentication.FirebaseAuthentication",
+        "rest_framework.authentication.SessionAuthentication", 
         "rest_framework_simplejwt.authentication.JWTAuthentication",
         "oauth2_provider.contrib.rest_framework.OAuth2Authentication",
         "drf_social_oauth2.authentication.SocialAuthentication",
     ),
+    "DEFAULT_PERMISSION_CLASSES": [
+        "rest_framework.permissions.IsAuthenticated",  # Add this line
+    ],
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
     "PAGE_SIZE": 10,
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
