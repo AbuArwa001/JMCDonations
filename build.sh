@@ -12,9 +12,9 @@ python manage.py collectstatic --no-input
 python manage.py migrate
 
 # Seed initial data (if any)
-python manage.py loaddata initial_data.json
+python manage.py loaddata additional_transactions.json
 
-
+# python manage.py loaddata initial_data.json
 # Bash
 
 # python manage.py loaddata initial_data.json

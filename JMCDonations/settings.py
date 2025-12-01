@@ -12,7 +12,6 @@ from dotenv import load_dotenv
 # dj_database_url is optional; install 'python-dj-database-url' if you need it.
 # import dj_database_url
 from decouple import config
-from firebase_admin import credentials, auth
 load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
