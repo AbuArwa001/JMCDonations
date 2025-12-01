@@ -13,6 +13,8 @@ rm db.sqlite3
 python manage.py migrate
 
 # Seed initial data (if any)
+
+python manage.py loaddata initial_data.json
 python manage.py loaddata additional_transactions.json
 
 # python manage.py loaddata initial_data.json
