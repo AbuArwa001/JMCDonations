@@ -145,7 +145,8 @@
     "pk": "33333333-3333-3333-3333-333333330001",
     "fields": {
       "category_name": "Education",
-      "color": "#BE9830"
+            "color": "#4A90E2",
+      "created_at": "2024-01-01T00:00:00Z"
     }
   },
   {
@@ -153,7 +154,8 @@
     "pk": "33333333-3333-3333-3333-333333330002",
     "fields": {
       "category_name": "Health",
-      "color": "#2E9C57"
+      "color": "#50C878",
+      "created_at": "2024-01-01T00:00:00Z"
     }
   },
   {
@@ -161,7 +163,8 @@
     "pk": "33333333-3333-3333-3333-333333330003",
     "fields": {
       "category_name": "Emergency",
-      "color": "#E74C3C"
+      "color": "#FF6B6B",
+      "created_at": "2024-01-01T00:00:00Z"
     }
   },
   {
@@ -169,7 +172,8 @@
     "pk": "33333333-3333-3333-3333-333333330004",
     "fields": {
       "category_name": "General",
-      "color": "#757575"
+      "color": "#95A5A6",
+      "created_at": "2024-01-01T00:00:00Z"
     }
   },
   {
@@ -177,7 +181,8 @@
     "pk": "33333333-3333-3333-3333-333333330005",
     "fields": {
       "category_name": "Environment",
-      "color": "#9D7C3F"
+      "color": "#27AE60",
+      "created_at": "2024-01-01T00:00:00Z"
     }
   },
   {

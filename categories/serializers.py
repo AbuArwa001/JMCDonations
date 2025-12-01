@@ -5,7 +5,7 @@ from .models import Categories
 class BasicCategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Categories
-        fields = ("id", "category_name")
+        fields = ("id", "category_name", "color", "created_at")
 
 class CategorySerializer(serializers.ModelSerializer):
     id = serializers.UUIDField(read_only=True)
@@ -13,7 +13,7 @@ class CategorySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Categories
-        fields = ("id", "category_name", "donations", "color")
+        fields = ("id", "category_name", "donations", "color", "created_at")
 
     def get_donations(self, obj):
         from donations.serializers import BasicDonationSerializer

@@ -6,7 +6,7 @@ from .serializers import CategorySerializer
 
 
 class CategoryViewSet(viewsets.ModelViewSet):
-    queryset = Categories.objects.all()
+    queryset = Categories.objects.order_by('-created_at')
     serializer_class = CategorySerializer
 
     def get_permissions(self):
