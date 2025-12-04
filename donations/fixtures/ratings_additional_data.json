@@ -1,0 +1,122 @@
+[
+  {
+    "model": "ratings.ratings",
+    "pk": "66666666-6666-6666-6666-666666660008",
+    "fields": {
+      "donation": "44444444-4444-4444-4444-444444440006",
+      "user": "22222222-2222-2222-2222-222222220002",
+      "rating": 5.0,
+      "comment": "Such an important initiative during the cold months!",
+      "created_at": "2024-12-05T10:00:00Z",
+      "updated_at": "2024-12-05T10:00:00Z"
+    }
+  },
+  {
+    "model": "ratings.ratings",
+    "pk": "66666666-6666-6666-6666-666666660009",
+    "fields": {
+      "donation": "44444444-4444-4444-4444-444444440006",
+      "user": "22222222-2222-2222-2222-222222220003",
+      "rating": 4.5,
+      "comment": "Great cause, helping those in need stay warm.",
+      "created_at": "2024-12-06T11:00:00Z",
+      "updated_at": "2024-12-06T11:00:00Z"
+    }
+  },
+  {
+    "model": "ratings.ratings",
+    "pk": "66666666-6666-6666-6666-666666660010",
+    "fields": {
+      "donation": "44444444-4444-4444-4444-444444440007",
+      "user": "22222222-2222-2222-2222-222222220004",
+      "rating": 5.0,
+      "comment": "Education is the key to breaking the poverty cycle!",
+      "created_at": "2024-12-07T12:00:00Z",
+      "updated_at": "2024-12-07T12:00:00Z"
+    }
+  },
+  {
+    "model": "ratings.ratings",
+    "pk": "66666666-6666-6666-6666-666666660011",
+    "fields": {
+      "donation": "44444444-4444-4444-4444-444444440008",
+      "user": "22222222-2222-2222-2222-222222220005",
+      "rating": 4.0,
+      "comment": "Food banks do amazing work, especially during holidays.",
+      "created_at": "2024-12-08T13:00:00Z",
+      "updated_at": "2024-12-08T13:00:00Z"
+    }
+  },
+  {
+    "model": "ratings.ratings",
+    "pk": "66666666-6666-6666-6666-666666660012",
+    "fields": {
+      "donation": "44444444-4444-4444-4444-444444440008",
+      "user": "22222222-2222-2222-2222-222222220002",
+      "rating": 4.5,
+      "comment": "Nobody should go hungry, especially during festive seasons.",
+      "created_at": "2024-12-09T14:00:00Z",
+      "updated_at": "2024-12-09T14:00:00Z"
+    }
+  },
+  {
+    "model": "ratings.ratings",
+    "pk": "66666666-6666-6666-6666-666666660013",
+    "fields": {
+      "donation": "44444444-4444-4444-4444-444444440009",
+      "user": "22222222-2222-2222-2222-222222220003",
+      "rating": 5.0,
+      "comment": "Upgraded medical equipment saves lives!",
+      "created_at": "2024-12-10T15:00:00Z",
+      "updated_at": "2024-12-10T15:00:00Z"
+    }
+  },
+  {
+    "model": "ratings.ratings",
+    "pk": "66666666-6666-6666-6666-666666660014",
+    "fields": {
+      "donation": "44444444-4444-4444-4444-444444440010",
+      "user": "22222222-2222-2222-2222-222222220004",
+      "rating": 4.0,
+      "comment": "Clean beaches mean a healthier environment for everyone.",
+      "created_at": "2024-12-11T16:00:00Z",
+      "updated_at": "2024-12-11T16:00:00Z"
+    }
+  },
+  {
+    "model": "ratings.ratings",
+    "pk": "66666666-6666-6666-6666-666666660015",
+    "fields": {
+      "donation": "44444444-4444-4444-4444-444444440011",
+      "user": "22222222-2222-2222-2222-222222220005",
+      "rating": 4.5,
+      "comment": "Libraries are essential community resources.",
+      "created_at": "2024-12-12T17:00:00Z",
+      "updated_at": "2024-12-12T17:00:00Z"
+    }
+  },
+  {
+    "model": "ratings.ratings",
+    "pk": "66666666-6666-6666-6666-666666660016",
+    "fields": {
+      "donation": "44444444-4444-4444-4444-444444440011",
+      "user": "22222222-2222-2222-2222-222222220002",
+      "rating": 5.0,
+      "comment": "Reading opens up new worlds for children and adults alike.",
+      "created_at": "2024-12-13T18:00:00Z",
+      "updated_at": "2024-12-13T18:00:00Z"
+    }
+  },
+  {
+    "model": "ratings.ratings",
+    "pk": "66666666-6666-6666-6666-666666660017",
+    "fields": {
+      "donation": "44444444-4444-4444-4444-444444440012",
+      "user": "22222222-2222-2222-2222-222222220003",
+      "rating": 4.5,
+      "comment": "Pets are family too, they deserve proper healthcare.",
+      "created_at": "2024-12-14T19:00:00Z",
+      "updated_at": "2024-12-14T19:00:00Z"
+    }
+  }
+]
