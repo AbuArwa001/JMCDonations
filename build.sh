@@ -19,6 +19,8 @@ python manage.py loaddata additional_transactions.json
 python manage.py loaddata additional_donation_data.json
 python manage.py loaddata ratings_additional_data.json
 
+python set_admin_claims.py
+
 # python manage.py loaddata initial_data.json
 # Bash
 
