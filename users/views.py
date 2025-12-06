@@ -141,9 +141,27 @@ class UserViewSet(viewsets.ModelViewSet):
     serializer_class = UserSerializer
     permission_classes = [IsAuthenticated]
 
+    def get_object(self):
+        """
+        Override get_object to allow lookup by either PK (UUID) or firebase_uid.
+        """
+        queryset = self.filter_queryset(self.get_queryset())
+        lookup_url_kwarg = self.lookup_url_kwarg or self.lookup_field
+        lookup_value = self.kwargs.get(lookup_url_kwarg)
+
+        try:
+            # Try standard lookup (UUID)
+            obj = get_object_or_404(queryset, pk=lookup_value)
+        except:
+            # If that fails (e.g. not a UUID), try firebase_uid
+            obj = get_object_or_404(queryset, firebase_uid=lookup_value)
+
+        self.check_object_permissions(self.request, obj)
+        return obj
+
     def get(self, request, pk=None):
         if pk:
-            user = get_object_or_404(Users, pk=pk)
+            user = self.get_object()
             serializer = UserSerializer(user)
             return Response(serializer.data)
         else:
