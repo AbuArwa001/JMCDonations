@@ -32,6 +32,10 @@ class UserSerializer(BaseUserSerializer):
             "is_admin",
             "role",
             "fcm_token",
+            "profile_image_url",
+            "address",
+            "bio",
+            "default_donation_account",
         )
 
 

@@ -30,6 +30,12 @@ class Users(AbstractUser):
     )  # to store Firebase UID
     last_analytics_sync = models.DateTimeField(null=True, blank=True)
 
+    # Profile fields
+    profile_image_url = models.CharField(max_length=500, blank=True, null=True)
+    address = models.TextField(blank=True, null=True)
+    bio = models.TextField(blank=True, null=True)
+    default_donation_account = models.CharField(max_length=50, blank=True, null=True)
+
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = ["username", "full_name"]
 

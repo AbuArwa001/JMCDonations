@@ -45,7 +45,7 @@ def sync_firebase_users():
                 'jane.smith@example.com': 'User', 
                 'alice.johnson@example.com': 'User',
                 'bob.brown@example.com': 'User',
-                'anonymous@donor.com': 'User'  # Add anonymous user
+                'anonymous@donor.com': 'User' 
             }
             
             # Determine role
