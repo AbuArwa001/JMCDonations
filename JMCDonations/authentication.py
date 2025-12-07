@@ -12,26 +12,43 @@ User = get_user_model()
 # Global flag to track initialization
 _firebase_initialized = False
 
+import json
+
 def initialize_firebase():
     global _firebase_initialized
     if not _firebase_initialized:
         try:
+            # 1. Try initializing from Environment Variable (Production)
+            service_account_json = os.environ.get('FIREBASE_SERVICE_ACCOUNT_JSON')
+            if service_account_json:
+                try:
+                    service_account_info = json.loads(service_account_json)
+                    cred = credentials.Certificate(service_account_info)
+                    firebase_admin.initialize_app(cred)
+                    print("✅ Firebase Admin initialized from Environment Variable")
+                    _firebase_initialized = True
+                    return
+                except json.JSONDecodeError as e:
+                    print(f"❌ Failed to parse FIREBASE_SERVICE_ACCOUNT_JSON: {e}")
+            
+            # 2. Try initializing from File (Local Development)
             service_account_path = os.path.join(settings.BASE_DIR, 'config', 'jmcdonations.json')
             
             if os.path.exists(service_account_path):
                 cred = credentials.Certificate(service_account_path)
                 firebase_admin.initialize_app(cred)
-                print("✅ Firebase Admin initialized successfully")
+                print("✅ Firebase Admin initialized from File")
             else:
                 print(f"❌ Firebase service account file not found at: {service_account_path}")
-                # Try default initialization for development
+                # Try default initialization (e.g. for GCloud environment)
                 firebase_admin.initialize_app()
                 print("✅ Firebase Admin initialized with default credentials")
             
             _firebase_initialized = True
         except Exception as e:
             print(f"❌ Firebase initialization failed: {e}")
-            raise
+            # Don't raise here to allow app to start, but auth will fail
+            # raise
 
 class FirebaseAuthentication(authentication.BaseAuthentication):
     def authenticate(self, request):
