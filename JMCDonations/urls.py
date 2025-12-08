@@ -18,10 +18,10 @@ urlpatterns = [
         "api/v1/",
         include(
             [
-                path("", include("users.urls"), name="users"),
                 path("", include("donations.urls"), name="donations"),
+                path("", include("users.urls"), name="users"),
                 path("", include("analytics.urls"), name="analytics"),
-                path("ratings/", include("ratings.urls"), name="ratings"),
+                path("", include("ratings.urls"), name="ratings"),
                 path("", include("categories.urls"), name="categories"),
                 path(
                     "transactions/", include("transactions.urls"), name="transactions"
