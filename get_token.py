@@ -10,16 +10,16 @@ url = f"https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?ke
 #     "returnSecureToken": True
 # }
 
-payload = {
-    "email": "donor1@example.com",
-    "password": "password321",
-    "returnSecureToken": True
-}
 # payload = {
-#     "email": "admin@example.com",
+#     "email": "donor1@example.com",
 #     "password": "password321",
 #     "returnSecureToken": True
 # }
+payload = {
+    "email": "admin@example.com",
+    "password": "password321",
+    "returnSecureToken": True
+}
 response = requests.post(url, json=payload)
 
 if response.status_code == 200:

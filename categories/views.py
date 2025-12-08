@@ -16,5 +16,5 @@ class CategoryViewSet(viewsets.ModelViewSet):
             permission_classes = [AllowAny]
         return [permission() for permission in permission_classes]
 
-    def perform_create(self, serializer):
-        serializer.save(created_by=self.request.user)
+    # def perform_create(self, serializer):
+    #     serializer.save(created_by=self.request.user)
