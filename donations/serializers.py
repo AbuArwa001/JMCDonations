@@ -64,6 +64,19 @@ class DonationSerializer(serializers.ModelSerializer):
             "paybill_number",
             "category",
         )
+        extra_kwargs = {
+            'title': {'required': False},
+            'description': {'required': False},
+            'account_name': {'required': False},
+            'target_amount': {'required': False},
+            'start_date': {'required': False},
+            'end_date': {'required': False},
+            'status': {'required': False},
+            'paybill_number': {'required': False},
+            'category': {'required': False},
+        }
+        read_only_fields = ('id', 'created_at', 'avg_rating')
+    
     def get_avg_rating(self, obj):
         return obj.average_rating()
     # def perform_create(self, serializer):

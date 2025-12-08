@@ -1,3 +1,4 @@
+import os
 from django.shortcuts import get_object_or_404
 from rest_framework.views import APIView
 from rest_framework import viewsets
@@ -5,6 +6,8 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
+
+from JMCDonations import settings
 from .models import Users
 from .serializers import FCMTokenSerializer, UserUUIDSerializer, UserSerializer
 
@@ -186,3 +189,34 @@ def update_fcm_token(request):
             }
         )
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework.permissions import AllowAny
+import os
+import firebase_admin
+from django.conf import settings
+
+class FirebaseCheckView(APIView):
+    authentication_classes = [] 
+    permission_classes = [AllowAny]
+    
+    def get(self, request):
+        """Debug endpoint to check Firebase status"""
+        try:
+            # Try to get Firebase app
+            app = firebase_admin.get_app()
+            return Response({
+                "status": "success",
+                "message": "Firebase initialized",
+                "app_name": app.name,
+                "env_var_set": bool(os.environ.get('FIREBASE_SERVICE_ACCOUNT_JSON')),
+                "path_exists": os.path.exists(os.path.join(settings.BASE_DIR, 'config', 'jmcdonations.json'))
+            })
+        except ValueError:
+            return Response({
+                "status": "error", 
+                "message": "Firebase not initialized",
+                "env_var_set": bool(os.environ.get('FIREBASE_SERVICE_ACCOUNT_JSON')),
+                "env_var_length": len(os.environ.get('FIREBASE_SERVICE_ACCOUNT_JSON', ''))
+            }, status=500)
