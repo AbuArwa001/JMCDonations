@@ -1,18 +1,66 @@
-# authentication.py
+
+import firebase_admin
+from firebase_admin import auth
+from django.contrib.auth import get_user_model
+from rest_framework import authentication, exceptions
+import logging
+
+logger = logging.getLogger(__name__)
+User = get_user_model()
+
+class FirebaseAuthentication(authentication.BaseAuthentication):
+    def authenticate(self, request):
+        auth_header = request.META.get('HTTP_AUTHORIZATION', '')
+        
+        if not auth_header.startswith('Bearer '):
+            return None
+        
+        token = auth_header.split(' ').pop()
+        if not token:
+            return None
+        
+        try:
+            # Firebase should already be initialized by settings.py
+            # Just verify the token
+            decoded_token = auth.verify_id_token(token)
+            uid = decoded_token['uid']
+            email = decoded_token.get('email')
+            
+            if not email:
+                raise exceptions.AuthenticationFailed('No email in token')
+            
+            # Get or create user
+            user, created = User.objects.get_or_create(
+                email=email,
+                defaults={
+                    'username': email.split('@')[0],
+                    'is_active': True
+                }
+            )
+            
+            if created:
+                logger.info(f"Created new user from Firebase: {email}")
+            
+            return (user, None)
+            
+        except Exception as e:
+            logger.error(f"Firebase authentication failed: {e}")
+            raise exceptions.AuthenticationFailed(f'Authentication failed: {str(e)}')
+
+""" # authentication.py
 import os
 import firebase_admin
 from firebase_admin import auth, credentials
 from django.contrib.auth import get_user_model
 from rest_framework import authentication
 from rest_framework import exceptions
-from django.conf import settings
+from JMCDonations import settings
+import json
 
 User = get_user_model()
 
 # Global flag to track initialization
 _firebase_initialized = False
-
-import json
 
 def initialize_firebase():
     global _firebase_initialized
@@ -39,7 +87,8 @@ def initialize_firebase():
                 firebase_admin.initialize_app(cred)
                 print("✅ Firebase Admin initialized from File")
             else:
-                print(f"❌ Firebase service account file not found at: {service_account_path}")
+                print(f"⚠️ Firebase service account file not found at: {service_account_path}")
+                print("ℹ️ Trying to initialize with default credentials...")
                 # Try default initialization (e.g. for GCloud environment)
                 firebase_admin.initialize_app()
                 print("✅ Firebase Admin initialized with default credentials")
@@ -47,8 +96,7 @@ def initialize_firebase():
             _firebase_initialized = True
         except Exception as e:
             print(f"❌ Firebase initialization failed: {e}")
-            # Don't raise here to allow app to start, but auth will fail
-            # raise
+            raise
 
 class FirebaseAuthentication(authentication.BaseAuthentication):
     def authenticate(self, request):
@@ -71,7 +119,10 @@ class FirebaseAuthentication(authentication.BaseAuthentication):
         try:
             initialize_firebase()
         except Exception as e:
-            raise exceptions.AuthenticationFailed(f'Firebase not configured: {e}')
+            # Provide more detailed error
+            error_msg = f'Firebase initialization failed: {str(e)}. '
+            error_msg += 'Check if FIREBASE_SERVICE_ACCOUNT_JSON is set or service account file exists.'
+            raise exceptions.AuthenticationFailed(error_msg)
 
         try:
             # Verify the Firebase ID token
@@ -90,18 +141,34 @@ class FirebaseAuthentication(authentication.BaseAuthentication):
             try:
                 user = User.objects.get(email=email)
             except User.DoesNotExist:
-                # Create new user
-                user = User.objects.create(
+                # Create new user with username (required by Django)
+                # Generate a username from email or use uid
+                username = email.split('@')[0] if '@' in email else uid
+                
+                # Make sure username is unique
+                base_username = username
+                counter = 1
+                while User.objects.filter(username=username).exists():
+                    username = f"{base_username}_{counter}"
+                    counter += 1
+                
+                user = User.objects.create_user(
+                    username=username,
                     email=email,
-                    username=email,  # Use email as username
-                    is_active=True
+                    password=None  # No password for Firebase users
                 )
-                print(f"✅ Created new user: {email}")
+                print(f"✅ Created new user: {email} with username: {username}")
 
-            # Update Firebase UID if not set
-            if not user.firebase_uid:
-                user.firebase_uid = uid
-                user.save()
+            # Optional: Store Firebase UID if you have the field
+            # Check if the field exists before trying to save it
+            if hasattr(user, 'firebase_uid'):
+                if not user.firebase_uid:
+                    user.firebase_uid = uid
+                    user.save()
+            else:
+                # If you don't have the field, you can store it in a separate model
+                # or just skip it
+                pass
 
             return (user, None)
             
@@ -112,4 +179,4 @@ class FirebaseAuthentication(authentication.BaseAuthentication):
         except auth.RevokedIdTokenError:
             raise exceptions.AuthenticationFailed('Firebase token revoked')
         except Exception as e:
-            raise exceptions.AuthenticationFailed(f'Authentication failed: {str(e)}')
+            raise exceptions.AuthenticationFailed(f'Authentication failed: {str(e)}') """

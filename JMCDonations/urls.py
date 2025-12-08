@@ -7,17 +7,21 @@ from drf_spectacular.views import (
     SpectacularRedocView,
 )
 
+from users.views import FirebaseCheckView
+
 urlpatterns = [
     path("admin/", admin.site.urls),
     # Authentication
     path("auth/", include("djoser.urls")),
     path("auth/", include("djoser.urls.jwt")),
     path("auth/", include("drf_social_oauth2.urls", namespace="drf")),
+    
     # API with versioning and clear prefixes
     path(
         "api/v1/",
         include(
             [
+                path('check-firebase/', FirebaseCheckView.as_view(), name='check-firebase'),
                 path("", include("donations.urls"), name="donations"),
                 path("", include("users.urls"), name="users"),
                 path("", include("analytics.urls"), name="analytics"),

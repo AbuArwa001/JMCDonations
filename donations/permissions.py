@@ -24,6 +24,7 @@ class IsAdminUser(permissions.BasePermission):
     """
 
     def has_permission(self, request, view):
+        print("Checking admin permission for user:", request.user)
         return request.user and request.user.is_authenticated and request.user.is_admin
 
 
