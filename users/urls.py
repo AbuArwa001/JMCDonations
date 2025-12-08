@@ -12,4 +12,4 @@ urlpatterns = [
     path("profile/", UserProfileView.as_view(), name="user_profile"),
     path("register/", UserProfileView.as_view(), name="user_register"),
     path("update-fcm-token/", FCMTokenUpdateView.as_view(), name="update_fcm_token"),
-]
+] + router.urls
