@@ -6,8 +6,15 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
-
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework.permissions import AllowAny
+import os
+import firebase_admin
+# from django.conf import settings
 from JMCDonations import settings
+from JMCDonations.authentication import FirebaseAuthentication
+from users.permissions import IsAdminOrSelf, IsAdminUser
 from .models import Users
 from .serializers import FCMTokenSerializer, UserUUIDSerializer, UserSerializer
 
@@ -140,9 +147,10 @@ class UserProfileView(APIView):
 class UserViewSet(viewsets.ModelViewSet):
     """ViewSet for user-related operations"""
 
-    queryset = Users.objects.all()
+    queryset = Users.objects.order_by('-date_joined')
     serializer_class = UserSerializer
-    permission_classes = [IsAuthenticated]
+    authentication_classes = [FirebaseAuthentication]
+    permission_classes = [IsAdminOrSelf]
 
     def get_object(self):
         """
@@ -162,15 +170,28 @@ class UserViewSet(viewsets.ModelViewSet):
         self.check_object_permissions(self.request, obj)
         return obj
 
-    def get(self, request, pk=None):
-        if pk:
-            user = self.get_object()
-            serializer = UserSerializer(user)
-            return Response(serializer.data)
-        else:
-            users = Users.objects.all()
-            serializer = UserSerializer(users, many=True)
-            return Response(serializer.data)
+    def list(self, request, *args, **kwargs):
+        """
+        Only admins can list all users.
+        """
+        if not request.user.is_staff:
+            return Response(
+                {"detail": "You do not have permission to perform this action."},
+                status=403
+            )
+        return super().list(request, *args, **kwargs)
+
+    def retrieve(self, request, *args, **kwargs):
+        """
+        Normal users may retrieve only themselves.
+        Admins may retrieve anyone.
+        """
+        return super().retrieve(request, *args, **kwargs)
+    def perform_update(self, serializer):
+        """Ensure only admins can update other users"""
+        if self.get_object() != self.request.user and not self.request.user.is_staff:
+            raise PermissionDenied("You do not have permission to update this user.")
+        return super().perform_update(serializer)
 
 
 @api_view(["POST"])
@@ -190,12 +211,6 @@ def update_fcm_token(request):
         )
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework.permissions import AllowAny
-import os
-import firebase_admin
-from django.conf import settings
 
 class FirebaseCheckView(APIView):
     authentication_classes = [] 
