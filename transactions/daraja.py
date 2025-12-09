@@ -18,6 +18,7 @@ class MpesaClient:
         response = requests.get(
             url, auth=HTTPBasicAuth(self.consumer_key, self.consumer_secret)
         )
+        print(response.status_code, response.text)
         if response.status_code == 200:
             return response.json()["access_token"]
         return None
