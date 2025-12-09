@@ -1,5 +1,4 @@
 from rest_framework import viewsets, generics, views, status
-import rest_framework_simplejwt
 from .permissions import IsAdminUser, IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
@@ -10,16 +9,14 @@ from transactions.models import Transactions
 from transactions.serializers import TransactionSerializer
 from reportlab.pdfgen import canvas
 import io
-from rest_framework_simplejwt.authentication import JWTAuthentication
-from rest_framework.authentication import SessionAuthentication
-
+from JMCDonations.authentication import FirebaseAuthentication
 from donations import permissions
 
 
 class DonationViewSet(viewsets.ModelViewSet):
     queryset = Donations.objects.order_by('-created_at')
     serializer_class = DonationSerializer
-    # authentication_classes = []
+    authentication_classes = [FirebaseAuthentication]
 
 
     def get_permissions(self):
