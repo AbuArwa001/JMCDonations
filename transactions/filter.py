@@ -9,4 +9,6 @@ class TransactionFilterSet(FilterSet):
             'payment_method': ['exact'],
             'donated_at': ['gte', 'lte'],
             'amount': ['gte', 'lte'],
+            'donation': ['exact'],
+            'user': ['exact'],
         }
