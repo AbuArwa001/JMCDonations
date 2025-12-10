@@ -28,7 +28,7 @@ urlpatterns = [
                 path("", include("ratings.urls"), name="ratings"),
                 path("", include("categories.urls"), name="categories"),
                 path(
-                    "transactions/", include("transactions.urls"), name="transactions"
+                    "", include("transactions.urls"), name="transactions"
                 ),
             ]
         ),
