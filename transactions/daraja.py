@@ -1,5 +1,5 @@
 import requests
-from django.conf import settings
+from JMCDonations import settings
 from requests.auth import HTTPBasicAuth
 import base64
 from datetime import datetime
@@ -37,7 +37,7 @@ class MpesaClient:
             "Authorization": f"Bearer {access_token}",
             "Content-Type": "application/json",
         }
-
+        print("Using Callback URL:", settings.MPESA_CALLBACK_URL)
         payload = {
             "BusinessShortCode": self.shortcode,
             "Password": password,
@@ -47,6 +47,7 @@ class MpesaClient:
             "PartyA": phone_number,
             "PartyB": self.shortcode,
             "PhoneNumber": phone_number,
+            # "CallBackURL": "https://diatomaceous-preventively-amber.ngrok-free.dev/api/v1/mpesa/callback/",
             "CallBackURL": settings.MPESA_CALLBACK_URL,
             "AccountReference": account_reference,
             "TransactionDesc": transaction_desc,

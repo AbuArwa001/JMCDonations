@@ -77,6 +77,7 @@ INSTALLED_APPS = [
     "drf_spectacular",
     "drf_spectacular_sidecar",
     "django_filters",
+    "django_crontab",
     # Local apps
     "users",
     "donations",
@@ -84,6 +85,7 @@ INSTALLED_APPS = [
     "ratings",
     "categories",
     "transactions",
+
 ]
 
 MIDDLEWARE = [
@@ -255,8 +257,12 @@ MPESA_API_URL = os.getenv(
 )  # Use 'https://api.safaricom.co.ke' for production
 MPESA_PASSKEY = os.getenv("MPESA_PASSKEY", "")
 MPESA_SHORTCODE = os.getenv("MPESA_SHORTCODE", "")
+# MPESA_CALLBACK_URL = os.getenv(
+#     "MPESA_CALLBACK_URL", "https://jmc.com/api/transactions/callback/"
+# )
+
 MPESA_CALLBACK_URL = os.getenv(
-    "MPESA_CALLBACK_URL", "https://jmc.com/api/transactions/callback/"
+    "MPESA_CALLBACK_URL", "https://diatomaceous-preventively-amber.ngrok-free.dev/api/v1/mpesa/callback/"
 )
 
 FIREBASE_API_KEY = os.getenv("FIREBASE_API_KEY")
