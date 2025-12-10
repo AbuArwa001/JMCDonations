@@ -42,7 +42,11 @@ DEBUG = True
 # the project uses the later sqlite DATABASES default defined further below.
 # To enable DATABASE_URL parsing, install 'python-dj-database-url' and restore this block.
 
-ALLOWED_HOSTS = ["jmcdonations.onrender.com", "localhost", "127.0.0.1"]
+ALLOWED_HOSTS = [
+    "jmcdonations.onrender.com",
+    "localhost", "127.0.0.1",
+    "diatomaceous-preventively-amber.ngrok-free.dev"
+    ]
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000", 
     "http://127.0.0.1:3000",
@@ -189,6 +193,11 @@ REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": [
         # "rest_framework.permissions.IsAuthenticated",
     ],
+    "DEFAULT_FILTER_BACKENDS": [
+        "django_filters.rest_framework.DjangoFilterBackend",
+        "rest_framework.filters.SearchFilter",
+        "rest_framework.filters.OrderingFilter",
+        ],
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
     "PAGE_SIZE": 10,
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
