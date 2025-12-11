@@ -1,30 +1,27 @@
+# JMCDonations/celery.py
 import os
 from celery import Celery
-from celery.schedules import crontab
 
+# Set the default Django settings module
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'JMCDonations.settings')
 
 app = Celery('JMCDonations')
+
+# Using a string here means the worker doesn't have to serialize
+# the configuration object to child processes.
 app.config_from_object('django.conf:settings', namespace='CELERY')
+
+# Load task modules from all registered Django app configs.
 app.autodiscover_tasks()
 
-# Configure beat schedule
+# Optional: Configure beat schedule here if not using database scheduler
 app.conf.beat_schedule = {
     'close-expired-donations-hourly': {
         'task': 'donations.tasks.close_expired_donations_task',
-        'schedule': crontab(minute=0),  # Run at the beginning of every hour
-        'args': (),
-    },
-    'check-expiring-donations-daily': {
-        'task': 'donations.tasks.check_and_notify_expiring_donations',
-        'schedule': crontab(hour=9, minute=0),  # Run daily at 9 AM
-        'args': (),
-    },
-    'donation-health-check': {
-        'task': 'donations.tasks.donation_health_check',
-        'schedule': crontab(minute='*/30'),  # Run every 30 minutes
-        'args': (),
+        'schedule': 3600.0,  # Every hour
     },
 }
 
-app.conf.timezone = 'Africa/Nairobi'
+@app.task(bind=True)
+def debug_task(self):
+    print(f'Request: {self.request!r}')
