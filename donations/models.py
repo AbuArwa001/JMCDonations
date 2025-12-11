@@ -35,7 +35,8 @@ class Donations(models.Model):
         if ratings.exists():
             return sum(r.rating for r in ratings) / ratings.count()
         return 0
-
+    def donor_count(self):
+        return self.transactions.values('user').distinct().count()
     def __str__(self):
         return self.title
     def is_expired(self):

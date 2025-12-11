@@ -44,6 +44,11 @@ class DonationSerializer(serializers.ModelSerializer):
             "created_by": "1b45ac05-5f0a-4c0e-8cec-48592f4cbc62"
         },
     """
+    def get_avg_rating(self, obj):
+        return obj.average_rating()
+    def get_donor_count(self, obj):
+        return obj.donor_count()
+    donor_count = serializers.SerializerMethodField()
     avg_rating = serializers.SerializerMethodField()
     # category = CategorySerializer()
 
@@ -63,6 +68,7 @@ class DonationSerializer(serializers.ModelSerializer):
             "avg_rating",
             "paybill_number",
             "category",
+            "donor_count",
         )
         extra_kwargs = {
             'title': {'required': False},
@@ -77,8 +83,7 @@ class DonationSerializer(serializers.ModelSerializer):
         }
         read_only_fields = ('id', 'created_at', 'avg_rating')
     
-    def get_avg_rating(self, obj):
-        return obj.average_rating()
+
     # def perform_create(self, serializer):
     #     serializer.save(created_by=self.context["request"].user)
 
