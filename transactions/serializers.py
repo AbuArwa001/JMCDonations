@@ -9,6 +9,7 @@ class TransactionSerializer(serializers.ModelSerializer):
     id = serializers.UUIDField(read_only=True)
     user = UserSerializer(read_only=True)
     donation = DonationSerializer(read_only=True)
+    donor_count = serializers.IntegerField(source='get_donor_count', read_only=True)
 
     class Meta:
         model = Transactions
