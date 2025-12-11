@@ -78,6 +78,8 @@ INSTALLED_APPS = [
     "drf_spectacular_sidecar",
     "django_filters",
     "django_crontab",
+    'django_celery_results',
+    'django_celery_beat',
     # Local apps
     "users",
     "donations",
@@ -205,6 +207,14 @@ REST_FRAMEWORK = {
     "PAGE_SIZE": 10,
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
 }
+# Cron jobs configuration
+CRONJOBS = [
+    # Run every hour to clean up M-Pesa pending transactions
+    ('0 * * * *', 'transactions.management.commands.cleanup_expired_transactions'),
+    
+    # Run daily at 2 AM to clean up all expired transactions
+    ('0 2 * * *', 'transactions.management.commands.cleanup_expired_transactions'),
+]
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
@@ -292,3 +302,19 @@ try:
         
 except Exception as e:
     print(f"⚠️ Firebase setup error: {e}")
+
+# Celery Configuration
+CELERY_BROKER_URL = 'redis://localhost:6379/0'  # Default Redis URL
+CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'Africa/Nairobi'
+CELERY_ENABLE_UTC = True
+
+# Beat scheduler for periodic tasks
+CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
+
+# Optional: Task settings
+CELERY_TASK_ALWAYS_EAGER = False  # Set to True for local testing (no broker needed)
+CELERY_TASK_EAGER_PROPAGATES = True

@@ -1,3 +1,4 @@
+from datetime import timezone
 from django.db import models
 from django.conf import settings
 import uuid
@@ -37,7 +38,43 @@ class Donations(models.Model):
 
     def __str__(self):
         return self.title
-
+    def is_expired(self):
+        """Check if donation end date has passed"""
+        return self.end_date < timezone.now()
+    
+    def should_be_closed(self):
+        """Check if donation should be closed (expired and still active)"""
+        return self.is_expired() and self.status == 'Active'
+    
+    def close_if_expired(self, save=True):
+        """Close the donation if it's expired and active"""
+        if self.should_be_closed():
+            self.status = 'Closed'
+            if save:
+                self.save(update_fields=['status'])
+            return True
+        return False
+    
+    @classmethod
+    def close_all_expired(cls):
+        """Close all expired donations in bulk"""
+        from django.utils import timezone
+        now = timezone.now()
+        
+        expired_count = cls.objects.filter(
+            end_date__lt=now,
+            status='Active'
+        ).update(status='Closed')
+        
+        return expired_count
+    
+    # You can also add a save method to auto-close if expired
+    def save(self, *args, **kwargs):
+        # Auto-close if end date has passed
+        if self.is_expired():
+            self.status = 'Closed'
+        
+        super().save(*args, **kwargs)
 
 class SavedDonations(models.Model):
     user = models.ForeignKey(
