@@ -7,9 +7,24 @@ from .models import Users
 
 
 class UserCreateSerializer(BaseUserCreateSerializer):
+    id = serializers.ReadOnlyField()
+    
     class Meta(BaseUserCreateSerializer.Meta):
         model = Users
-        fields = ("id", "email", "username", "password", "full_name", "phone_number")
+        fields = {
+            "id",
+            "email",
+            "username",
+            "password",
+            "full_name",
+            "phone_number",
+            "is_admin",
+            "role",
+            "fcm_token",
+            "profile_image_url",
+            "address",
+            "bio",
+        }
 
     def create(self, validated_data):
         user = super().create(validated_data)
