@@ -1,4 +1,6 @@
 from rest_framework import viewsets, generics, views, status
+
+from donations.filters import DonationFilterSet
 from .permissions import IsAdminUser, IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
@@ -17,6 +19,7 @@ class DonationViewSet(viewsets.ModelViewSet):
     queryset = Donations.objects.order_by('-created_at')
     serializer_class = DonationSerializer
     authentication_classes = [FirebaseAuthentication]
+    filterset_class = DonationFilterSet
 
 
     def get_permissions(self):
