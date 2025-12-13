@@ -21,4 +21,5 @@ class TransactionSerializer(serializers.ModelSerializer):
             "donated_at",
             "payment_method",
             "payment_status",
+            "donor_count"
         )
