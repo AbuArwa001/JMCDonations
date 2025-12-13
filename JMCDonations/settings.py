@@ -132,6 +132,10 @@ DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
         "NAME": BASE_DIR / "db.sqlite3",
+        'OPTIONS': {
+            'timeout': 30,
+            'check_same_thread': False, 
+        }
     }
 }
 
@@ -198,6 +202,8 @@ REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": [
         # "rest_framework.permissions.IsAuthenticated",
     ],
+    'DATETIME_FORMAT': "%Y-%m-%dT%H:%M:%S",
+    'DATETIME_INPUT_FORMATS': ["%Y-%m-%dT%H:%M:%S", "iso-8601"],
     "DEFAULT_FILTER_BACKENDS": [
         "django_filters.rest_framework.DjangoFilterBackend",
         "rest_framework.filters.SearchFilter",

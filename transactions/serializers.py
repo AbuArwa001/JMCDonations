@@ -9,7 +9,7 @@ class TransactionSerializer(serializers.ModelSerializer):
     id = serializers.UUIDField(read_only=True)
     user = UserSerializer(read_only=True)
     donation = DonationSerializer(read_only=True)
-    donor_count = serializers.IntegerField(source='get_donor_count', read_only=True)
+    amount = serializers.DecimalField(max_digits=10, decimal_places=2, read_only=True)
 
     class Meta:
         model = Transactions
@@ -21,5 +21,8 @@ class TransactionSerializer(serializers.ModelSerializer):
             "donated_at",
             "payment_method",
             "payment_status",
-            "donor_count"
         )
+        extra_kwargs = {
+            "payment_method": {"read_only": True},
+            "donated_at": {"read_only": True},
+        }
