@@ -41,7 +41,7 @@ class CategoryBreakdownView(APIView):
                 "donations__transactions__amount",
                 filter=models.Q(donations__transactions__payment_status="Completed"),
             )
-        ).values("category_name", "total_amount")
+        ).values("category_name", "total_amount", "color")
         return Response(data)
 
 
