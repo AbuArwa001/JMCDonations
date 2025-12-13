@@ -9,7 +9,7 @@ from .daraja import MpesaClient
 
 
 class TransactionViewSet(viewsets.ModelViewSet):
-    queryset = Transactions.objects.order_by("-donated_at")
+    queryset = Transactions.objects.order_by("-payment_status")
     serializer_class = TransactionSerializer
     authentication_classes = []
     filterset_class = TransactionFilterSet
