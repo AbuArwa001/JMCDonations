@@ -180,3 +180,73 @@ class ExportView(APIView):
 
         wb.save(response)
         return response
+class DonationTrendsView(APIView):
+    permission_classes = [IsAdminUser]
+
+    def get(self, request):
+        period = request.query_params.get("period", "week")
+        now = timezone.now()
+        
+        if period == "week":
+            start_date = now - timedelta(days=7)
+            trunc_func = TruncDate("donated_at")
+            date_format = "%a" # Mon, Tue
+            days_range = 7
+        elif period == "month":
+            start_date = now - timedelta(days=30)
+            trunc_func = TruncDate("donated_at")
+            date_format = "%d %b" # 01 Jan
+            days_range = 30
+        elif period == "year":
+            start_date = now - timedelta(days=365)
+            trunc_func = TruncDate("donated_at") # Grouping by month would be better for year, but keeping simple for now
+            date_format = "%b" # Jan
+            days_range = 365
+        else:
+            return Response({"error": "Invalid period"}, status=400)
+
+        # Base query
+        queryset = Transactions.objects.filter(
+            payment_status="Completed", 
+            donated_at__gte=start_date
+        )
+
+        # Group by date
+        trends_data = (
+            queryset.annotate(date=trunc_func)
+            .values("date")
+            .annotate(amount=Sum("amount"))
+            .order_by("date")
+        )
+
+        # Format for frontend
+        trends = []
+        
+        if period == "year":
+             # For year, let's group by month manually or use TruncMonth if imported
+             # For simplicity/consistency with current imports, let's just return the data points we have
+             # A better approach for year is usually 12 months.
+             # Let's stick to the requested logic:
+             pass 
+
+        # Re-using the logic from DashboardSummaryView but making it dynamic
+        # For 'week' and 'month', we want to fill in missing days.
+        
+        if period in ["week", "month"]:
+            for i in range(days_range):
+                date = (now - timedelta(days=(days_range - 1) - i)).date()
+                day_data = next((item for item in trends_data if item["date"] == date), None)
+                trends.append({
+                    "name": date.strftime(date_format),
+                    "amount": day_data["amount"] if day_data else 0
+                })
+        else:
+             # For year, just return the data points found, or group by month if we had TruncMonth
+             # Let's return the raw daily data for now, frontend can handle or we can improve later
+             for item in trends_data:
+                 trends.append({
+                     "name": item["date"].strftime("%d %b"),
+                     "amount": item["amount"]
+                 })
+
+        return Response(trends)
