@@ -1,5 +1,5 @@
 from django_filters import FilterSet
-from .models import Transactions
+from .models import BankAccount, Transactions
 
 class TransactionFilterSet(FilterSet):
     class Meta:
@@ -11,4 +11,13 @@ class TransactionFilterSet(FilterSet):
             'amount': ['gte', 'lte'],
             'donation': ['exact'],
             'user': ['exact'],
+        }
+
+class BankAccountFilterSet(FilterSet):
+    class Meta:
+        model = BankAccount
+        fields = {
+            'is_active': ['exact'],
+            'account_name': ['icontains'],
+            'account_number': ['icontains'],
         }
