@@ -47,3 +47,16 @@ class Transactions(models.Model):
 
     def __str__(self):
         return f"{self.amount} - {self.donation.title}"
+
+
+class BankAccount(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    bank_name = models.CharField(max_length=100)
+    account_number = models.CharField(max_length=50)
+    account_name = models.CharField(max_length=100)
+    is_active = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"{self.bank_name} - {self.account_number}"
