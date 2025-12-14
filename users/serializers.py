@@ -33,8 +33,9 @@ class UserCreateSerializer(BaseUserCreateSerializer):
 
 
 class UserSerializer(BaseUserSerializer):
-    public_uuid = serializers.ReadOnlyField()  # Expose the UUID to Flutter
+    public_uuid = serializers.ReadOnlyField() 
     full_name=serializers.CharField(required=False)
+    username=serializers.CharField(required=False)
 
     class Meta(BaseUserSerializer.Meta):
         model = Users
