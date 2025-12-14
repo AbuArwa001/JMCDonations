@@ -5,6 +5,7 @@ from .views import (
     DriveProgressView,
     PendingCashView,
     ExportView,
+    DonationTrendsView,
 )
 from rest_framework.routers import DefaultRouter
 
@@ -33,6 +34,7 @@ urlpatterns = [
                 ),
                 path("cash/pending/", PendingCashView.as_view(), name="pending-cash"),
                 path("export/", ExportView.as_view(), name="data-export"),
+                path("trends/", DonationTrendsView.as_view(), name="donation-trends"),
             ]
         ),
     ),

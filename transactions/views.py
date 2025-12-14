@@ -6,6 +6,7 @@ from transactions.filter import TransactionFilterSet
 from .models import Transactions
 from .serializers import TransactionSerializer
 from .daraja import MpesaClient
+from django.utils import timezone
 
 
 class TransactionViewSet(viewsets.ModelViewSet):
@@ -56,6 +57,47 @@ class TransactionViewSet(viewsets.ModelViewSet):
         response.update(serializer.data)
 
         return Response(response, status=200)
+
+    @action(detail=False, methods=["post"])
+    def transfer(self, request):
+        amount = request.data.get("amount")
+        
+        if not amount:
+            return Response(
+                {"error": "Amount is required"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+            
+        try:
+            amount = float(amount)
+            if amount <= 0:
+                raise ValueError
+        except ValueError:
+             return Response(
+                {"error": "Invalid amount"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        # Simulate B2B Transfer
+        # In a real scenario, this would call MpesaClient().b2b_payment(...)
+        
+        # Create transaction record
+        transaction = Transactions.objects.create(
+            amount=amount,
+            payment_method="Transfer", # Custom method for transfers
+            payment_status="Completed", # Assume instant success for simulation
+            transaction_reference=f"TRX-{timezone.now().timestamp()}",
+            user=request.user if request.user.is_authenticated else None,
+            # donation=None # Transfers might not be linked to a specific donation drive
+        )
+        
+        return Response({
+            "message": "Transfer initiated successfully",
+            "transaction_id": transaction.id,
+            "amount": amount,
+            "status": "Completed"
+        })
+
     def list(self, request, *args, **kwargs):
         print("Filterset:", self.filterset_class)
         print("Query params:", request.query_params)
