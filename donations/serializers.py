@@ -1,5 +1,6 @@
 from rest_framework import serializers
 
+from django.db import models
 from categories.serializers import CategorySerializer
 from .models import Donations, SavedDonations
 
@@ -7,6 +8,7 @@ class BasicDonationSerializer(serializers.ModelSerializer):
     """
     Basic serializer without category details to avoid recursion
     """
+    collected_amount = serializers.SerializerMethodField()
     class Meta:
         model = Donations
         fields = (
@@ -20,8 +22,14 @@ class BasicDonationSerializer(serializers.ModelSerializer):
             "paybill_number",
             "account_name",
             "created_at",
+            "collected_amount",
         )
-
+    def get_collected_amount(self, obj):
+        """Calculate total from completed transactions only"""
+        total = obj.transactions.filter(
+            payment_status="Completed"
+        ).aggregate(total=models.Sum('amount'))['total']
+        return total if total else 0
 
 class DonationSerializer(serializers.ModelSerializer):
     
@@ -48,6 +56,13 @@ class DonationSerializer(serializers.ModelSerializer):
         return obj.average_rating()
     def get_donor_count(self, obj):
         return obj.donor_count()
+    def get_collected_amount(self, obj):
+        """Calculate total from completed transactions only"""
+        total = obj.transactions.filter(
+            payment_status="Completed"
+        ).aggregate(total=models.Sum('amount'))['total']
+        return total if total else 0
+    collected_amount = serializers.SerializerMethodField()
     donor_count = serializers.SerializerMethodField()
     avg_rating = serializers.SerializerMethodField()
     # category = CategorySerializer()
@@ -69,6 +84,7 @@ class DonationSerializer(serializers.ModelSerializer):
             "paybill_number",
             "category",
             "donor_count",
+            "collected_amount",
         )
         extra_kwargs = {
             'title': {'required': False},
