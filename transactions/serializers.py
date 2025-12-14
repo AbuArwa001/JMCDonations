@@ -2,7 +2,7 @@ from rest_framework import serializers
 
 from donations.serializers import DonationSerializer
 from users.serializers import UserSerializer
-from .models import Transactions
+from .models import Transactions, BankAccount
 
 
 class TransactionSerializer(serializers.ModelSerializer):
@@ -26,3 +26,12 @@ class TransactionSerializer(serializers.ModelSerializer):
             "payment_method": {"read_only": True},
             "donated_at": {"read_only": True},
         }
+
+
+
+
+
+class BankAccountSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = BankAccount
+        fields = "__all__"

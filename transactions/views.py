@@ -3,10 +3,11 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 
 from transactions.filter import TransactionFilterSet
-from .models import Transactions
-from .serializers import TransactionSerializer
+from .models import Transactions, BankAccount
+from .serializers import TransactionSerializer, BankAccountSerializer
 from .daraja import MpesaClient
 from django.utils import timezone
+from rest_framework import permissions
 
 
 class TransactionViewSet(viewsets.ModelViewSet):
@@ -14,6 +15,12 @@ class TransactionViewSet(viewsets.ModelViewSet):
     serializer_class = TransactionSerializer
     authentication_classes = []
     filterset_class = TransactionFilterSet
+
+
+class BankAccountViewSet(viewsets.ModelViewSet):
+    queryset = BankAccount.objects.filter(is_active=True)
+    serializer_class = BankAccountSerializer
+    permission_classes = [permissions.IsAuthenticated] # Or IsAdminUser if imported
 
     @action(detail=False, methods=["post"])
     def stk_push(self, request):
