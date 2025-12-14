@@ -1,4 +1,5 @@
-from datetime import timezone
+# from datetime import timezone
+from django.utils import timezone
 from django.db import models
 from django.conf import settings
 import uuid
@@ -20,7 +21,7 @@ class Donations(models.Model):
     )
     target_amount = models.DecimalField(max_digits=12, decimal_places=2)
     start_date = models.DateTimeField()
-    end_date = models.DateTimeField()
+    end_date = models.DateTimeField(null=False)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default="Active")
     created_by = models.ForeignKey(
         settings.AUTH_USER_MODEL,
@@ -41,6 +42,7 @@ class Donations(models.Model):
         return self.title
     def is_expired(self):
         """Check if donation end date has passed"""
+        print(self.end_date, timezone.now())
         return self.end_date < timezone.now()
     
     def should_be_closed(self):
