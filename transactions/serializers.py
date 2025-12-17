@@ -32,6 +32,29 @@ class TransactionSerializer(serializers.ModelSerializer):
 
 
 class BankAccountSerializer(serializers.ModelSerializer):
+    """
+    Serializer for BankAccount model.
+    returns bank account details.
+    example:
+    {
+        "id": "uuid",
+        "bank_name": "Bank of Example",
+        "account_number": "1234567890",
+        "account_name": "John Doe",
+        "is_active": true,
+        "created_at": "2024-01-01T00:00:00Z",
+        "updated_at": "2024-01-01T00:00:00Z"
+    }
+    """
     class Meta:
         model = BankAccount
-        fields = "__all__"
+        fields = (
+            "id",
+            "bank_name",
+            "account_number",
+            "account_name",
+            "is_active",
+            "created_at",
+            "updated_at",
+        )
+        read_only_fields = ("id", "created_at", "updated_at")
