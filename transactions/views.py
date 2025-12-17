@@ -1,7 +1,9 @@
 from rest_framework import viewsets, status
 from rest_framework.decorators import action
 from rest_framework.response import Response
+from transactions.permissions import IsAuthenticated
 
+from authentication.backends import FirebaseAuthentication
 from transactions.filter import BankAccountFilterSet, TransactionFilterSet
 from .models import Transactions, BankAccount
 from .serializers import TransactionSerializer, BankAccountSerializer
@@ -20,7 +22,8 @@ class TransactionViewSet(viewsets.ModelViewSet):
 class BankAccountViewSet(viewsets.ModelViewSet):
     queryset = BankAccount.objects.filter(is_active=True)
     serializer_class = BankAccountSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [FirebaseAuthentication]
     filterset_class = BankAccountFilterSet
 
     @action(detail=False, methods=["post"])
