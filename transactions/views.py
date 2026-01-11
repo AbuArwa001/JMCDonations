@@ -2,12 +2,14 @@ from rest_framework import viewsets, status
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from transactions.permissions import IsAuthenticated
+from django.shortcuts import redirect
 
 from authentication.backends import FirebaseAuthentication
 from transactions.filter import BankAccountFilterSet, TransactionFilterSet
 from .models import Transactions, BankAccount
 from .serializers import TransactionSerializer, BankAccountSerializer
 from .daraja import MpesaClient
+from .paypal_client import PayPalClient
 from django.utils import timezone
 from rest_framework import permissions
 
@@ -52,6 +54,81 @@ class TransactionViewSet(viewsets.ModelViewSet):
         transaction.payment_status = "Failed"
         transaction.save()
         return Response(response, status=400)
+
+    @action(detail=False, methods=['post'])
+    def initiate_paypal_payment(self, request):
+        amount = request.data.get('amount')
+        donation_id = request.data.get('donation')
+        
+        # 1. Create Pending Transaction
+        transaction = Transactions.objects.create(
+            donation_id=donation_id,
+            user=request.user if request.user.is_authenticated else None,
+            amount=amount,
+            payment_method="Paypal",
+            payment_status="Pending"
+        )
+
+        # 2. Call PayPal to create order
+        client = PayPalClient()
+        # Define return/cancel URLs (adjust domain for production/ngrok)
+        # Use simple deep links or a backend callback URL that redirects to app
+        # For simplicity, we redirect to a backend callback 
+        # that handles capture then redirects to App via Scheme
+        callback_url = "http://10.0.2.2:8000/api/v1/transactions/paypal_callback/"
+        # OR request.build_absolute_uri('/api/v1/transactions/paypal_callback/')
+        
+        # Using a fixed one for testing if request.build_absolute_uri is tricky with proxies
+        base_url = f"{request.scheme}://{request.get_host()}"
+        return_url = f"{base_url}/api/v1/transactions/paypal_callback/?tx_id={transaction.id}"
+        cancel_url = f"{base_url}/api/v1/transactions/paypal_callback/?cancel=true&tx_id={transaction.id}"
+
+        order = client.create_order(amount, return_url=return_url, cancel_url=cancel_url)
+        
+        if order and "id" in order:
+            transaction.transaction_reference = order["id"]
+            transaction.save()
+            
+            # Find approval link
+            approval_link = next(link["href"] for link in order["links"] if link["rel"] == "approve")
+            return Response({"approval_url": approval_link, "transaction_id": transaction.id}, status=200)
+        
+        transaction.payment_status = "Failed"
+        transaction.save()
+        return Response({"error": "Failed to create PayPal order"}, status=400)
+
+    @action(detail=False, methods=['get'])
+    def paypal_callback(self, request):
+        tx_id = request.query_params.get('tx_id')
+        token = request.query_params.get('token') # PayPal Order ID
+        cancel = request.query_params.get('cancel')
+        
+        try:
+            transaction = Transactions.objects.get(id=tx_id)
+        except Transactions.DoesNotExist:
+            return Response({"error": "Transaction not found"}, status=404)
+
+        if cancel == 'true':
+            transaction.payment_status = "Failed"
+            transaction.save()
+            # Redirect to App Deep Link (Failure)
+            return redirect("jamiagive://payment/cancel")
+
+        # Capture Order
+        client = PayPalClient()
+        capture = client.capture_order(token)
+        
+        if capture and capture["status"] == "COMPLETED":
+            transaction.payment_status = "Completed"
+            from django.utils import timezone
+            transaction.completed_at = timezone.now()
+            transaction.save()
+            # Redirect to App Deep Link (Success)
+            return redirect(f"jamiagive://payment/success?tx_id={transaction.id}")
+        
+        transaction.payment_status = "Failed"
+        transaction.save()
+        return redirect("jamiagive://payment/failure")
 
 class BankAccountViewSet(viewsets.ModelViewSet):
     queryset = BankAccount.objects.filter(is_active=True)

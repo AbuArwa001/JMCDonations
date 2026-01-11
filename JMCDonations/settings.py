@@ -283,6 +283,12 @@ MPESA_CALLBACK_URL = os.getenv(
     "MPESA_CALLBACK_URL", "https://diatomaceous-preventively-amber.ngrok-free.dev/api/v1/mpesa/callback/"
 )
 
+# PAYPAL
+PAYPAL_CLIENT_ID = os.getenv("PAYPAL_CLIENT_ID", "")
+PAYPAL_CLIENT_SECRET = os.getenv("PAYPAL_CLIENT_SECRET", "")
+PAYPAL_MODE = os.getenv("PAYPAL_MODE", "sandbox")
+PAYPAL_WEBHOOK_ID = os.getenv("PAYPAL_WEBHOOK_ID", "")
+
 FIREBASE_API_KEY = os.getenv("FIREBASE_API_KEY")
 
 try:
