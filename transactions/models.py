@@ -42,6 +42,7 @@ class Transactions(models.Model):
     payment_status = models.CharField(
         max_length=20, choices=PAYMENT_STATUS_CHOICES, default="Pending"
     )
+    mpesa_receipt = models.CharField(max_length=50, blank=True, null=True)
     donated_at = models.DateTimeField(auto_now_add=True)
     completed_at = models.DateTimeField(null=True, blank=True)
 

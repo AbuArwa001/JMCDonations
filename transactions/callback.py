@@ -35,6 +35,8 @@ class MpesaCallbackView(APIView):
             transaction.payment_status = "Completed"
             transaction.mpesa_receipt = mpesa_receipt
             transaction.amount = amount
+            from django.utils import timezone
+            transaction.completed_at = timezone.now()
         else:
             transaction.payment_status = "Failed"
 

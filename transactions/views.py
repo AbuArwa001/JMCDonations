@@ -34,7 +34,7 @@ class BankAccountViewSet(viewsets.ModelViewSet):
         transaction_desc = request.data.get("transaction_desc")
         donation_id = request.data.get("donation")
 
-        if not all([phone_number, amount, account_reference, transaction_desc]):
+        if not all([phone_number, amount, account_reference, transaction_desc, donation_id]):
             return Response(
                 {"error": "Missing required fields"},
                 status=status.HTTP_400_BAD_REQUEST
