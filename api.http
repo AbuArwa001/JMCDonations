@@ -12,7 +12,7 @@ Content-Type: application/json
 }
 
 ###
-POST http://127.0.0.1:8000/api/v1/transactions/paypal_initiate_payment/
+POST http://127.0.0.1:8000/api/v1/transactions/initiate_paypal_payment/
 Content-Type: application/json
 
 {

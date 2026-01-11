@@ -147,7 +147,7 @@
     "model": "donations.donations",
     "pk": "44444444-4444-4444-4444-444444440014",
     "fields": {
-      "title": "Mental Health Awareness Campaign",
+      "title": "Mental Health Awareness",
       "description": "Workshops and materials for mental health awareness.",
       "paybill_number": "123469",
       "account_name": "MentalHealthAware",
