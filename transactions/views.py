@@ -75,7 +75,7 @@ class TransactionViewSet(viewsets.ModelViewSet):
         # Use simple deep links or a backend callback URL that redirects to app
         # For simplicity, we redirect to a backend callback 
         # that handles capture then redirects to App via Scheme
-        callback_url = "http://10.0.2.2:8000/api/v1/transactions/paypal_callback/"
+        callback_url = settings.PAYPAL_CALLBACK_URL
         # OR request.build_absolute_uri('/api/v1/transactions/paypal_callback/')
         
         # Using a fixed one for testing if request.build_absolute_uri is tricky with proxies

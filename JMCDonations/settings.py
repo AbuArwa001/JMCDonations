@@ -288,7 +288,9 @@ PAYPAL_CLIENT_ID = os.getenv("PAYPAL_CLIENT_ID", "")
 PAYPAL_CLIENT_SECRET = os.getenv("PAYPAL_CLIENT_SECRET", "")
 PAYPAL_MODE = os.getenv("PAYPAL_MODE", "sandbox")
 PAYPAL_WEBHOOK_ID = os.getenv("PAYPAL_WEBHOOK_ID", "")
-
+PAYPAL_CALLBACK_URL = os.getenv(
+    "PAYPAL_CALLBACK_URL", "https://diatomaceous-preventively-amber.ngrok-free.dev/api/v1/transactions/paypal_callback/"
+)
 FIREBASE_API_KEY = os.getenv("FIREBASE_API_KEY")
 
 try:
