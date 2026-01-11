@@ -18,6 +18,40 @@ class TransactionViewSet(viewsets.ModelViewSet):
     authentication_classes = []
     filterset_class = TransactionFilterSet
 
+    @action(detail=False, methods=['post'])
+    def initiate_stk_push(self, request):
+        phone_number = request.data.get('phone_number')
+        amount = request.data.get('amount')
+        donation_id = request.data.get('donation')
+
+        # 1. Create the Transaction record as "Pending"
+        transaction = Transactions.objects.create(
+            donation_id=donation_id,
+            user=request.user if request.user.is_authenticated else None,
+            amount=amount,
+            payment_method="M-Pesa",
+            payment_status="Pending"
+        )
+
+        # 2. Call M-Pesa
+        mpesa = MpesaClient()
+        # We use transaction.id as the AccountReference so we can identify it later
+        response = mpesa.stk_push(
+            phone_number=phone_number,
+            amount=amount,
+            account_reference=str(transaction.id)[:12], 
+            transaction_desc=f"Donation {donation_id}"
+        )
+
+        # 3. Update with Safaricom's CheckoutID for the callback to find
+        if "CheckoutRequestID" in response:
+            transaction.transaction_reference = response["CheckoutRequestID"]
+            transaction.save()
+            return Response(response, status=200)
+        
+        transaction.payment_status = "Failed"
+        transaction.save()
+        return Response(response, status=400)
 
 class BankAccountViewSet(viewsets.ModelViewSet):
     queryset = BankAccount.objects.filter(is_active=True)

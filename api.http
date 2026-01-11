@@ -1,3 +1,12 @@
 
 http://127.0.0.1:8000/api/donations/
 
+###
+POST http://127.0.0.1:8000/api/v1/transactions/initiate_stk_push/
+Content-Type: application/json
+
+{
+    "phone_number": "254740403037",
+    "amount": 10.00,
+    "donation": "d0ffbe50-40a4-49ac-98b7-dc33f32001c4"
+}
