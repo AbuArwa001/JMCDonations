@@ -5,7 +5,7 @@ import base64
 class PayPalClient:
     def __init__(self):
         self.client_id = settings.PAYPAL_CLIENT_ID
-        self.client_secret = settings.PAYPAL_SECRET
+        self.client_secret = settings.PAYPAL_CLIENT_SECRET
         self.mode = settings.PAYPAL_MODE
         
         if self.mode == "sandbox":

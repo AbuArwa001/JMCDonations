@@ -10,3 +10,12 @@ Content-Type: application/json
     "amount": 10.00,
     "donation": "d0ffbe50-40a4-49ac-98b7-dc33f32001c4"
 }
+
+###
+POST http://127.0.0.1:8000/api/v1/transactions/paypal_initiate_payment/
+Content-Type: application/json
+
+{
+    "donation": "d0ffbe50-40a4-49ac-98b7-dc33f32001c4",
+    "amount": 10.00
+}

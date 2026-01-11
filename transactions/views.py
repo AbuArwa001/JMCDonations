@@ -3,7 +3,7 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from transactions.permissions import IsAuthenticated
 from django.shortcuts import redirect
-
+from django.conf import settings
 from authentication.backends import FirebaseAuthentication
 from transactions.filter import BankAccountFilterSet, TransactionFilterSet
 from .models import Transactions, BankAccount
@@ -100,7 +100,7 @@ class TransactionViewSet(viewsets.ModelViewSet):
     @action(detail=False, methods=['get'])
     def paypal_callback(self, request):
         tx_id = request.query_params.get('tx_id')
-        token = request.query_params.get('token') # PayPal Order ID
+        token = request.query_params.get('token')
         cancel = request.query_params.get('cancel')
         
         try:
