@@ -118,3 +118,13 @@ class SavedDonationSerializer(serializers.ModelSerializer):
         from donations.serializers import BasicDonationSerializer
         donations = obj.donations.all() 
         return BasicDonationSerializer(donations, many=True).data
+
+class SaveDonationSerializer(serializers.ModelSerializer):
+    donation = BasicDonationSerializer()
+    class Meta:
+        model = SavedDonations
+        fields = (
+            "id",
+            "donation",
+            "user",
+        )

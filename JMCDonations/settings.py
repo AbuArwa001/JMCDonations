@@ -46,7 +46,8 @@ ALLOWED_HOSTS = [
     "jmcdonations.onrender.com",
     "localhost", "127.0.0.1",
     "diatomaceous-preventively-amber.ngrok-free.dev"
-    "jmc-admin-dashboard.vercel.app"
+    "jmc-admin-dashboard.vercel.app",
+    "192.168.3.96"
     ]
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000", 

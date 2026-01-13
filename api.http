@@ -19,3 +19,13 @@ Content-Type: application/json
     "donation": "d0ffbe50-40a4-49ac-98b7-dc33f32001c4",
     "amount": 10.00
 }
+
+###
+POST  /api/v1/donations/44444444-4444-4444-4444-444444440015/save/
+Authorization: Bearer 
+Content-Type: application/json
+
+{
+    "donation": "44444444-4444-4444-4444-444444440015",
+
+}

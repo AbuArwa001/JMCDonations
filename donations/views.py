@@ -6,7 +6,7 @@ from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponse
 from .models import Donations, SavedDonations
-from .serializers import DonationSerializer, SavedDonationSerializer
+from .serializers import DonationSerializer, SaveDonationSerializer, SavedDonationSerializer
 from transactions.models import Transactions
 from transactions.serializers import TransactionSerializer
 from reportlab.pdfgen import canvas
@@ -37,6 +37,21 @@ class DonationViewSet(viewsets.ModelViewSet):
 
 class SavedDonationView(generics.ListCreateAPIView):
     serializer_class = SavedDonationSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return SavedDonations.objects.filter(user=self.request.user)
+
+    def perform_create(self, serializer):
+        # Handle creation from URL pk if provided, else expect donation_id in body
+        donation_id = self.kwargs.get("pk")
+        if donation_id:
+            donation = get_object_or_404(Donations, pk=donation_id)
+            serializer.save(user=self.request.user, donation=donation)
+        else:
+            serializer.save(user=self.request.user)
+class SaveDonationView(generics.ListCreateAPIView):
+    serializer_class = SaveDonationSerializer
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
