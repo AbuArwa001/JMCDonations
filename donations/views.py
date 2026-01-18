@@ -6,14 +6,14 @@ from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponse
 from .models import Donations, SavedDonations
-from .serializers import DonationSerializer, SaveDonationSerializer, SavedDonationSerializer
+from .serializers import DonationSerializer, SavedDonationSerializer
 from transactions.models import Transactions
 from transactions.serializers import TransactionSerializer
 from reportlab.pdfgen import canvas
 import io
 from JMCDonations.authentication import FirebaseAuthentication
 from donations import permissions
-
+from rest_framework.decorators import action
 
 class DonationViewSet(viewsets.ModelViewSet):
     queryset = Donations.objects.order_by('-created_at')
@@ -21,63 +21,52 @@ class DonationViewSet(viewsets.ModelViewSet):
     authentication_classes = [FirebaseAuthentication]
     filterset_class = DonationFilterSet
 
-
     def get_permissions(self):
+        # Allow save/unsave for authenticated users
+        if self.action in ["save", "unsave", "saved"]:
+            return [IsAuthenticated()]
         if self.action in ["create", "update", "partial_update", "destroy"]:
-            permission_classes = [IsAdminUser]
-        else:
-            permission_classes = [AllowAny]
-        return [permission() for permission in permission_classes]
+            return [IsAdminUser()]
+        return [AllowAny()]
 
+    # GET /api/v1/donations/saved/
+    @action(detail=False, methods=['get'], url_path='saved')
+    def saved(self, request):
+        """List all donations saved by the current user"""
+        saved_donations = SavedDonations.objects.filter(user=request.user)
+        # We use the serializer that shows the donation details
+        serializer = SavedDonationSerializer(saved_donations, many=True)
+        return Response(serializer.data)
 
-
-    def perform_create(self, serializer):
-        serializer.save(created_by=self.request.user)
-
-
-class SavedDonationView(generics.ListCreateAPIView):
-    serializer_class = SavedDonationSerializer
-    permission_classes = [IsAuthenticated]
-
-    def get_queryset(self):
-        return SavedDonations.objects.filter(user=self.request.user)
-
-    def perform_create(self, serializer):
-        # Handle creation from URL pk if provided, else expect donation_id in body
-        donation_id = self.kwargs.get("pk")
-        if donation_id:
-            donation = get_object_or_404(Donations, pk=donation_id)
-            serializer.save(user=self.request.user, donation=donation)
-        else:
-            serializer.save(user=self.request.user)
-class SaveDonationView(generics.ListCreateAPIView):
-    serializer_class = SaveDonationSerializer
-    permission_classes = [IsAuthenticated]
-
-    def get_queryset(self):
-        return SavedDonations.objects.filter(user=self.request.user)
-
-    def perform_create(self, serializer):
-        # Handle creation from URL pk if provided, else expect donation_id in body
-        donation_id = self.kwargs.get("pk")
-        if donation_id:
-            donation = get_object_or_404(Donations, pk=donation_id)
-            serializer.save(user=self.request.user, donation=donation)
-        else:
-            serializer.save(user=self.request.user)
-
-
-class UnsaveDonationView(views.APIView):
-    permission_classes = [permissions.IsAuthenticated]
-
-    def delete(self, request, pk):
-        saved_donation = get_object_or_404(
-            SavedDonations, user=request.user, donation_id=pk
+    # POST /api/v1/donations/<pk>/save/
+    @action(detail=True, methods=['post'])
+    def save(self, request, pk=None):
+        """Save a specific donation to user's list"""
+        donation = self.get_object()
+        saved_donation, created = SavedDonations.objects.get_or_create(
+            user=request.user, 
+            donation=donation
         )
-        saved_donation.delete()
+        if not created:
+            return Response({"detail": "Already saved"}, status=status.HTTP_400_BAD_REQUEST)
+        
+        serializer = SavedDonationSerializer(saved_donation)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+    # DELETE /api/v1/donations/<pk>/unsave/
+    @action(detail=True, methods=['delete'])
+    def unsave(self, request, pk=None):
+        """Remove a specific donation from user's list"""
+        donation = self.get_object()
+        deleted_count, _ = SavedDonations.objects.filter(
+            user=request.user, 
+            donation=donation
+        ).delete()
+        
+        if deleted_count == 0:
+            return Response({"detail": "Not found in saved list"}, status=status.HTTP_404_NOT_FOUND)
+            
         return Response(status=status.HTTP_204_NO_CONTENT)
-
-
 class DonationHistoryView(generics.ListAPIView):
     serializer_class = TransactionSerializer
     permission_classes = [permissions.IsAuthenticated]
