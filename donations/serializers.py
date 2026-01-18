@@ -118,22 +118,13 @@ class DonationSerializer(serializers.ModelSerializer):
     # def perform_create(self, serializer):
     #     serializer.save(created_by=self.context["request"].user)
 
-
 class SavedDonationSerializer(serializers.ModelSerializer):
-    donations = serializers.SerializerMethodField()
+    # This automatically uses the serializer for the linked donation object
+    donation = BasicDonationSerializer(read_only=True)
+
     class Meta:
         model = SavedDonations
-        fields = (
-            "id",
-            "donations",
-            "user",
-        )
-
-    def get_donations(self, obj):
-        from donations.serializers import BasicDonationSerializer
-        donations = obj.donations.all() 
-        return BasicDonationSerializer(donations, many=True).data
-
+        fields = ("id", "donation", "user", "saved_at")
 class SaveDonationSerializer(serializers.ModelSerializer):
     donation = BasicDonationSerializer()
     class Meta:
