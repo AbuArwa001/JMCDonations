@@ -9,6 +9,7 @@ class BasicDonationSerializer(serializers.ModelSerializer):
     Basic serializer without category details to avoid recursion
     """
     collected_amount = serializers.SerializerMethodField()
+    is_saved = serializers.SerializerMethodField()
     class Meta:
         model = Donations
         fields = (
@@ -23,7 +24,13 @@ class BasicDonationSerializer(serializers.ModelSerializer):
             "account_name",
             "created_at",
             "collected_amount",
+            "is_saved",
         )
+    def get_is_saved(self, obj):
+        user = self.context.get('request').user if self.context.get('request') else None
+        if user and user.is_authenticated:
+            return SavedDonations.objects.filter(user=user, donation=obj).exists()
+        return False
     def get_collected_amount(self, obj):
         """Calculate total from completed transactions only"""
         total = obj.transactions.filter(
@@ -65,7 +72,14 @@ class DonationSerializer(serializers.ModelSerializer):
     collected_amount = serializers.SerializerMethodField()
     donor_count = serializers.SerializerMethodField()
     avg_rating = serializers.SerializerMethodField()
+    is_saved = serializers.SerializerMethodField()
     # category = CategorySerializer()
+
+    def get_is_saved(self, obj):
+        user = self.context.get('request').user if self.context.get('request') else None
+        if user and user.is_authenticated:
+            return SavedDonations.objects.filter(user=user, donation=obj).exists()
+        return False
 
     class Meta:
         model = Donations
@@ -85,6 +99,7 @@ class DonationSerializer(serializers.ModelSerializer):
             "category",
             "donor_count",
             "collected_amount",
+            "is_saved",
         )
         extra_kwargs = {
             'title': {'required': False},
