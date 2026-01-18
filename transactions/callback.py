@@ -2,6 +2,10 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from transactions.models import Transactions
 from rest_framework import permissions
+from django.utils import timezone
+import logging
+
+logger = logging.getLogger(__name__)
 
 class MpesaCallbackView(APIView):
     authentication_classes = [] 
@@ -9,14 +13,22 @@ class MpesaCallbackView(APIView):
 
     def post(self, request):
         data = request.data
-        stk_callback = data["Body"]["stkCallback"]
-        checkout_id = stk_callback["CheckoutRequestID"]
-        result_code = stk_callback["ResultCode"]
+        logger.info(f"Mpesa Callback Received: {data}")
+        
+        try:
+            stk_callback = data["Body"]["stkCallback"]
+            checkout_id = stk_callback["CheckoutRequestID"]
+            result_code = stk_callback["ResultCode"]
+            logger.info(f"Processing Callback - CheckoutID: {checkout_id}, ResultCode: {result_code}")
+        except KeyError as e:
+            logger.error(f"Invalid Callback Data Format: {e}")
+            return Response({"error": "Invalid format"}, status=400)
 
         try:
             # Match by the CheckoutRequestID we saved during initiation
             transaction = Transactions.objects.get(transaction_reference=checkout_id)
         except Transactions.DoesNotExist:
+            logger.warning(f"Transaction not found for CheckoutID: {checkout_id}")
             return Response({"error": "Transaction not found"}, status=404)
 
         if result_code == 0:
