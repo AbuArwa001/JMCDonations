@@ -47,7 +47,6 @@ class MpesaClient:
             "PartyA": phone_number,
             "PartyB": self.shortcode,
             "PhoneNumber": phone_number,
-            # "CallBackURL": "https://diatomaceous-preventively-amber.ngrok-free.dev/api/v1/mpesa/callback/",
             "CallBackURL": settings.MPESA_CALLBACK_URL,
             "AccountReference": account_reference,
             "TransactionDesc": transaction_desc,

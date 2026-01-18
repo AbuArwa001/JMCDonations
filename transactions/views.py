@@ -55,6 +55,23 @@ class TransactionViewSet(viewsets.ModelViewSet):
         transaction.save()
         return Response(response, status=400)
 
+    @action(detail=False, methods=['get'])
+    def check_status(self, request):
+        reference = request.query_params.get('reference')
+        if not reference:
+            return Response({"error": "Reference is required"}, status=400)
+        
+        try:
+            transaction = Transactions.objects.get(transaction_reference=reference)
+            return Response({
+                "payment_status": transaction.payment_status,
+                "mpesa_receipt": transaction.mpesa_receipt,
+                "transaction_id": str(transaction.id),
+                "amount": transaction.amount,
+            }, status=200)
+        except Transactions.DoesNotExist:
+            return Response({"error": "Transaction not found"}, status=404)
+
     @action(detail=False, methods=['post'])
     def initiate_paypal_payment(self, request):
         amount = request.data.get('amount')

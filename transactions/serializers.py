@@ -21,6 +21,7 @@ class TransactionSerializer(serializers.ModelSerializer):
             "donated_at",
             "payment_method",
             "payment_status",
+            "transaction_reference",
         )
         extra_kwargs = {
             "payment_method": {"read_only": True},
