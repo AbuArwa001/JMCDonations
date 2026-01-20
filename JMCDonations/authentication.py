@@ -18,31 +18,30 @@ class FirebaseAuthentication(authentication.BaseAuthentication):
         token = auth_header.split(' ').pop()
         if not token:
             return None
-        
+
         try:
-            # Firebase should already be initialized by settings.py
-            # Just verify the token
             decoded_token = auth.verify_id_token(token)
             uid = decoded_token['uid']
             email = decoded_token.get('email')
             
-            if not email:
-                raise exceptions.AuthenticationFailed('No email in token')
+            # Check for admin claim in the token
+            is_firebase_admin = decoded_token.get('admin', False)
             
-            # Get or create user
             user, created = User.objects.get_or_create(
                 email=email,
                 defaults={
                     'username': email.split('@')[0],
-                    'is_active': True
+                    'is_active': True,
+                    'is_admin': is_firebase_admin # Set it on creation
                 }
             )
-            
-            if created:
-                logger.info(f"Created new user from Firebase: {email}")
+
+            # Sync admin status if it changed in Firebase
+            if user.is_admin != is_firebase_admin:
+                user.is_admin = is_firebase_admin
+                user.save()
             
             return (user, None)
-            
         except Exception as e:
             logger.error(f"Firebase authentication failed: {e}")
             raise exceptions.AuthenticationFailed(f'Authentication failed: {str(e)}')

@@ -40,3 +40,25 @@ Content-Type: application/json
 GET http://127.0.0.1:8000/api/v1/transactions/
 ###
 GET http://127.0.0.1:8000/api/v1/transactions/check_status/?reference=TEST-REF-123456
+
+###
+GET http://127.0.0.1:8000/api/v1/categories/
+Authorization: Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjFjMzIxOTgzNGRhNTBlMjBmYWVhZWE3Yzg2Y2U3YjU1MzhmMTdiZTEiLCJ0eXAiOiJKV1QifQ.eyJuYW1lIjoia2hhbGZhbiBBdGhtYW4iLCJhZG1pbiI6dHJ1ZSwicm9sZSI6InN1cGVyX2FkbWluIiwiaXNzIjoiaHR0cHM6Ly9zZWN1cmV0b2tlbi5nb29nbGUuY29tL2ptY2RvbmF0aW9ucy1jZDQ1OCIsImF1ZCI6ImptY2RvbmF0aW9ucy1jZDQ1OCIsImF1dGhfdGltZSI6MTc2ODk0NDYyMSwidXNlcl9pZCI6Ik1IaTd5S3YxYnBoaEVVZENEVEp2V2pxUTB3bjEiLCJzdWIiOiJNSGk3eUt2MWJwaGhFVWRDRFRKdldqcVEwd24xIiwiaWF0IjoxNzY4OTQ0NjIxLCJleHAiOjE3Njg5NDgyMjEsImVtYWlsIjoiYWRtaW5AZXhhbXBsZS5jb20iLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsImZpcmViYXNlIjp7ImlkZW50aXRpZXMiOnsiZW1haWwiOlsiYWRtaW5AZXhhbXBsZS5jb20iXX0sInNpZ25faW5fcHJvdmlkZXIiOiJwYXNzd29yZCJ9fQ.ErbVSYUUwwsTH3xuhEVWKut6o5xlr1ZwQHBiyEU-myVbOCC1wIrEojeSJ8YBzrj1cWHMqGNd6EyqGi6_IwC2Oe0ELVe4aOJrhAt_0ErAFHUN7JqaDaUwJ4g0T1nwJ82P2xo-KuyplVeIpisAEPBYDFnqHOsaCpoQqcVYgeHAl23NZdoVjyf7DMjpjoxSxtKMaiLXuQJgFTGR1xH0QM79EQmqyTEwBTHj3o6HWg85NCFlLS5cbeCENkNSPb1awCMtsMWKPppsnqt1QVRQ9NCglLk-dtru3I5a94T_pXfeHazwQxzkElJPrW7cXsOmgQt8ThHNbZcg_XHmXl3IQK6fDA
+
+###
+POST http://127.0.0.1:8000/api/v1/donations/
+Authorization: Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjFjMzIxOTgzNGRhNTBlMjBmYWVhZWE3Yzg2Y2U3YjU1MzhmMTdiZTEiLCJ0eXAiOiJKV1QifQ.eyJuYW1lIjoia2hhbGZhbiBBdGhtYW4iLCJhZG1pbiI6dHJ1ZSwicm9sZSI6InN1cGVyX2FkbWluIiwiaXNzIjoiaHR0cHM6Ly9zZWN1cmV0b2tlbi5nb29nbGUuY29tL2ptY2RvbmF0aW9ucy1jZDQ1OCIsImF1ZCI6ImptY2RvbmF0aW9ucy1jZDQ1OCIsImF1dGhfdGltZSI6MTc2ODk0NDYyMSwidXNlcl9pZCI6Ik1IaTd5S3YxYnBoaEVVZENEVEp2V2pxUTB3bjEiLCJzdWIiOiJNSGk3eUt2MWJwaGhFVWRDRFRKdldqcVEwd24xIiwiaWF0IjoxNzY4OTQ0NjIxLCJleHAiOjE3Njg5NDgyMjEsImVtYWlsIjoiYWRtaW5AZXhhbXBsZS5jb20iLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsImZpcmViYXNlIjp7ImlkZW50aXRpZXMiOnsiZW1haWwiOlsiYWRtaW5AZXhhbXBsZS5jb20iXX0sInNpZ25faW5fcHJvdmlkZXIiOiJwYXNzd29yZCJ9fQ.ErbVSYUUwwsTH3xuhEVWKut6o5xlr1ZwQHBiyEU-myVbOCC1wIrEojeSJ8YBzrj1cWHMqGNd6EyqGi6_IwC2Oe0ELVe4aOJrhAt_0ErAFHUN7JqaDaUwJ4g0T1nwJ82P2xo-KuyplVeIpisAEPBYDFnqHOsaCpoQqcVYgeHAl23NZdoVjyf7DMjpjoxSxtKMaiLXuQJgFTGR1xH0QM79EQmqyTEwBTHj3o6HWg85NCFlLS5cbeCENkNSPb1awCMtsMWKPppsnqt1QVRQ9NCglLk-dtru3I5a94T_pXfeHazwQxzkElJPrW7cXsOmgQt8ThHNbZcg_XHmXl3IQK6fDA
+Content-Type: application/json
+
+{
+    "title": "Donation 1",
+    "slug": "donation-1",
+    "description": "Description for Donation 1",
+    "paybill_number": "1234567890",
+    "account_name": "Donation Account 1",
+    "category": "5ff2b92b-8b91-4f1f-a57c-901e4ad9fd20",
+    "target_amount": 1000.00,
+    "start_date": "2024-01-01T00:00:00Z",
+    "end_date": "2024-12-31T23:59:59Z",
+    "status": "Active"
+}

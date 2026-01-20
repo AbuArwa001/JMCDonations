@@ -6,9 +6,10 @@ import uuid
 from django.utils.text import slugify
 
 def donation_image_upload_path(instance, filename):
-    # jmcdonations/donations_name_slug/[listof images]
-    donation_slug = slugify(instance.donation.title)
-    return f'donations/{donation_slug}/{filename}'
+    # jmcdonations/[donationDriveslug]/[image name].jpg
+    # Assuming the bucket is the root, so we return the key path.
+    # We strip 'donations/' prefix to match user request of jmcdonations/[slug]/...
+    return f'{instance.donation.slug}/{filename}'
 
 
 class Donations(models.Model):
@@ -19,6 +20,7 @@ class Donations(models.Model):
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     title = models.CharField(max_length=255)
+    slug = models.SlugField(max_length=255, unique=True, blank=True)
     description = models.TextField()
     paybill_number = models.CharField(max_length=50)
     account_name = models.CharField(max_length=100)
@@ -48,7 +50,7 @@ class Donations(models.Model):
         return self.title
     def is_expired(self):
         """Check if donation end date has passed"""
-        print(self.end_date, timezone.now())
+        # print(self.end_date, timezone.now())
         return self.end_date < timezone.now()
     
     def should_be_closed(self):
@@ -79,6 +81,15 @@ class Donations(models.Model):
     
     # You can also add a save method to auto-close if expired
     def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.title)
+            # Ensure uniqueness
+            original_slug = self.slug
+            counter = 1
+            while Donations.objects.filter(slug=self.slug).exists():
+                self.slug = f'{original_slug}-{counter}'
+                counter += 1
+
         # Auto-close if end date has passed
         if self.is_expired():
             self.status = 'Closed'

@@ -41,7 +41,7 @@ class BasicDonationSerializer(serializers.ModelSerializer):
 class DonationImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = DonationImage
-        fields = ("id", "image", "created_at")
+        fields = ("id", "image", "donation", "created_at")
 
 class DonationSerializer(serializers.ModelSerializer):
     
