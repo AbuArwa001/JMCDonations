@@ -4,6 +4,7 @@ from django.db import models
 from django.conf import settings
 import uuid
 from django.utils.text import slugify
+from django.db.models import JSONField
 
 def donation_image_upload_path(instance, filename):
     # jmcdonations/[donationDriveslug]/[image name].jpg
@@ -20,6 +21,7 @@ class Donations(models.Model):
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     title = models.CharField(max_length=255)
+    image_urls = JSONField(default=list, blank=True)
     slug = models.SlugField(max_length=255, unique=True, blank=True)
     description = models.TextField()
     paybill_number = models.CharField(max_length=50)
@@ -110,13 +112,13 @@ class SavedDonations(models.Model):
     class Meta:
         unique_together = ("user", "donation")
  
-class DonationImage(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    donation = models.ForeignKey(
-        Donations, on_delete=models.CASCADE, related_name="images"
-    )
-    image = models.ImageField(upload_to=donation_image_upload_path)
-    created_at = models.DateTimeField(auto_now_add=True)
+# class DonationImage(models.Model):
+#     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+#     donation = models.ForeignKey(
+#         Donations, on_delete=models.CASCADE, related_name="images"
+#     )
+#     image = models.ImageField(upload_to=donation_image_upload_path)
+#     created_at = models.DateTimeField(auto_now_add=True)
 
-    def __str__(self):
-        return f"Image for {self.donation.title}"
+#     def __str__(self):
+#         return f"Image for {self.donation.title}"

@@ -1,15 +1,54 @@
 from rest_framework import serializers
-
 from django.db import models
 from categories.serializers import CategorySerializer
-from .models import Donations, SavedDonations, DonationImage
+from .models import Donations, SavedDonations
+import boto3
+from django.conf import settings
 
+
+def upload_donation_images_to_s3(donation_instance, image_files):
+    """
+    Uploads a list of files to S3 and returns the list of public URLs.
+    Path: [bucket_name]/[slug]/[filename]
+    """
+    s3_client = boto3.client(
+        's3',
+        aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
+        aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
+        region_name=settings.AWS_S3_REGION_NAME
+    )
+    
+    urls = []
+    bucket_name = settings.AWS_STORAGE_BUCKET_NAME
+
+    for i, file_obj in enumerate(image_files[:5]):  # Limit to 5 images
+        # Generate path: slug/filename.jpg
+        file_path = f"{donation_instance.slug}/{file_obj.name}"
+        
+        # Upload to S3
+        s3_client.upload_fileobj(
+            file_obj,
+            bucket_name,
+            file_path,
+            ExtraArgs={'ContentType': file_obj.content_type}
+        )
+        
+        # Construct the URL
+        url = f"https://{settings.AWS_S3_CUSTOM_DOMAIN}/{file_path}"
+        urls.append(url)
+    
+    return urls
 class BasicDonationSerializer(serializers.ModelSerializer):
     """
     Basic serializer without category details to avoid recursion
     """
     collected_amount = serializers.SerializerMethodField()
     is_saved = serializers.SerializerMethodField()
+    uploaded_images = serializers.ListField(
+        child=serializers.ImageField(max_length=1000000, allow_empty_file=False, use_url=False),
+        write_only=True,
+        required=False
+    )
     class Meta:
         model = Donations
         fields = (
@@ -25,6 +64,7 @@ class BasicDonationSerializer(serializers.ModelSerializer):
             "created_at",
             "collected_amount",
             "is_saved",
+            "uploaded_images",
         )
     def get_is_saved(self, obj):
         user = self.context.get('request').user if self.context.get('request') else None
@@ -38,13 +78,12 @@ class BasicDonationSerializer(serializers.ModelSerializer):
         ).aggregate(total=models.Sum('amount'))['total']
         return total if total else 0
 
-class DonationImageSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = DonationImage
-        fields = ("id", "image", "donation", "created_at")
+# class DonationImageSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = DonationImage
+#         fields = ("id", "image", "donation", "created_at")
 
 class DonationSerializer(serializers.ModelSerializer):
-    
     """
     serializer for Donations model
     """
@@ -63,8 +102,11 @@ class DonationSerializer(serializers.ModelSerializer):
     donor_count = serializers.SerializerMethodField()
     avg_rating = serializers.SerializerMethodField()
     is_saved = serializers.SerializerMethodField()
-    images = DonationImageSerializer(many=True, read_only=True)
-
+    uploaded_images = serializers.ListField(
+        child=serializers.ImageField(max_length=1000000, allow_empty_file=False, use_url=False),
+        write_only=True,
+        required=False
+    )
     def get_is_saved(self, obj):
         user = self.context.get('request').user if self.context.get('request') else None
         if user and user.is_authenticated:
@@ -90,6 +132,7 @@ class DonationSerializer(serializers.ModelSerializer):
             "donor_count",
             "collected_amount",
             "is_saved",
+            "uploaded_images",
         )
         extra_kwargs = {
             'title': {'required': False},
@@ -101,12 +144,18 @@ class DonationSerializer(serializers.ModelSerializer):
             'status': {'required': False},
             'paybill_number': {'required': False},
             'category': {'required': False},
+            'uploaded_images': {'required': False},
         }
         read_only_fields = ('id', 'created_at', 'avg_rating')
-    
-
-    # def perform_create(self, serializer):
-    #     serializer.save(created_by=self.context["request"].user)
+    def create(self, validated_data):
+            images = validated_data.pop('uploaded_images', [])
+            donation = Donations.objects.create(**validated_data)
+            
+            if images:
+                urls = upload_donation_images_to_s3(donation, images)
+                donation.image_urls = urls
+                donation.save()
+            return donation
 
 class SavedDonationSerializer(serializers.ModelSerializer):
     # This automatically uses the serializer for the linked donation object

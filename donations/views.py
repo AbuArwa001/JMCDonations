@@ -14,18 +14,8 @@ import io
 from JMCDonations.authentication import FirebaseAuthentication
 from donations import permissions
 from rest_framework.decorators import action
-from .models import Donations, SavedDonations, DonationImage
-from .serializers import DonationSerializer, SavedDonationSerializer, DonationImageSerializer
-
-class DonationImageViewSet(viewsets.ModelViewSet):
-    queryset = DonationImage.objects.all()
-    serializer_class = DonationImageSerializer
-    authentication_classes = [FirebaseAuthentication]
-
-    def get_permissions(self):
-        if self.action in ["create", "destroy"]:
-            return [IsAdminUser()]
-        return [AllowAny()]
+from .models import Donations, SavedDonations
+from .serializers import DonationSerializer, SavedDonationSerializer
 
 class DonationViewSet(viewsets.ModelViewSet):
     queryset = Donations.objects.order_by('-created_at')
