@@ -223,6 +223,9 @@ CRONJOBS = [
     
     # Run daily at 2 AM to clean up all expired transactions
     ('0 2 * * *', 'transactions.management.commands.cleanup_expired_transactions'),
+
+    # Run every hour to close expired donations
+    ('0 * * * *', 'donations.management.commands.close_expired_donations'),
 ]
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60),
