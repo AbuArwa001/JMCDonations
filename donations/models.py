@@ -17,6 +17,7 @@ class Donations(models.Model):
     STATUS_CHOICES = (
         ("Active", "Active"),
         ("Closed", "Closed"),
+        ("Completed", "Completed"),
     )
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
