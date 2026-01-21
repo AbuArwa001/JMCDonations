@@ -43,7 +43,7 @@ GET http://127.0.0.1:8000/api/v1/transactions/check_status/?reference=TEST-REF-1
 
 ###
 GET http://127.0.0.1:8000/api/v1/categories/
-Authorization: Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjFjMzIxOTgzNGRhNTBlMjBmYWVhZWE3Yzg2Y2U3YjU1MzhmMTdiZTEiLCJ0eXAiOiJKV1QifQ.eyJuYW1lIjoia2hhbGZhbiBBdGhtYW4iLCJhZG1pbiI6dHJ1ZSwicm9sZSI6InN1cGVyX2FkbWluIiwiaXNzIjoiaHR0cHM6Ly9zZWN1cmV0b2tlbi5nb29nbGUuY29tL2ptY2RvbmF0aW9ucy1jZDQ1OCIsImF1ZCI6ImptY2RvbmF0aW9ucy1jZDQ1OCIsImF1dGhfdGltZSI6MTc2ODk0NDYyMSwidXNlcl9pZCI6Ik1IaTd5S3YxYnBoaEVVZENEVEp2V2pxUTB3bjEiLCJzdWIiOiJNSGk3eUt2MWJwaGhFVWRDRFRKdldqcVEwd24xIiwiaWF0IjoxNzY4OTQ0NjIxLCJleHAiOjE3Njg5NDgyMjEsImVtYWlsIjoiYWRtaW5AZXhhbXBsZS5jb20iLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsImZpcmViYXNlIjp7ImlkZW50aXRpZXMiOnsiZW1haWwiOlsiYWRtaW5AZXhhbXBsZS5jb20iXX0sInNpZ25faW5fcHJvdmlkZXIiOiJwYXNzd29yZCJ9fQ.ErbVSYUUwwsTH3xuhEVWKut6o5xlr1ZwQHBiyEU-myVbOCC1wIrEojeSJ8YBzrj1cWHMqGNd6EyqGi6_IwC2Oe0ELVe4aOJrhAt_0ErAFHUN7JqaDaUwJ4g0T1nwJ82P2xo-KuyplVeIpisAEPBYDFnqHOsaCpoQqcVYgeHAl23NZdoVjyf7DMjpjoxSxtKMaiLXuQJgFTGR1xH0QM79EQmqyTEwBTHj3o6HWg85NCFlLS5cbeCENkNSPb1awCMtsMWKPppsnqt1QVRQ9NCglLk-dtru3I5a94T_pXfeHazwQxzkElJPrW7cXsOmgQt8ThHNbZcg_XHmXl3IQK6fDA
+
 
 ###
 POST http://127.0.0.1:8000/api/v1/donations/
@@ -61,4 +61,20 @@ Content-Type: application/json
     "start_date": "2024-01-01T00:00:00Z",
     "end_date": "2024-12-31T23:59:59Z",
     "status": "Active"
+}
+
+###
+PUT http://127.0.0.1:8000/api/v1/donations/25a40223-eda0-4241-9394-0121fb2c2686/
+Authorization: Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjFjMzIxOTgzNGRhNTBlMjBmYWVhZWE3Yzg2Y2U3YjU1MzhmMTdiZTEiLCJ0eXAiOiJKV1QifQ.eyJuYW1lIjoia2hhbGZhbiBBdGhtYW4iLCJhZG1pbiI6dHJ1ZSwicm9sZSI6InN1cGVyX2FkbWluIiwiaXNzIjoiaHR0cHM6Ly9zZWN1cmV0b2tlbi5nb29nbGUuY29tL2ptY2RvbmF0aW9ucy1jZDQ1OCIsImF1ZCI6ImptY2RvbmF0aW9ucy1jZDQ1OCIsImF1dGhfdGltZSI6MTc2ODk1MzcxMywidXNlcl9pZCI6Ik1IaTd5S3YxYnBoaEVVZENEVEp2V2pxUTB3bjEiLCJzdWIiOiJNSGk3eUt2MWJwaGhFVWRDRFRKdldqcVEwd24xIiwiaWF0IjoxNzY4OTUzNzEzLCJleHAiOjE3Njg5NTczMTMsImVtYWlsIjoiYWRtaW5AZXhhbXBsZS5jb20iLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsImZpcmViYXNlIjp7ImlkZW50aXRpZXMiOnsiZW1haWwiOlsiYWRtaW5AZXhhbXBsZS5jb20iXX0sInNpZ25faW5fcHJvdmlkZXIiOiJwYXNzd29yZCJ9fQ.gfBbA06WlyTspdAbceAdods5SjEXTfSi1WSpScalTopYTiWxCJOmDs84mQadzJEfFkc7Rd44Ru_EVBJyJ8K-ORT3jwMMu5VmwpUTYG0zTQqwlGEF2V9qAmK0f35GH8PHeGAWIOL3Ub-YSBCAFAWG2ereZ1ehUyS8BKYxid-Dt86VyPrZBlcHiBlivaxoeOa01qNXHarP48mBAg5lG8-D8cFiXkTQ04pWxvjh_1m-bmI588ppNAR5WG2B2z2OBzBJUazLX39lKfm89YM0vKEbGi5PFNrh42HcWSGIDGh_E_-VjLYL8WRfiKau_p2G4gjicPM6Ujw1n4mT1JzuQQzZOg
+
+{
+    "title": "Build Lanagata Mosque",
+    "description": "The LIWO Mosque community in Langata envisions establishing a state-of-the-art Islamic Center and rental apartment complex with a total estimated cost of Ksh 578 million. This ambitious project will cater to the spiritual, educational, and economic needs of the Muslim community. It is also intended that the project will focus on transforming the locality into a God-fearing area, inspiring individuals to align their lives with Islamic principles and values.",
+    "account_name": "LIWO",
+    "target_amount": 1500000.00,
+    "start_date": "2026-01-18T00:00:00Z",
+    "end_date": "2026-02-18T00:00:00Z",
+    "status": "Active",
+    "paybill_number": "247247",
+    "category": "78482c5c-6726-4a81-86a3-f444ef9b63fe",
 }

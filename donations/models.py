@@ -22,7 +22,7 @@ class Donations(models.Model):
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     title = models.CharField(max_length=255)
-    image_urls = JSONField(default=list, blank=True)
+    image_urls = models.JSONField(default=list, blank=True)
     slug = models.SlugField(max_length=255, unique=True, blank=True)
     description = models.TextField()
     paybill_number = models.CharField(max_length=50)
@@ -52,10 +52,8 @@ class Donations(models.Model):
     def __str__(self):
         return self.title
     def is_expired(self):
-        """Check if donation end date has passed"""
-        # print(self.end_date, timezone.now())
-        return self.end_date < timezone.now()
-    
+        return self.end_date and self.end_date < timezone.now()
+
     def should_be_closed(self):
         """Check if donation should be closed (expired and still active)"""
         return self.is_expired() and self.status == 'Active'
