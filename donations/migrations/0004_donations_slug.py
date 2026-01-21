@@ -9,10 +9,30 @@ class Migration(migrations.Migration):
         ('donations', '0003_donationimage'),
     ]
 
+    def gen_slug(apps, schema_editor):
+        Donations = apps.get_model('donations', 'Donations')
+        for donation in Donations.objects.all():
+            from django.utils.text import slugify
+            if not donation.slug:
+                donation.slug = slugify(donation.title)
+                orig_slug = donation.slug
+                n = 1
+                while Donations.objects.filter(slug=donation.slug).exists():
+                    donation.slug = f"{orig_slug}-{n}"
+                    n += 1
+                donation.save()
+
     operations = [
         migrations.AddField(
             model_name='donations',
             name='slug',
-            field=models.SlugField(blank=True, max_length=255, unique=True),
+            field=models.SlugField(blank=True, max_length=255, null=True),
+        ),
+        migrations.RunPython(gen_slug, reverse_code=migrations.RunPython.noop),
+        migrations.AlterField(
+            model_name='donations',
+            name='slug',
+            field=models.SlugField(blank=True, default='', max_length=255, unique=True),
+            preserve_default=False,
         ),
     ]
