@@ -145,7 +145,7 @@
     "pk": "33333333-3333-3333-3333-333333330001",
     "fields": {
       "category_name": "Education",
-            "color": "#4A90E2",
+      "color": "#4A90E2",
       "created_at": "2024-01-01T00:00:00Z"
     }
   },
@@ -190,6 +190,7 @@
     "pk": "44444444-4444-4444-4444-444444440001",
     "fields": {
       "title": "School Supplies Fund",
+      "slug": "school-supplies-fund",
       "description": "Buy school supplies for children in need.",
       "paybill_number": "123456",
       "account_name": "SchoolFund",
@@ -208,6 +209,7 @@
     "pk": "44444444-4444-4444-4444-444444440002",
     "fields": {
       "title": "Health Camp Support",
+      "slug": "health-camp-support",
       "description": "Support our free health camps in rural areas.",
       "paybill_number": "123457",
       "account_name": "HealthCamp",
@@ -226,6 +228,7 @@
     "pk": "44444444-4444-4444-4444-444444440003",
     "fields": {
       "title": "Flood Relief",
+      "slug": "flood-relief",
       "description": "Emergency funds for flood victims.",
       "paybill_number": "123458",
       "account_name": "FloodRelief",
@@ -244,6 +247,7 @@
     "pk": "44444444-4444-4444-4444-444444440004",
     "fields": {
       "title": "Tree Planting Initiative",
+      "slug": "tree-planting-initiative",
       "description": "Planting 1000 trees this season.",
       "paybill_number": "123459",
       "account_name": "GreenEarth",
@@ -262,6 +266,7 @@
     "pk": "44444444-4444-4444-4444-444444440005",
     "fields": {
       "title": "Animal Shelter Renovation",
+      "slug": "animal-shelter-renovation",
       "description": "Fixing the roof of the local shelter.",
       "paybill_number": "123460",
       "account_name": "PawsAndClaws",
@@ -350,7 +355,6 @@
       "completed_at": null
     }
   },
-  
   {
     "model": "ratings.ratings",
     "pk": "66666666-6666-6666-6666-666666660001",
