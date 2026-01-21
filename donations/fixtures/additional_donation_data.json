@@ -4,6 +4,7 @@
     "pk": "44444444-4444-4444-4444-444444440006",
     "fields": {
       "title": "Winter Warmth Drive",
+      "slug": "winter-warmth-drive",
       "description": "Providing warm clothing and blankets for homeless shelters this winter.",
       "paybill_number": "123461",
       "account_name": "WinterWarmth",
@@ -22,6 +23,7 @@
     "pk": "44444444-4444-4444-4444-444444440007",
     "fields": {
       "title": "New Year Scholarship Fund",
+      "slug": "new-year-scholarship-fund",
       "description": "Scholarships for underprivileged students starting school in January.",
       "paybill_number": "123462",
       "account_name": "NewYearScholars",
@@ -40,6 +42,7 @@
     "pk": "44444444-4444-4444-4444-444444440008",
     "fields": {
       "title": "Holiday Food Bank Support",
+      "slug": "holiday-food-bank-support",
       "description": "Stocking food banks during the holiday season.",
       "paybill_number": "123463",
       "account_name": "HolidayFood",
@@ -58,6 +61,7 @@
     "pk": "44444444-4444-4444-4444-444444440009",
     "fields": {
       "title": "Medical Equipment Upgrade",
+      "slug": "medical-equipment-upgrade",
       "description": "Upgrading medical equipment at community health centers.",
       "paybill_number": "123464",
       "account_name": "MedEquipment",
@@ -76,6 +80,7 @@
     "pk": "44444444-4444-4444-4444-444444440010",
     "fields": {
       "title": "Beach Cleanup Initiative",
+      "slug": "beach-cleanup-initiative",
       "description": "Cleaning up local beaches and coastal areas.",
       "paybill_number": "123465",
       "account_name": "CleanBeaches",
@@ -94,6 +99,7 @@
     "pk": "44444444-4444-4444-4444-444444440011",
     "fields": {
       "title": "Community Library Expansion",
+      "slug": "community-library-expansion",
       "description": "Adding new books and furniture to the community library.",
       "paybill_number": "123466",
       "account_name": "LibraryFund",
@@ -112,6 +118,7 @@
     "pk": "44444444-4444-4444-4444-444444440012",
     "fields": {
       "title": "Veterinary Care Program",
+      "slug": "veterinary-care-program",
       "description": "Providing free veterinary care for pets of low-income families.",
       "paybill_number": "123467",
       "account_name": "PetCareFund",
@@ -130,6 +137,7 @@
     "pk": "44444444-4444-4444-4444-444444440013",
     "fields": {
       "title": "Youth Sports Equipment",
+      "slug": "youth-sports-equipment",
       "description": "New sports equipment for community youth programs.",
       "paybill_number": "123468",
       "account_name": "YouthSports",
@@ -148,6 +156,7 @@
     "pk": "44444444-4444-4444-4444-444444440014",
     "fields": {
       "title": "Mental Health Awareness",
+      "slug": "mental-health-awareness",
       "description": "Workshops and materials for mental health awareness.",
       "paybill_number": "123469",
       "account_name": "MentalHealthAware",
@@ -166,6 +175,7 @@
     "pk": "44444444-4444-4444-4444-444444440015",
     "fields": {
       "title": "Disaster Preparedness Kits",
+      "slug": "disaster-preparedness-kits",
       "description": "Emergency kits for families in disaster-prone areas.",
       "paybill_number": "123470",
       "account_name": "EmergencyKits",
