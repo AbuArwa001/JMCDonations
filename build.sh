@@ -8,7 +8,7 @@ pip install -r requirements.txt
 # Collect static files
 python manage.py collectstatic --no-input
 
-# rm db.sqlite3
+rm db.sqlite3
 # Apply database migrations
 python manage.py migrate
 
