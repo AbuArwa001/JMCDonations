@@ -30,7 +30,10 @@ def upload_donation_images_to_s3(donation_instance, image_files):
             file_obj,
             bucket_name,
             file_path,
-            ExtraArgs={'ContentType': file_obj.content_type}
+            ExtraArgs={
+                'ContentType': file_obj.content_type,
+                'ACL': 'public-read'
+            }
         )
         
         # Construct the URL
