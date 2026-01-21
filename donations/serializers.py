@@ -127,6 +127,7 @@ class DonationSerializer(serializers.ModelSerializer):
             "donor_count",
             "collected_amount",
             "is_saved",
+            "image_urls",
             "uploaded_images",
         )
         extra_kwargs = {
@@ -141,14 +142,15 @@ class DonationSerializer(serializers.ModelSerializer):
         }
         read_only_fields = ('id', 'created_at', 'avg_rating')
     def create(self, validated_data):
-            images = validated_data.pop('uploaded_images', [])
-            donation = Donations.objects.create(**validated_data)
+        print(validated_data)
+        images = validated_data.pop('uploaded_images', [])
+        donation = Donations.objects.create(**validated_data)
             
-            if images:
-                urls = upload_donation_images_to_s3(donation, images)
-                donation.image_urls = urls
-                donation.save()
-            return donation
+        if images:
+            urls = upload_donation_images_to_s3(donation, images)
+            donation.image_urls = urls
+            donation.save()
+        return donation
     def update(self, instance, validated_data):
         print(validated_data)
         images = validated_data.pop('uploaded_images', [])
