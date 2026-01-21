@@ -31,8 +31,7 @@ def upload_donation_images_to_s3(donation_instance, image_files):
             bucket_name,
             file_path,
             ExtraArgs={
-                'ContentType': file_obj.content_type,
-                'ACL': 'public-read'
+                'ContentType': file_obj.content_type
             }
         )
         
@@ -160,7 +159,15 @@ class DonationSerializer(serializers.ModelSerializer):
         instance = super().update(instance, validated_data)
         if images:
             urls = upload_donation_images_to_s3(instance, images)
-            instance.image_urls = urls
+            
+            # Ensure image_urls is a list
+            if instance.image_urls is None:
+                instance.image_urls = []
+            elif not isinstance(instance.image_urls, list):
+                # Handle case where it might be stored incorrectly or as a string
+                instance.image_urls = list(instance.image_urls)
+                
+            instance.image_urls.extend(urls)
             instance.save()
         return instance
 
