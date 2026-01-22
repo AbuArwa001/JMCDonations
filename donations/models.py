@@ -41,6 +41,7 @@ class Donations(models.Model):
     )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    notification_sent = models.BooleanField(default=False)
 
     def average_rating(self):
         ratings = self.ratings.all()

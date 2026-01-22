@@ -33,7 +33,13 @@ class DonationViewSet(viewsets.ModelViewSet):
 
 
     def perform_create(self, serializer):
-        serializer.save(created_by=self.request.user)
+        donation = serializer.save(created_by=self.request.user)
+        # Send push notification to all users via topic
+        try:
+            from .notifications import send_new_donation_notification
+            send_new_donation_notification(donation.title, donation.id)
+        except Exception as e:
+            print(f"Failed to send notification: {e}")
 
     # GET /api/v1/donations/saved/
     @action(detail=False, methods=['get'], url_path='saved')
