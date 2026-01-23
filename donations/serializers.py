@@ -4,6 +4,7 @@ from categories.serializers import CategorySerializer
 from .models import Donations, SavedDonations
 import boto3
 from django.conf import settings
+from django.utils import timezone
 
 
 def upload_donation_images_to_s3(donation_instance, image_files):
@@ -105,12 +106,14 @@ class DonationSerializer(serializers.ModelSerializer):
         child=serializers.ImageField(max_length=1000000, allow_empty_file=False, use_url=False),
         required=False
     )
+    remaining_days = serializers.SerializerMethodField()
     def get_is_saved(self, obj):
         user = self.context.get('request').user if self.context.get('request') else None
         if user and user.is_authenticated:
             return SavedDonations.objects.filter(user=user, donation=obj).exists()
         return False
-
+    def get_remaining_days(self, obj):
+        return (obj.end_date - timezone.now()).days
     class Meta:
         model = Donations
         fields = (
@@ -130,6 +133,7 @@ class DonationSerializer(serializers.ModelSerializer):
             "collected_amount",
             "is_saved",
             "image_urls",
+            "remaining_days",
             "uploaded_images",
         )
         extra_kwargs = {
