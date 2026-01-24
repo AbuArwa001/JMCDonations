@@ -41,6 +41,13 @@ class DonationViewSet(viewsets.ModelViewSet):
         except Exception as e:
             print(f"Failed to send notification: {e}")
 
+    # GET /api/v1/donations/saved_ids/
+    @action(detail=False, methods=['get'], url_path='saved_ids')
+    def saved_ids(self, request):
+        """List IDs of all donations saved by the current user"""
+        saved_ids = SavedDonations.objects.filter(user=request.user).values_list('donation_id', flat=True)
+        return Response(list(saved_ids))
+
     # GET /api/v1/donations/saved/
     @action(detail=False, methods=['get'], url_path='saved')
     def saved(self, request):

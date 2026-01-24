@@ -46,7 +46,6 @@ class BasicDonationSerializer(serializers.ModelSerializer):
     Basic serializer without category details to avoid recursion
     """
     collected_amount = serializers.SerializerMethodField()
-    is_saved = serializers.SerializerMethodField()
     uploaded_images = serializers.ListField(
         child=serializers.ImageField(max_length=1000000, allow_empty_file=False, use_url=False),
         write_only=True,
@@ -66,16 +65,10 @@ class BasicDonationSerializer(serializers.ModelSerializer):
             "account_name",
             "created_at",
             "collected_amount",
-            "is_saved",
             "image_urls",
             "uploaded_images",
         )
         read_only_fields = ('id', 'created_at', 'avg_rating', 'image_urls')
-    def get_is_saved(self, obj):
-        user = self.context.get('request').user if self.context.get('request') else None
-        if user and user.is_authenticated:
-            return SavedDonations.objects.filter(user=user, donation=obj).exists()
-        return False
     def get_collected_amount(self, obj):
         """Calculate total from completed transactions only"""
         total = obj.transactions.filter(
@@ -101,17 +94,11 @@ class DonationSerializer(serializers.ModelSerializer):
     collected_amount = serializers.SerializerMethodField()
     donor_count = serializers.SerializerMethodField()
     avg_rating = serializers.SerializerMethodField()
-    is_saved = serializers.SerializerMethodField()
     uploaded_images = serializers.ListField(
         child=serializers.ImageField(max_length=1000000, allow_empty_file=False, use_url=False),
         required=False
     )
     remaining_days = serializers.SerializerMethodField()
-    def get_is_saved(self, obj):
-        user = self.context.get('request').user if self.context.get('request') else None
-        if user and user.is_authenticated:
-            return SavedDonations.objects.filter(user=user, donation=obj).exists()
-        return False
     def get_remaining_days(self, obj):
         return (obj.end_date - timezone.now()).days
     class Meta:
@@ -131,7 +118,6 @@ class DonationSerializer(serializers.ModelSerializer):
             "category",
             "donor_count",
             "collected_amount",
-            "is_saved",
             "image_urls",
             "remaining_days",
             "uploaded_images",
