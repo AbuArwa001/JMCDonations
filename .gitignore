@@ -34,3 +34,4 @@ config/
 staticfiles/
 media/
 get_token.py
+script.sh
