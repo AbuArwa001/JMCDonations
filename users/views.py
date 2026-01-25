@@ -15,8 +15,24 @@ import firebase_admin
 from JMCDonations import settings
 from JMCDonations.authentication import FirebaseAuthentication
 from users.permissions import IsAdminOrSelf, IsAdminUser
-from .models import Users
-from .serializers import FCMTokenSerializer, UserUUIDSerializer, UserSerializer
+from .models import Users, UserPaymentAccount
+from .serializers import (
+    FCMTokenSerializer,
+    UserUUIDSerializer,
+    UserSerializer,
+    UserPaymentAccountSerializer,
+)
+
+
+class UserPaymentAccountViewSet(viewsets.ModelViewSet):
+    serializer_class = UserPaymentAccountSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return UserPaymentAccount.objects.filter(user=self.request.user)
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
 
 
 # In /home/khalfan/Documents/JMCDonations/JMCDonations/views.py (or wherever your views file is)
@@ -47,7 +63,7 @@ class FirebaseLoginView(APIView):
     Accepts a Firebase ID Token, verifies it, and returns
     Django/Djoser compatible Access and Refresh JWTs.
     """
-    authentication_classes = [] # This endpoint should not require existing auth
+    authentication_classes = []
     permission_classes = []
 
     def post(self, request):

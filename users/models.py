@@ -3,6 +3,12 @@ from django.contrib.auth.models import AbstractUser
 import uuid
 
 
+def profile_image_upload_path(instance, filename):
+    # profiles/[username].jpg
+    ext = filename.split('.')[-1]
+    return f'profiles/{instance.username}.{ext}'
+
+
 class Roles(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     role_name = models.CharField(max_length=50, unique=True)
@@ -31,6 +37,7 @@ class Users(AbstractUser):
     last_analytics_sync = models.DateTimeField(null=True, blank=True)
 
     # Profile fields
+    profile_image = models.ImageField(upload_to=profile_image_upload_path, blank=True, null=True)
     profile_image_url = models.CharField(max_length=500, blank=True, null=True)
     address = models.TextField(blank=True, null=True)
     bio = models.TextField(blank=True, null=True)
@@ -46,8 +53,34 @@ class Users(AbstractUser):
     def public_uuid(self):
         """Public UUID for Firebase Analytics user identification"""
         return str(self.id)
-
     def save(self, *args, **kwargs):
         if not self.role:
             self.role, created = Roles.objects.get_or_create(role_name="User")
         super().save(*args, **kwargs)
+
+
+class UserPaymentAccount(models.Model):
+    ACCOUNT_TYPES = (
+        ('M-Pesa', 'M-Pesa'),
+        ('Card', 'Card'),
+        ('PayPal', 'PayPal'),
+    )
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    user = models.ForeignKey(
+        Users, on_delete=models.CASCADE, related_name="payment_accounts"
+    )
+    account_type = models.CharField(max_length=20, choices=ACCOUNT_TYPES)
+    provider = models.CharField(max_length=50, blank=True, null=True) # Safaricom, Visa, etc.
+    account_number = models.CharField(max_length=100) # Phone, Card Last 4, Email
+    extra_data = models.JSONField(default=dict, blank=True) # Masked card info, Till number etc.
+    is_default = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def save(self, *args, **kwargs):
+        if self.is_default:
+            UserPaymentAccount.objects.filter(user=self.user, is_default=True).update(is_default=False)
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return f"{self.account_type} - {self.account_number} ({self.user.email})"

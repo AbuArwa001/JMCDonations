@@ -1,9 +1,16 @@
 from django.urls import path
-from .views import FCMTokenUpdateView, FirebaseLoginView, UserProfileView, UserViewSet
+from .views import (
+    FCMTokenUpdateView,
+    FirebaseLoginView,
+    UserProfileView,
+    UserViewSet,
+    UserPaymentAccountViewSet,
+)
 from rest_framework.routers import DefaultRouter
 
 router = DefaultRouter()
 router.register(r"users", UserViewSet)
+router.register(r"payment-accounts", UserPaymentAccountViewSet, basename="payment-account")
 
 urlpatterns = [
     path('auth/firebase/login/', FirebaseLoginView.as_view(), name='firebase_login'),

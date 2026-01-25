@@ -3,7 +3,23 @@ from djoser.serializers import (
     UserCreateSerializer as BaseUserCreateSerializer,
     UserSerializer as BaseUserSerializer,
 )
-from .models import Users
+from .models import Users, UserPaymentAccount
+
+
+class UserPaymentAccountSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserPaymentAccount
+        fields = (
+            "id",
+            "account_type",
+            "provider",
+            "account_number",
+            "extra_data",
+            "is_default",
+            "created_at",
+            "updated_at",
+        )
+        read_only_fields = ("id", "created_at", "updated_at")
 
 
 class UserCreateSerializer(BaseUserCreateSerializer):
@@ -21,6 +37,7 @@ class UserCreateSerializer(BaseUserCreateSerializer):
             "is_admin",
             "role",
             "fcm_token",
+            "profile_image",
             "profile_image_url",
             "address",
             "bio",
@@ -28,7 +45,6 @@ class UserCreateSerializer(BaseUserCreateSerializer):
 
     def create(self, validated_data):
         user = super().create(validated_data)
-        # User gets automatic UUID from model default
         return user
 
 
@@ -36,6 +52,7 @@ class UserSerializer(BaseUserSerializer):
     public_uuid = serializers.ReadOnlyField() 
     full_name=serializers.CharField(required=False)
     username=serializers.CharField(required=False)
+    payment_accounts = UserPaymentAccountSerializer(many=True, read_only=True)
 
     class Meta(BaseUserSerializer.Meta):
         model = Users
@@ -49,10 +66,12 @@ class UserSerializer(BaseUserSerializer):
             "is_admin",
             "role",
             "fcm_token",
+            "profile_image",
             "profile_image_url",
             "address",
             "bio",
             "default_donation_account",
+            "payment_accounts",
         )
 
 
