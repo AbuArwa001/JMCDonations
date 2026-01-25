@@ -111,14 +111,3 @@ class SavedDonations(models.Model):
 
     class Meta:
         unique_together = ("user", "donation")
- 
-# class DonationImage(models.Model):
-#     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-#     donation = models.ForeignKey(
-#         Donations, on_delete=models.CASCADE, related_name="images"
-#     )
-#     image = models.ImageField(upload_to=donation_image_upload_path)
-#     created_at = models.DateTimeField(auto_now_add=True)
-
-#     def __str__(self):
-#         return f"Image for {self.donation.title}"
