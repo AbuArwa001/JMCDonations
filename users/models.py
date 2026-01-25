@@ -4,9 +4,9 @@ import uuid
 
 
 def profile_image_upload_path(instance, filename):
-    # profiles/[username].jpg
+    # proofles/[username].jpg
     ext = filename.split('.')[-1]
-    return f'profiles/{instance.username}.{ext}'
+    return f'proofles/{instance.username}.{ext}'
 
 
 class Roles(models.Model):
