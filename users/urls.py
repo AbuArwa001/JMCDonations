@@ -6,6 +6,7 @@ from .views import (
     UserViewSet,
     UserPaymentAccountViewSet,
 )
+from .admin_auth_views import FirebaseAdminLoginView
 from rest_framework.routers import DefaultRouter
 
 router = DefaultRouter()
@@ -19,4 +20,5 @@ urlpatterns = [
     path("profile/", UserProfileView.as_view(), name="user_profile"),
     path("register/", UserProfileView.as_view(), name="user_register"),
     path("update-fcm-token/", FCMTokenUpdateView.as_view(), name="update_fcm_token"),
+    path("admin-firebase-login/", FirebaseAdminLoginView.as_view(), name="admin_firebase_login"),
 ] + router.urls
