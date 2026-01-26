@@ -15,11 +15,24 @@ from rest_framework import permissions
 
 
 class TransactionViewSet(viewsets.ModelViewSet):
-    queryset = Transactions.objects.order_by("-payment_status")
     serializer_class = TransactionSerializer
     authentication_classes = [FirebaseAuthentication]
-    permission_classes = [permissions.AllowAny]  # Allow both authenticated and anonymous
+    permission_classes = [permissions.AllowAny] 
     filterset_class = TransactionFilterSet
+
+    def get_queryset(self):
+        user = self.request.user
+        
+        # If not authenticated, they get nothing in the list
+        if not user or not user.is_authenticated:
+            return Transactions.objects.none()
+            
+        # Admins can see all transactions
+        if getattr(user, 'is_admin', False):
+            return Transactions.objects.all().order_by("-donated_at")
+            
+        # Regular users only see their own transactions
+        return Transactions.objects.filter(user=user).order_by("-donated_at")
 
     @action(detail=False, methods=['post'])
     def initiate_stk_push(self, request):

@@ -44,6 +44,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     "jmcdonations.onrender.com",
+    "54.161.31.236",
     "www.khalfanathman.site",
     "khalfanathman.site",
     "localhost", "127.0.0.1",

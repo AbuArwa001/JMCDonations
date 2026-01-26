@@ -22,6 +22,7 @@ class TransactionSerializer(serializers.ModelSerializer):
             "payment_method",
             "payment_status",
             "transaction_reference",
+            "mpesa_receipt",
         )
         extra_kwargs = {
             "payment_method": {"read_only": True},
