@@ -10,6 +10,8 @@ class TransactionSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
     donation = DonationSerializer(read_only=True)
     amount = serializers.DecimalField(max_digits=10, decimal_places=2, read_only=True)
+    account_name = serializers.CharField(read_only=True)
+    account_number = serializers.CharField(read_only=True)
 
     class Meta:
         model = Transactions
@@ -23,6 +25,8 @@ class TransactionSerializer(serializers.ModelSerializer):
             "payment_status",
             "transaction_reference",
             "mpesa_receipt",
+            "account_name",
+            "account_number",
         )
         extra_kwargs = {
             "payment_method": {"read_only": True},

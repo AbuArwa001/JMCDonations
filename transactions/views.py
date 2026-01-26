@@ -46,7 +46,7 @@ class TransactionViewSet(viewsets.ModelViewSet):
             user=request.user if request.user.is_authenticated else None,
             amount=amount,
             payment_method="M-Pesa",
-            payment_status="Pending"
+            payment_status="Pending",
         )
 
         # 2. Call M-Pesa
@@ -122,7 +122,7 @@ class TransactionViewSet(viewsets.ModelViewSet):
             user=request.user if request.user.is_authenticated else None,
             amount=amount,
             payment_method="Paypal",
-            payment_status="Pending"
+            payment_status="Pending",
         )
 
         # 2. Call PayPal to create order

@@ -20,6 +20,8 @@ class Transactions(models.Model):
     donation = models.ForeignKey(
         "donations.Donations", on_delete=models.CASCADE, related_name="transactions"
     )
+    account_name = models.CharField(max_length=100, blank=True, null=True)
+    account_number = models.CharField(max_length=100, blank=True, null=True)
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.SET_NULL,
@@ -45,6 +47,13 @@ class Transactions(models.Model):
     mpesa_receipt = models.CharField(max_length=50, blank=True, null=True)
     donated_at = models.DateTimeField(auto_now_add=True)
     completed_at = models.DateTimeField(null=True, blank=True)
+
+    def save(self, *args, **kwargs):
+        if not self.account_name:
+            self.account_name = self.donation.account_name
+        if not self.account_number:
+            self.account_number = self.donation.paybill_number
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return f"{self.amount} - {self.donation.title}"
