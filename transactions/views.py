@@ -56,6 +56,31 @@ class TransactionViewSet(viewsets.ModelViewSet):
         transaction.save()
         return Response(response, status=400)
 
+    @action(detail=False, methods=['post'], url_path='complete-test')
+    def complete_test_transaction(self, request):
+        """
+        Manual endpoint to complete a transaction for testing when callbacks can't reach localhost.
+        Usage: POST /api/v1/transactions/complete-test/ with {"reference": "checkout_id"}
+        """
+        reference = request.data.get('reference')
+        if not reference:
+            return Response({'error': 'reference is required'}, status=400)
+        
+        try:
+            transaction = Transactions.objects.get(transaction_reference=reference)
+            transaction.payment_status = "Completed"
+            transaction.mpesa_receipt = f"TEST{reference[:10]}"
+            transaction.completed_at = timezone.now()
+            transaction.save()
+            
+            return Response({
+                'message': 'Transaction marked as completed',
+                'transaction': TransactionSerializer(transaction).data
+            }, status=200)
+        except Transactions.DoesNotExist:
+            return Response({'error': 'Transaction not found'}, status=404)
+
+
     @action(detail=False, methods=['get'])
     def check_status(self, request):
         reference = request.query_params.get('reference')
