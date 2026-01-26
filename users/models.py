@@ -56,6 +56,11 @@ class Users(AbstractUser):
     def save(self, *args, **kwargs):
         if not self.role:
             self.role, created = Roles.objects.get_or_create(role_name="User")
+        
+        # Sync profile_image_url if an image is uploaded
+        if self.profile_image:
+            self.profile_image_url = self.profile_image.url
+            
         super().save(*args, **kwargs)
 
 
