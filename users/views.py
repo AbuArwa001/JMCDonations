@@ -84,25 +84,34 @@ class FirebaseLoginView(APIView):
             if not email:
                  return Response({'error': 'Firebase account missing email address'}, status=status.HTTP_400_BAD_REQUEST)
 
-            # 2. Create or update the local Django user using firebase_uid as the unique identifier
-            user, created = Users.objects.get_or_create(
-                firebase_uid=firebase_uid,
-                defaults={
-                    'email': email,
-                    # Ensure username is set if your model requires it
-                    'username': email.split('@')[0], 
-                    'full_name': full_name,
-                    'is_active': True,
-                    'ss_login': timezone.now(), # Update last sign in time
-                }
-            )
-            
-            # If user already existed, ensure fields are updated
-            if not created:
-                user.email = email
-                user.full_name = full_name
-                user.ss_login = timezone.now()
-                user.save()
+            # 2. Optimized user lookup: check by firebase_uid first, then email
+            try:
+                user = Users.objects.get(firebase_uid=firebase_uid)
+                created = False
+            except Users.DoesNotExist:
+                try:
+                    # Look for existing user by email
+                    user = Users.objects.get(email=email)
+                    user.firebase_uid = firebase_uid
+                    user.save()
+                    created = False
+                    print(f"✅ Linked existing user {email} to firebase_uid")
+                except Users.DoesNotExist:
+                    # New user entirely
+                    user = Users.objects.create(
+                        firebase_uid=firebase_uid,
+                        email=email,
+                        username=email.split('@')[0], 
+                        full_name=full_name,
+                        is_active=True,
+                    )
+                    created = True
+                    print(f"✅ Created new user {email}")
+
+            # Ensure fields are updated upon login
+            user.full_name = full_name or user.full_name
+            user.ss_login = timezone.now()
+            user.save()
 
             # 3. Generate Djoser/SimpleJWT tokens for the user
             refresh = RefreshToken.for_user(user)

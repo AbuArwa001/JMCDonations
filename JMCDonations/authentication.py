@@ -27,14 +27,22 @@ class FirebaseAuthentication(authentication.BaseAuthentication):
             # Check for admin claim in the token
             is_firebase_admin = decoded_token.get('admin', False)
             
-            user, created = User.objects.get_or_create(
-                email=email,
-                defaults={
-                    'username': email.split('@')[0],
-                    'is_active': True,
-                    'is_admin': is_firebase_admin # Set it on creation
-                }
-            )
+            # Improved lookup logic to prevent UNIQUE constraint errors
+            try:
+                user = User.objects.get(email=email)
+                if not getattr(user, 'firebase_uid', None):
+                    user.firebase_uid = uid
+                    user.save()
+                    print(f"✅ Linked existing user {email} to firebase_uid in auth backend")
+            except User.DoesNotExist:
+                user = User.objects.create(
+                    email=email,
+                    firebase_uid=uid,
+                    username=email.split('@')[0], 
+                    is_active=True,
+                    is_admin=is_firebase_admin
+                )
+                print(f"✅ Created new user {email} in auth backend")
 
             # Sync admin status if it changed in Firebase
             if user.is_admin != is_firebase_admin:
