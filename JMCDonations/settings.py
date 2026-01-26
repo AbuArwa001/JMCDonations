@@ -47,15 +47,17 @@ ALLOWED_HOSTS = [
     "www.khalfanathman.site",
     "khalfanathman.site",
     "localhost", "127.0.0.1",
-    "diatomaceous-preventively-amber.ngrok-free.dev"
+    "diatomaceous-preventively-amber.ngrok-free.dev",
+    "http://diatomaceous-preventively-amber.ngrok-free.dev",
     "jmc-admin-dashboard.vercel.app",
     "192.168.3.96"
     ]
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000", 
+    "http://localhost:3000",
+    "http://diatomaceous-preventively-amber.ngrok-free.dev",
     "http://127.0.0.1:3000",
     "https://jmcdonations.onrender.com",
-    "https://khalfanathman.site",
+    "http://khalfanathman.site",
     "https://www.khalfanathman.site",
     "https://jmc-admin-dashboard.vercel.app",
 ]
