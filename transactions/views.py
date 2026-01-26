@@ -17,7 +17,8 @@ from rest_framework import permissions
 class TransactionViewSet(viewsets.ModelViewSet):
     queryset = Transactions.objects.order_by("-payment_status")
     serializer_class = TransactionSerializer
-    authentication_classes = []
+    authentication_classes = [FirebaseAuthentication]
+    permission_classes = [permissions.AllowAny]  # Allow both authenticated and anonymous
     filterset_class = TransactionFilterSet
 
     @action(detail=False, methods=['post'])
