@@ -39,6 +39,7 @@ class TransactionViewSet(viewsets.ModelViewSet):
         phone_number = request.data.get('phone_number')
         amount = request.data.get('amount')
         donation_id = request.data.get('donation')
+        account_name = request.data.get('account_name')
 
         # 1. Create the Transaction record as "Pending"
         transaction = Transactions.objects.create(
@@ -55,8 +56,8 @@ class TransactionViewSet(viewsets.ModelViewSet):
         response = mpesa.stk_push(
             phone_number=phone_number,
             amount=amount,
-            account_reference=str(transaction.id)[:12], 
-            transaction_desc=f"Donation {donation_id}"
+            account_reference=account_name, 
+            transaction_desc=f"Donation to {account_name}"
         )
 
         # 3. Update with Safaricom's CheckoutID for the callback to find
@@ -207,12 +208,12 @@ class BankAccountViewSet(viewsets.ModelViewSet):
                 status=status.HTTP_400_BAD_REQUEST
             )
 
-        cl = MpesaClient()
+        account_name = request.data.get("account_name") or account_reference
         response = cl.stk_push(
-            phone_number,
-            amount,
-            account_reference,
-            transaction_desc
+            phone_number=phone_number,
+            amount=amount,
+            account_reference=account_name,
+            transaction_desc=f"Donation to {account_name}"
         )
 
         # Error from Daraja
