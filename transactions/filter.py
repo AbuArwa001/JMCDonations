@@ -11,6 +11,8 @@ class TransactionFilterSet(FilterSet):
             'amount': ['gte', 'lte'],
             'donation': ['exact'],
             'user': ['exact'],
+            'account_name': ['icontains'],
+            'account_number': ['icontains'],
         }
 
 class BankAccountFilterSet(FilterSet):
