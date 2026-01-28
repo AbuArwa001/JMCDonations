@@ -7,21 +7,27 @@ import logging
 logger = logging.getLogger(__name__)
 User = get_user_model()
 
-class FirebaseAuthentication(authentication.BaseAuthentication):
+class FirebaseDRFAuthentication(authentication.BaseAuthentication):
+    """
+    Authentication backend for Django REST Framework.
+    Returns (User, None) tuple.
+    API: GET /api/v1/... (with Bearer token)
+    """
     def authenticate(self, request):
-        # 1. Initialize token as None to prevent UnboundLocalError
-        token = None
-        auth_header = request.META.get('HTTP_AUTHORIZATION')
+        return self._authenticate_credentials(request)
 
-        # 2. Try to get token from Header
-        if auth_header and auth_header.startswith('Bearer '):
-            token = auth_header.split(' ').pop()
-        
-        # 3. Fallback: Try to get token from Request Body (useful for DRF Web UI)
-        if not token and hasattr(request, 'data'):
-            token = request.data.get('token')
+    def _authenticate_credentials(self, request, token=None):
+        # 1. Initialize logic
+        if not token:
+            auth_header = request.META.get('HTTP_AUTHORIZATION')
+            if auth_header and auth_header.startswith('Bearer '):
+                token = auth_header.split(' ').pop()
+            
+            # Fallback for Web UI
+            if not token and hasattr(request, 'data'):
+                if isinstance(request.data, dict):
+                    token = request.data.get('token')
 
-        # 4. If no token found anywhere, move to the next backend
         if not token:
             return None
         
@@ -40,20 +46,25 @@ class FirebaseAuthentication(authentication.BaseAuthentication):
                 defaults={
                     'username': email.split('@')[0],
                     'firebase_uid': uid,
-                    'is_staff': is_firebase_admin,    # Needed for /admin/
-                    'is_superuser': is_firebase_admin # Needed for /admin/
+                    'is_staff': is_firebase_admin,    
+                    'is_superuser': is_firebase_admin 
                 }
             )
             
-            # Sync UID if it's a legacy user without one
+            # Sync user details
+            should_save = False
             if not user.firebase_uid:
                 user.firebase_uid = uid
-                user.save()
+                should_save = True
 
             if user.is_staff != is_firebase_admin:
                 user.is_staff = is_firebase_admin
                 user.is_superuser = is_firebase_admin
+                should_save = True
+            
+            if should_save:
                 user.save()
+
             return (user, None)
             
         except auth.ExpiredIdTokenError:
@@ -63,6 +74,30 @@ class FirebaseAuthentication(authentication.BaseAuthentication):
         except Exception as e:
             logger.error(f"Firebase auth error: {e}")
             raise exceptions.AuthenticationFailed(str(e))
+
+class FirebaseDjangoAuthentication:
+    """
+    Authentication backend for Django Admin / Login sessions.
+    Returns User object (not tuple).
+    API: /admin/ login
+    """
+    def authenticate(self, request, username=None, password=None, **kwargs):
+        # Attempt to get token from request if present (e.g. customized login)
+        # Or simple pass-through if bridging from view
+        # This wrapper re-uses the logic above but returns just user
+        
+        # Check if we have an explicit token passed directly (from bridge view)
+        token = kwargs.get('token')
+        
+        # Or try to extract from request like DRF does
+        drf_auth = FirebaseDRFAuthentication()
+        try:
+            result = drf_auth._authenticate_credentials(request, token=token)
+            if result:
+                return result[0] # Return just the User
+        except Exception:
+            return None
+        return None
 
     def get_user(self, user_id):
         try:

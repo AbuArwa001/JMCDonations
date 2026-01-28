@@ -201,9 +201,10 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 AUTH_USER_MODEL = "users.Users"
 
 # DRF Configuration
+# DRF Configuration
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
-        "JMCDonations.authentication.FirebaseAuthentication",
+        "authentication.backends.FirebaseDRFAuthentication",
         "rest_framework.authentication.SessionAuthentication", 
         "rest_framework_simplejwt.authentication.JWTAuthentication",
         "oauth2_provider.contrib.rest_framework.OAuth2Authentication",
@@ -262,7 +263,7 @@ AUTHENTICATION_BACKENDS = (
     "social_core.backends.facebook.FacebookAppOAuth2",
     "drf_social_oauth2.backends.DjangoOAuth2",
     # Firebase
-    "authentication.backends.FirebaseAuthentication",
+    "authentication.backends.FirebaseDjangoAuthentication",
     # Django
     "django.contrib.auth.backends.ModelBackend",
 )

@@ -2,7 +2,7 @@ from django.contrib.auth import login
 from django.shortcuts import redirect
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from .backends import FirebaseAuthentication
+from .backends import FirebaseDRFAuthentication
 
 class AdminFirebaseBridge(APIView):
     """
@@ -11,7 +11,7 @@ class AdminFirebaseBridge(APIView):
     """
     def post(self, request):
         # 1. Use your existing logic to verify the user
-        auth_instance = FirebaseAuthentication()
+        auth_instance = FirebaseDRFAuthentication()
         user_tuple = auth_instance.authenticate(request)
         
         if user_tuple:
