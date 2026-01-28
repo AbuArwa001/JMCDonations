@@ -7,52 +7,97 @@ import logging
 
 logger = logging.getLogger(__name__)
 User = get_user_model()
+import logging
+from firebase_admin import auth
+from django.contrib.auth import get_user_model
 
-class FirebaseAuthentication(authentication.BaseAuthentication):
-    def authenticate(self, request):
-        auth_header = request.META.get('HTTP_AUTHORIZATION', '')
+logger = logging.getLogger(__name__)
+User = get_user_model()
+
+class FirebaseAuthentication:
+    # 1. This method makes it work for Django Admin / Web sessions
+    def authenticate(self, request, username=None, password=None, **kwargs):
+        # The Admin panel sends username/password. 
+        # However, Firebase doesn't send these to the server this way.
+        # This method is usually called AFTER a frontend JS login.
         
+        auth_header = request.META.get('HTTP_AUTHORIZATION', '')
         if not auth_header.startswith('Bearer '):
             return None
-        
-        token = auth_header.split(' ').pop()
-        if not token:
-            return None
 
+        token = auth_header.split(' ').pop()
         try:
             decoded_token = auth.verify_id_token(token)
             uid = decoded_token['uid']
             email = decoded_token.get('email')
-            
-            # Check for admin claim in the token
             is_firebase_admin = decoded_token.get('admin', False)
-            
-            # Improved lookup logic to prevent UNIQUE constraint errors
-            try:
-                user = User.objects.get(email=email)
-                if not getattr(user, 'firebase_uid', None):
-                    user.firebase_uid = uid
-                    user.save()
-                    print(f"✅ Linked existing user {email} to firebase_uid in auth backend")
-            except User.DoesNotExist:
-                user = User.objects.create(
-                    email=email,
-                    firebase_uid=uid,
-                    username=email.split('@')[0], 
-                    is_active=True,
-                    is_admin=is_firebase_admin
-                )
-                print(f"✅ Created new user {email} in auth backend")
 
-            # Sync admin status if it changed in Firebase
-            if user.is_admin != is_firebase_admin:
-                user.is_admin = is_firebase_admin
-                user.save()
-            
-            return (user, None)
+            user, created = User.objects.get_or_create(
+                email=email,
+                defaults={
+                    'username': email.split('@')[0],
+                    'firebase_uid': uid,
+                    'is_staff': is_firebase_admin,  # Required for Admin access
+                    'is_superuser': is_firebase_admin # Required for full Admin access
+                }
+            )
+            return user
         except Exception as e:
-            logger.error(f"Firebase authentication failed: {e}")
-            raise exceptions.AuthenticationFailed(f'Authentication failed: {str(e)}')
+            logger.error(f"Firebase auth failed: {e}")
+            return None
+
+    # 2. This method is REQUIRED for Django Admin sessions to stay logged in
+    def get_user(self, user_id):
+        try:
+            return User.objects.get(pk=user_id)
+        except User.DoesNotExist:
+            return None
+
+# class FirebaseAuthentication(authentication.BaseAuthentication):
+#     def authenticate(self, request):
+#         auth_header = request.META.get('HTTP_AUTHORIZATION', '')
+        
+#         if not auth_header.startswith('Bearer '):
+#             return None
+        
+#         token = auth_header.split(' ').pop()
+#         if not token:
+#             return None
+
+#         try:
+#             decoded_token = auth.verify_id_token(token)
+#             uid = decoded_token['uid']
+#             email = decoded_token.get('email')
+            
+#             # Check for admin claim in the token
+#             is_firebase_admin = decoded_token.get('admin', False)
+            
+#             # Improved lookup logic to prevent UNIQUE constraint errors
+#             try:
+#                 user = User.objects.get(email=email)
+#                 if not getattr(user, 'firebase_uid', None):
+#                     user.firebase_uid = uid
+#                     user.save()
+#                     print(f"✅ Linked existing user {email} to firebase_uid in auth backend")
+#             except User.DoesNotExist:
+#                 user = User.objects.create(
+#                     email=email,
+#                     firebase_uid=uid,
+#                     username=email.split('@')[0], 
+#                     is_active=True,
+#                     is_admin=is_firebase_admin
+#                 )
+#                 print(f"✅ Created new user {email} in auth backend")
+
+#             # Sync admin status if it changed in Firebase
+#             if user.is_admin != is_firebase_admin:
+#                 user.is_admin = is_firebase_admin
+#                 user.save()
+            
+#             return (user, None)
+#         except Exception as e:
+#             logger.error(f"Firebase authentication failed: {e}")
+#             raise exceptions.AuthenticationFailed(f'Authentication failed: {str(e)}')
 
 """ # authentication.py
 import os

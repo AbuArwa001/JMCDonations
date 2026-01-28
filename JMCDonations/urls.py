@@ -16,7 +16,7 @@ urlpatterns = [
     path('auth/', include('djoser.urls')),
     path('auth/', include('djoser.urls.jwt')),
     path('auth/', include('drf_social_oauth2.urls', namespace='drf')),
-    
+    path('', include('authentication.urls')),
     # API with versioning and clear prefixes
     path(
         "api/v1/",

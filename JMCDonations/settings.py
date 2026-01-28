@@ -262,7 +262,7 @@ AUTHENTICATION_BACKENDS = (
     "social_core.backends.facebook.FacebookAppOAuth2",
     "drf_social_oauth2.backends.DjangoOAuth2",
     # Firebase
-    "authentication.backends.FirebaseBackend",
+    "authentication.backends.FirebaseAuthentication",
     # Django
     "django.contrib.auth.backends.ModelBackend",
 )
