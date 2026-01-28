@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from transactions.permissions import IsAuthenticated
 from django.shortcuts import redirect
 from django.conf import settings
-from authentication.backends import FirebaseAuthentication
+from authentication.backends import FirebaseDRFAuthentication
 from transactions.filter import BankAccountFilterSet, TransactionFilterSet
 from .models import Transactions, BankAccount
 from .serializers import TransactionSerializer, BankAccountSerializer
@@ -16,7 +16,7 @@ from rest_framework import permissions
 
 class TransactionViewSet(viewsets.ModelViewSet):
     serializer_class = TransactionSerializer
-    authentication_classes = [FirebaseAuthentication]
+    authentication_classes = [FirebaseDRFAuthentication]
     permission_classes = [permissions.AllowAny] 
     filterset_class = TransactionFilterSet
 
@@ -191,7 +191,7 @@ class BankAccountViewSet(viewsets.ModelViewSet):
     queryset = BankAccount.objects.filter(is_active=True)
     serializer_class = BankAccountSerializer
     permission_classes = [IsAuthenticated]
-    authentication_classes = [FirebaseAuthentication]
+    authentication_classes = [FirebaseDRFAuthentication]
     filterset_class = BankAccountFilterSet
 
     @action(detail=False, methods=["post"])

@@ -12,12 +12,12 @@ from datetime import datetime
 from django.utils import timezone
 from datetime import timedelta
 from django.db.models.functions import TruncDate
-from JMCDonations.authentication import FirebaseAuthentication
+from authentication.backends import FirebaseDRFAuthentication
 from donations.permissions import IsAdminUser
 
 class DashboardSummaryView(APIView):
     permission_classes = [IsAdminUser]
-    authentication_classes = [FirebaseAuthentication]
+    authentication_classes = [FirebaseDRFAuthentication]
 
     def get(self, request):
         now = timezone.now()
@@ -85,7 +85,7 @@ class DashboardSummaryView(APIView):
 
 class CategoryBreakdownView(APIView):
     permission_classes = [IsAdminUser]
-    authentication_classes = [FirebaseAuthentication]
+    authentication_classes = [FirebaseDRFAuthentication]
 
     def get(self, request):
         data = Categories.objects.annotate(
@@ -99,7 +99,7 @@ class CategoryBreakdownView(APIView):
 
 class DriveProgressView(APIView):
     permission_classes = [IsAdminUser]
-    authentication_classes = [FirebaseAuthentication]
+    authentication_classes = [FirebaseDRFAuthentication]
 
     def get(self, request, pk):
         donation = Donations.objects.get(pk=pk)
@@ -127,7 +127,7 @@ class DriveProgressView(APIView):
 
 class PendingCashView(APIView):
     permission_classes = [IsAdminUser]
-    authentication_classes = [FirebaseAuthentication]
+    authentication_classes = [FirebaseDRFAuthentication]
 
     def get(self, request):
         transactions = Transactions.objects.filter(
@@ -142,7 +142,7 @@ class PendingCashView(APIView):
 
 class ExportView(APIView):
     permission_classes = [IsAdminUser]
-    authentication_classes = [FirebaseAuthentication]
+    authentication_classes = [FirebaseDRFAuthentication]
 
     def get(self, request):
         drive_id = request.query_params.get("drive_id")
@@ -182,7 +182,7 @@ class ExportView(APIView):
         return response
 class DonationTrendsView(APIView):
     permission_classes = [IsAdminUser]
-    authentication_classes = [FirebaseAuthentication]
+    authentication_classes = [FirebaseDRFAuthentication]
 
     def get(self, request):
         period = request.query_params.get("period", "week")

@@ -174,7 +174,7 @@ class UserViewSet(viewsets.ModelViewSet):
 
     queryset = Users.objects.order_by('-date_joined')
     serializer_class = UserSerializer
-    authentication_classes = [FirebaseAuthentication]
+    authentication_classes = [FirebaseDRFAuthentication]
     permission_classes = [IsAdminOrSelf]
 
     def get_object(self):

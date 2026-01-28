@@ -11,7 +11,7 @@ from transactions.models import Transactions
 from transactions.serializers import TransactionSerializer
 from reportlab.pdfgen import canvas
 import io
-from JMCDonations.authentication import FirebaseAuthentication
+from authentication.backends import FirebaseDRFAuthentication
 from donations import permissions
 from rest_framework.decorators import action
 from .models import Donations, SavedDonations
@@ -20,7 +20,7 @@ from .serializers import DonationSerializer, SavedDonationSerializer
 class DonationViewSet(viewsets.ModelViewSet):
     queryset = Donations.objects.order_by('-created_at')
     serializer_class = DonationSerializer
-    authentication_classes = [FirebaseAuthentication]
+    authentication_classes = [FirebaseDRFAuthentication]
     filterset_class = DonationFilterSet
 
     def get_permissions(self):
