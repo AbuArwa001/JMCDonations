@@ -13,7 +13,7 @@ import os
 import firebase_admin
 # from django.conf import settings
 from JMCDonations import settings
-from JMCDonations.authentication import FirebaseAuthentication
+from authentication.backends import FirebaseDRFAuthentication
 from users.permissions import IsAdminOrSelf, IsAdminUser
 from .models import Users, UserPaymentAccount
 from .serializers import (
