@@ -23,8 +23,10 @@ class DonationViewSet(viewsets.ModelViewSet):
     serializer_class = DonationSerializer
     authentication_classes = [FirebaseDRFAuthentication]
     filterset_class = DonationFilterSet
-    filter_backends = [DjangoFilterBackend, filters.SearchFilter]
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
     search_fields = ['title', 'description', 'organization_name']
+    ordering_fields = ['target_amount', 'avg_rating', 'created_at']
+    ordering = ['-created_at']
 
     def get_permissions(self):
         # Allow save/unsave for authenticated users
