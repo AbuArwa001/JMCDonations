@@ -12,6 +12,7 @@ from .daraja import MpesaClient
 from .paypal_client import PayPalClient
 from django.utils import timezone
 from rest_framework import permissions
+import uuid
 
 
 class TransactionViewSet(viewsets.ModelViewSet):
@@ -186,7 +187,90 @@ class TransactionViewSet(viewsets.ModelViewSet):
         transaction.payment_status = "Failed"
         transaction.save()
         return redirect("jamiagive://payment/failure")
+        return redirect("jamiagive://payment/failure")
 
+    @action(detail=False, methods=['post'])
+    def initiate_card_payment(self, request):
+        """
+        Initiates a Card payment (Flutterwave).
+        Creates a pending transaction and returns the tx_ref to be used by the frontend.
+        """
+        amount = request.data.get('amount')
+        donation_id = request.data.get('donation_id')
+        
+        if not all([amount, donation_id]):
+             return Response({"error": "Missing amount or donation_id"}, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            # Create Pending Transaction
+            transaction = Transactions.objects.create(
+                donation_id=donation_id,
+                user=request.user if request.user.is_authenticated else None,
+                amount=amount,
+                payment_method="Card",
+                payment_status="Pending",
+                # transaction_reference will be auto-generated in save() if not provided, 
+                # OR we can generate it here to ensure we have it for the response.
+                # Models default is uuid, but let's use a specific ref string if needed.
+                # The model uses a UUIDField for ID, but transaction_reference is a CharField.
+                # Let's generate a unique ref.
+                transaction_reference=f"JM-{uuid.uuid4()}",
+                completed_at=None
+            )
+            
+            return Response({
+                "message": "Card payment initiated",
+                "tx_ref": transaction.transaction_reference,
+                "public_key": settings.FLUTTERWAVE_PUBLIC_KEY if hasattr(settings, 'FLUTTERWAVE_PUBLIC_KEY') else "",
+                "amount": transaction.amount,
+                "currency": "KES"
+            }, status=201)
+            
+        except Exception as e:
+            return Response({"error": str(e)}, status=500)
+
+    @action(detail=False, methods=['post'])
+    def verify_flutterwave_payment(self, request):
+        """
+        Endpoint called by the mobile app after a successful Flutterwave payment.
+        Validates the payload and records the transaction.
+        """
+        tx_ref = request.data.get('tx_ref')
+        flw_ref = request.data.get('flw_ref')
+        status_param = request.data.get('status') # 'successful'
+
+        # We primarily need tx_ref to find the transaction
+        if not tx_ref:
+            return Response({"error": "Missing tx_ref"}, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            # Find the existing pending transaction
+            try:
+                transaction = Transactions.objects.get(transaction_reference=tx_ref)
+            except Transactions.DoesNotExist:
+                 return Response({"error": "Transaction not found"}, status=404)
+
+            if transaction.payment_status == "Completed":
+                return Response({"message": "Transaction already processed"}, status=200)
+
+            # Update Transaction
+            if status_param == "successful":
+                transaction.payment_status = "Completed"
+                transaction.mpesa_receipt = flw_ref # Store Gateway Ref
+                transaction.completed_at = timezone.now()
+            else:
+                transaction.payment_status = "Failed"
+            
+            transaction.save()
+            
+            return Response({
+                "message": "Transaction updated successfully",
+                "transaction_id": transaction.id,
+                "status": transaction.payment_status
+            }, status=200)
+
+        except Exception as e:
+            return Response({"error": str(e)}, status=500)
 class BankAccountViewSet(viewsets.ModelViewSet):
     queryset = BankAccount.objects.filter(is_active=True)
     serializer_class = BankAccountSerializer
