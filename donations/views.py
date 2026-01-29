@@ -1,4 +1,5 @@
-from rest_framework import viewsets, generics, views, status
+from rest_framework import viewsets, generics, views, status, filters
+from django_filters.rest_framework import DjangoFilterBackend
 
 from donations.filters import DonationFilterSet
 from .permissions import IsAdminUser, IsAuthenticated, AllowAny
@@ -22,6 +23,8 @@ class DonationViewSet(viewsets.ModelViewSet):
     serializer_class = DonationSerializer
     authentication_classes = [FirebaseDRFAuthentication]
     filterset_class = DonationFilterSet
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter]
+    search_fields = ['title', 'description', 'organization_name']
 
     def get_permissions(self):
         # Allow save/unsave for authenticated users
