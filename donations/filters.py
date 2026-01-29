@@ -1,8 +1,10 @@
 # from rest_framework import
-from django_filters import FilterSet
+from django_filters import FilterSet, NumberFilter
 from donations.models import Donations
 
 class DonationFilterSet(FilterSet):
+    avg_rating__gte = NumberFilter(field_name='avg_rating', lookup_expr='gte')
+
     class Meta:
         model = Donations
         fields = {
@@ -12,5 +14,4 @@ class DonationFilterSet(FilterSet):
             'status': ['icontains'],
             'category': ['exact'],
             'category__category_name': ['icontains', 'exact'],
-            'avg_rating': ['gte'],
         }

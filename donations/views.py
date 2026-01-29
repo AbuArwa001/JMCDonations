@@ -14,12 +14,13 @@ from reportlab.pdfgen import canvas
 import io
 from authentication.backends import FirebaseDRFAuthentication
 from donations import permissions
+from django.db.models import Avg
 from rest_framework.decorators import action
-from .models import Donations, SavedDonations
-from .serializers import DonationSerializer, SavedDonationSerializer
 
 class DonationViewSet(viewsets.ModelViewSet):
-    queryset = Donations.objects.order_by('-created_at')
+    queryset = Donations.objects.annotate(
+        avg_rating=Avg('ratings__rating')
+    ).order_by('-created_at')
     serializer_class = DonationSerializer
     authentication_classes = [FirebaseDRFAuthentication]
     filterset_class = DonationFilterSet
