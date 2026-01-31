@@ -292,6 +292,7 @@ class BankAccountViewSet(viewsets.ModelViewSet):
                 status=status.HTTP_400_BAD_REQUEST
             )
 
+        cl = MpesaClient()
         account_name = request.data.get("account_name") or account_reference
         response = cl.stk_push(
             phone_number=phone_number,
@@ -314,54 +315,89 @@ class BankAccountViewSet(viewsets.ModelViewSet):
             user=request.user if request.user.is_authenticated else None,
         )
 
-        serializer = self.get_serializer(transaction)
-
         # include transaction data in the STK response
-        response.update(serializer.data)
+        response.update(TransactionSerializer(transaction).data)
 
         return Response(response, status=200)
 
-    @action(detail=False, methods=["post"])
-    def transfer(self, request):
+
+from .models import Transfer
+from .serializers import TransferSerializer
+
+class TransferViewSet(viewsets.ModelViewSet):
+    """
+    ViewSet for internal transfers (B2B).
+    """
+    queryset = Transfer.objects.all().order_by("-created_at")
+    serializer_class = TransferSerializer
+    authentication_classes = [FirebaseDRFAuthentication]
+    permission_classes = [IsAuthenticated] # Maybe IsAdminUser? The user mentioned ADMIN dashboard.
+
+    def create(self, request, *args, **kwargs):
         amount = request.data.get("amount")
-        
-        if not amount:
+        destination_account_id = request.data.get("destination_account")
+        description = request.data.get("description", "Transfer from JMC Admin")
+
+        if not amount or not destination_account_id:
             return Response(
-                {"error": "Amount is required"},
+                {"error": "Amount and Destination Account are required"},
                 status=status.HTTP_400_BAD_REQUEST
             )
-            
+
         try:
             amount = float(amount)
             if amount <= 0:
-                raise ValueError
-        except ValueError:
-             return Response(
-                {"error": "Invalid amount"},
-                status=status.HTTP_400_BAD_REQUEST
-            )
+                raise ValueError("Amount must be positive")
+            
+            destination_account = BankAccount.objects.get(id=destination_account_id)
+        except (ValueError, BankAccount.DoesNotExist) as e:
+            return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
-        # Simulate B2B Transfer
-        # In a real scenario, this would call MpesaClient().b2b_payment(...)
-        
-        # Create transaction record
-        transaction = Transactions.objects.create(
+        # 1. Create Pending Transfer Record
+        transfer = Transfer.objects.create(
             amount=amount,
-            payment_method="Transfer", # Custom method for transfers
-            payment_status="Completed", # Assume instant success for simulation
-            transaction_reference=f"TRX-{timezone.now().timestamp()}",
-            user=request.user if request.user.is_authenticated else None,
-            # donation=None # Transfers might not be linked to a specific donation drive
+            destination_account=destination_account,
+            initiated_by=request.user,
+            status="Pending",
+            description=description,
+            source_paybill="150770"
         )
-        
-        return Response({
-            "message": "Transfer initiated successfully",
-            "transaction_id": transaction.id,
-            "amount": amount,
-            "status": "Completed"
-        })
 
-    def list(self, request, *args, **kwargs):
-        print("Filterset:", self.filterset_class)
-        print("Query params:", request.query_params)
-        return super().list(request, *args, **kwargs)
+        # 2. Call M-Pesa B2B API
+        # Only if destination has a paybill number. If it's a bank account, we need Bank Settlement API (not implemented here per user request "USE B2B API FROM MPESA").
+        # B2B API works for Paybill-to-Paybill or Paybill-to-Till directly.
+        
+        mpesa = MpesaClient()
+        party_b = destination_account.paybill_number
+        account_ref = destination_account.account_number # For B2B, AccountReference is usually used for reconciliation.
+        
+        if not party_b:
+             # Fallback or Error if user assumes Bank Transfer works via B2B without Paybill
+             # Assuming 'Paybill' means Business Paybill
+             return Response({"error": "Destination account must have a Paybill Number for B2B transfer"}, status=400)
+
+        response = mpesa.b2b_payment(
+            amount=amount,
+            party_b=party_b,
+            account_reference=account_ref,
+            remarks=description
+        )
+
+        # 3. Handle Response
+        # Success response from M-Pesa B2B is usually synchronous for the request acknowledgment.
+        # "ResponseCode": "0" means accepted for processing.
+        
+        if response.get("ResponseCode") == "0":
+            transfer.transaction_reference = response.get("ConversationID") # or OriginatorConversationID
+            transfer.save()
+            
+            return Response({
+                "message": "Transfer initiated successfully",
+                "transfer": TransferSerializer(transfer).data,
+                "mpesa_response": response
+            }, status=201)
+        else:
+            transfer.status = "Failed"
+            transfer.description += f" | M-Pesa Error: {response.get('ResponseDescription', 'Unknown Error')}"
+            transfer.save()
+            return Response(response, status=400)

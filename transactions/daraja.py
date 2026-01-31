@@ -55,3 +55,51 @@ class MpesaClient:
         url = f"{self.api_url}/mpesa/stkpush/v1/processrequest"
         response = requests.post(url, headers=headers, json=payload)
         return response.json()
+
+    def b2b_payment(
+        self,
+        amount,
+        party_b,
+        account_reference,
+        remarks="Business Transfer",
+        command_id="BusinessPayBill",
+    ):
+        """
+        Initiates a B2B payment (Paybill to Paybill/Till).
+        default command_id is 'BusinessPayBill'.
+        """
+        access_token = self.get_access_token()
+        if not access_token:
+            return {"error": "Failed to authenticate with Daraja API"}
+
+        # Security Credential generation is complex and requires a certificate.
+        # For this implementation, we will assume the environment provides a pre-generated SecurityCredential
+        # or we skip it if testing in Sandbox (Sandbox often uses a static one, or initiator password).
+        # However, strictly speaking, B2B requires `SecurityCredential`.
+        # We will use settings.MPESA_SECURITY_CREDENTIAL.
+
+        security_credential = getattr(settings, "MPESA_SECURITY_CREDENTIAL", "DUMMY_CREDENTIAL")
+
+        payload = {
+            "Initiator": getattr(settings, "MPESA_INITIATOR_NAME", "testapi"),
+            "SecurityCredential": security_credential,
+            "CommandID": command_id,
+            "SenderIdentifierType": "4",  # 4 for Shortcode
+            "RecieverIdentifierType": "4", # 4 for Shortcode
+            "Amount": amount,
+            "PartyA": self.shortcode,  # Source Paybill (150770)
+            "PartyB": party_b,  # Destination Paybill
+            "Remarks": remarks,
+            "QueueTimeOutURL": settings.MPESA_CALLBACK_URL,
+            "ResultURL": settings.MPESA_CALLBACK_URL,
+            "AccountReference": account_reference,
+        }
+
+        headers = {
+            "Authorization": f"Bearer {access_token}",
+            "Content-Type": "application/json",
+        }
+
+        url = f"{self.api_url}/mpesa/b2b/v1/paymentrequest"
+        response = requests.post(url, headers=headers, json=payload)
+        return response.json()

@@ -2,7 +2,7 @@ from rest_framework import serializers
 
 from donations.serializers import DonationSerializer
 from users.serializers import UserSerializer
-from .models import Transactions, BankAccount
+from .models import Transactions, BankAccount, Transfer
 
 
 class TransactionSerializer(serializers.ModelSerializer):
@@ -40,23 +40,13 @@ class TransactionSerializer(serializers.ModelSerializer):
 class BankAccountSerializer(serializers.ModelSerializer):
     """
     Serializer for BankAccount model.
-    returns bank account details.
-    example:
-    {
-        "id": "uuid",
-        "bank_name": "Bank of Example",
-        "account_number": "1234567890",
-        "account_name": "John Doe",
-        "is_active": true,
-        "created_at": "2024-01-01T00:00:00Z",
-        "updated_at": "2024-01-01T00:00:00Z"
-    }
     """
     class Meta:
         model = BankAccount
         fields = (
             "id",
             "bank_name",
+            "paybill_number",
             "account_number",
             "account_name",
             "is_active",
@@ -64,3 +54,37 @@ class BankAccountSerializer(serializers.ModelSerializer):
             "updated_at",
         )
         read_only_fields = ("id", "created_at", "updated_at")
+
+
+class TransferSerializer(serializers.ModelSerializer):
+    """
+    Serializer for Transfer model.
+    """
+    destination_account_details = BankAccountSerializer(source='destination_account', read_only=True)
+    initiated_by_name = serializers.CharField(source='initiated_by.get_full_name', read_only=True)
+
+    class Meta:
+        model = Transfer
+        fields = (
+            "id",
+            "source_paybill",
+            "destination_account",
+            "destination_account_details",
+            "amount",
+            "initiated_by",
+            "initiated_by_name",
+            "status",
+            "transaction_reference",
+            "description",
+            "created_at",
+            "completed_at",
+        )
+        read_only_fields = (
+            "id", 
+            "initiated_by", 
+            "status", 
+            "transaction_reference", 
+            "created_at", 
+            "completed_at",
+            "source_paybill"
+        )

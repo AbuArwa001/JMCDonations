@@ -62,7 +62,8 @@ class Transactions(models.Model):
 class BankAccount(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     bank_name = models.CharField(max_length=100)
-    account_number = models.CharField(max_length=50)
+    paybill_number = models.CharField(max_length=50, blank=True, null=True, help_text="Paybill Business Number")
+    account_number = models.CharField(max_length=50, help_text="Account Number/Reference")
     account_name = models.CharField(max_length=100)
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -70,3 +71,32 @@ class BankAccount(models.Model):
 
     def __str__(self):
         return f"{self.bank_name} - {self.account_number}"
+
+
+class Transfer(models.Model):
+    STATUS_CHOICES = (
+        ("Pending", "Pending"),
+        ("Completed", "Completed"),
+        ("Failed", "Failed"),
+    )
+    
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    source_paybill = models.CharField(max_length=50, default="150770")
+    destination_account = models.ForeignKey(
+        BankAccount, on_delete=models.SET_NULL, null=True, related_name="transfers_received"
+    )
+    amount = models.DecimalField(max_digits=12, decimal_places=2)
+    initiated_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        null=True,
+        related_name="initiated_transfers",
+    )
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default="Pending")
+    transaction_reference = models.CharField(max_length=100, blank=True, null=True)
+    description = models.TextField(blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    completed_at = models.DateTimeField(null=True, blank=True)
+
+    def __str__(self):
+        return f"Transfer of {self.amount} to {self.destination_account}"
