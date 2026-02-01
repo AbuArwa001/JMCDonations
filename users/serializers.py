@@ -53,6 +53,8 @@ class UserSerializer(BaseUserSerializer):
     full_name=serializers.CharField(required=False)
     username=serializers.CharField(required=False)
     payment_accounts = UserPaymentAccountSerializer(many=True, read_only=True)
+    total_donations = serializers.ReadOnlyField()
+    total_impact = serializers.ReadOnlyField()
 
     class Meta(BaseUserSerializer.Meta):
         model = Users
@@ -72,6 +74,8 @@ class UserSerializer(BaseUserSerializer):
             "bio",
             "default_donation_account",
             "payment_accounts",
+            "total_donations",
+            "total_impact",
         )
 
 

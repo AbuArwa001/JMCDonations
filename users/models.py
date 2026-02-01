@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import Sum
 from django.contrib.auth.models import AbstractUser
 import uuid
 
@@ -53,6 +54,18 @@ class Users(AbstractUser):
     def public_uuid(self):
         """Public UUID for Firebase Analytics user identification"""
         return str(self.id)
+
+    @property
+    def total_donations(self):
+        return self.transactions.filter(payment_status="Completed").count()
+
+    @property
+    def total_impact(self):
+        result = self.transactions.filter(payment_status="Completed").aggregate(
+            total=Sum("amount")
+        )
+        return result["total"] or 0.0
+
     def save(self, *args, **kwargs):
         if not self.role:
             self.role, created = Roles.objects.get_or_create(role_name="User")
