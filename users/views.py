@@ -98,15 +98,23 @@ class FirebaseLoginView(APIView):
                     print(f"✅ Linked existing user {email} to firebase_uid")
                 except Users.DoesNotExist:
                     # New user entirely
+                    base_username = email.split('@')[0]
+                    username = base_username
+                    import random
+                    
+                    # Ensure username uniqueness
+                    while Users.objects.filter(username=username).exists():
+                         username = f"{base_username}{random.randint(1000, 9999)}"
+
                     user = Users.objects.create(
                         firebase_uid=firebase_uid,
                         email=email,
-                        username=email.split('@')[0], 
+                        username=username, 
                         full_name=full_name,
                         is_active=True,
                     )
                     created = True
-                    print(f"✅ Created new user {email}")
+                    print(f"✅ Created new user {email} with username {username}")
 
             # Ensure fields are updated upon login
             user.full_name = full_name or user.full_name
