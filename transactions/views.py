@@ -244,11 +244,20 @@ class TransactionViewSet(viewsets.ModelViewSet):
             return Response({"error": "Missing tx_ref"}, status=status.HTTP_400_BAD_REQUEST)
 
         try:
-            # Find the existing pending transaction
+            # Find the existing pending transaction OR create it if missing (Direct Charge case)
             try:
                 transaction = Transactions.objects.get(transaction_reference=tx_ref)
             except Transactions.DoesNotExist:
-                 return Response({"error": "Transaction not found"}, status=404)
+                # If verify is called but we don't have a record, create it now.
+                # This handles the Direct Charge flow where frontend initiates without backend knowledge initially.
+                transaction = Transactions.objects.create(
+                    transaction_reference=tx_ref,
+                    donation_id=request.data.get('donation_id'), # Ensure donation_id is sent!
+                    amount=request.data.get('amount'),
+                    payment_method="Card",
+                    payment_status="Pending", # Will be updated below
+                    user=request.user if request.user.is_authenticated else None
+                )
 
             if transaction.payment_status == "Completed":
                 return Response({"message": "Transaction already processed"}, status=200)
