@@ -80,6 +80,7 @@ class FirebaseLoginView(APIView):
             firebase_uid = decoded_token['uid']
             email = decoded_token.get('email')
             full_name = decoded_token.get('name', '')
+            picture = decoded_token.get('picture')
 
             if not email:
                  return Response({'error': 'Firebase account missing email address'}, status=status.HTTP_400_BAD_REQUEST)
@@ -111,6 +112,7 @@ class FirebaseLoginView(APIView):
                         email=email,
                         username=username, 
                         full_name=full_name,
+                        profile_image_url=picture,
                         is_active=True,
                     )
                     created = True
@@ -118,6 +120,8 @@ class FirebaseLoginView(APIView):
 
             # Ensure fields are updated upon login
             user.full_name = full_name or user.full_name
+            if picture and not user.profile_image:
+                 user.profile_image_url = picture
             user.ss_login = timezone.now()
             user.save()
 
