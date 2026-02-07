@@ -43,15 +43,14 @@ DEBUG = True
 # To enable DATABASE_URL parsing, install 'python-dj-database-url' and restore this block.
 
 ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS").split(" ")
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
-    "http://diatomaceous-preventively-amber.ngrok-free.dev",
-    "http://127.0.0.1:3000",
-    "https://jmcdonations.onrender.com",
-    "http://khalfanathman.site",
-    "https://www.khalfanathman.site",
-    "https://jmc-admin-dashboard.vercel.app",
-]
+
+AUTH_USER_MODEL = 'users.User'
+# Get the string from .env, default to empty string if not found
+cors_origins = os.getenv("CORS_ALLOWED_ORIGINS", "")
+
+# Convert the string into a list, removing extra whitespace if any
+CORS_ALLOWED_ORIGINS = [origin.strip() for origin in cors_origins.split(",") if origin]
+
 
 # Application definition
 
