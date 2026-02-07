@@ -42,7 +42,7 @@ DEBUG = True
 # the project uses the later sqlite DATABASES default defined further below.
 # To enable DATABASE_URL parsing, install 'python-dj-database-url' and restore this block.
 
-ALLOWED_HOSTS = getenv("ALLOWED_HOSTS").split(",")
+ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS").split(",")
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "http://diatomaceous-preventively-amber.ngrok-free.dev",
