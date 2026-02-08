@@ -12,6 +12,7 @@ class DonationFilterSet(FilterSet):
             'start_date': ['exact', 'year__gt', 'year__lt'],
             'end_date': ['exact', 'year__gt', 'year__lt'],
             'status': ['icontains'],
+            'is_featured': ['exact'],
             'category': ['exact'],
             'category__category_name': ['icontains', 'exact'],
         }

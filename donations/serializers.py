@@ -56,6 +56,7 @@ class BasicDonationSerializer(serializers.ModelSerializer):
         fields = (
             "id",
             "title",
+            "is_featured",
             "description",
             "target_amount",
             "start_date",
@@ -106,6 +107,7 @@ class DonationSerializer(serializers.ModelSerializer):
         fields = (
             "id",
             "title",
+            "is_featured",
             "description",
             "created_at",
             "account_name",
