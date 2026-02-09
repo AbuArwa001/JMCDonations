@@ -53,8 +53,19 @@ class Donations(models.Model):
         return self.transactions.values('user').distinct().count()
     def __str__(self):
         return self.title
+    @property
+    def remaining_days(self):
+        """Calculate days remaining until end_date"""
+        if not self.end_date:
+            return 0
+        delta = self.end_date - timezone.now()
+        # Using .days returns the number of full days. 
+        # If it's 10:30 AM and end_date is 10:00 AM same day, it's -1 or 0? 
+        # Actually delta.days is usually what we want.
+        return delta.days
+
     def is_expired(self):
-        return self.end_date and self.end_date < timezone.now()
+        return self.remaining_days < 0
 
     @property
     def collected_amount(self):
@@ -64,27 +75,42 @@ class Donations(models.Model):
         ).aggregate(total=models.Sum('amount'))['total']
         return total if total else 0
 
+    def auto_update_status(self, save=True):
+        """
+        Main logic to close or complete a donation based on:
+        1. Funding (collected >= target) -> Completed
+        2. Time (days remaining < 0) -> Closed
+        """
+        if self.status != 'Active':
+            return False
+
+        updated = False
+        
+        # Check funding first (priority)
+        if self.collected_amount >= self.target_amount:
+            self.status = 'Completed'
+            updated = True
+        # Then check expiration
+        elif self.is_expired():
+            self.status = 'Closed'
+            updated = True
+
+        if updated and save:
+            self.save(update_fields=['status'])
+        
+        return updated
+
     def check_and_close_if_funded(self, save=True):
-        """Close the donation if it has reached or exceeded its target amount"""
-        if self.status == 'Active' and self.collected_amount >= self.target_amount:
-            self.status = 'Completed' # Using 'Completed' as it fits better for fully funded
-            if save:
-                self.save(update_fields=['status'])
-            return True
-        return False
+        """Legacy method for backward compatibility/signals"""
+        return self.auto_update_status(save=save)
 
     def should_be_closed(self):
-        """Check if donation should be closed (expired and still active)"""
-        return self.is_expired() and self.status == 'Active'
+        """Check if donation should be closed (expired or funded) and still active"""
+        return self.status == 'Active' and (self.is_expired() or self.collected_amount >= self.target_amount)
     
     def close_if_expired(self, save=True):
-        """Close the donation if it's expired and active"""
-        if self.should_be_closed():
-            self.status = 'Closed'
-            if save:
-                self.save(update_fields=['status'])
-            return True
-        return False
+        """Close the donation if it's expired or funded and active"""
+        return self.auto_update_status(save=save)
     
     @classmethod
     def close_all_expired(cls):
@@ -110,9 +136,14 @@ class Donations(models.Model):
                 self.slug = f'{original_slug}-{counter}'
                 counter += 1
 
-        # Auto-close if end date has passed
-        if self.is_expired():
-            self.status = 'Closed'
+        # Auto-update status based on time and funding
+        if self.status == 'Active':
+            # We don't call auto_update_status here to avoid potential recursion 
+            # if it calls save(), but we apply the same logic.
+            if self.collected_amount >= self.target_amount:
+                self.status = 'Completed'
+            elif self.is_expired():
+                self.status = 'Closed'
         
         super().save(*args, **kwargs)
 

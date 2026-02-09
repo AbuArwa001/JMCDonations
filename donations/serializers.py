@@ -99,9 +99,7 @@ class DonationSerializer(serializers.ModelSerializer):
         child=serializers.ImageField(max_length=1000000, allow_empty_file=False, use_url=False),
         required=False
     )
-    remaining_days = serializers.SerializerMethodField()
-    def get_remaining_days(self, obj):
-        return (obj.end_date - timezone.now()).days
+    remaining_days = serializers.ReadOnlyField()
     class Meta:
         model = Donations
         fields = (

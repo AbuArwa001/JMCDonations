@@ -72,30 +72,21 @@ def close_expired_donations():
         now = timezone.now()
         logger.info(f"System time: {now}")
         
-        # 1. Close donations that have passed their end date
-        expired_donations = Donations.objects.filter(
-            end_date__lt=now,
-            status='Active'
-        )
-        expired_count = expired_donations.update(status='Closed')
-        logger.info(f"✅ Closed {expired_count} expired donation(s)")
-        
-        # 2. Close donations that have reached their target amount
-        funded_count = 0
+        # Close donations that are either expired or fully funded
+        closed_count = 0
         active_donations = Donations.objects.filter(status='Active')
-        for donation in active_donations:
-            if donation.check_and_close_if_funded():
-                funded_count += 1
-                logger.info(f"✅ Closed fully funded donation: {donation.title} (ID: {donation.id})")
         
-        logger.info(f"✅ SUCCESS: Closed {expired_count + funded_count} total donation(s)")
+        for donation in active_donations:
+            if donation.auto_update_status():
+                closed_count += 1
+                logger.info(f"✅ Closed donation: {donation.title} (ID: {donation.id}) - Status: {donation.status}")
+        
+        logger.info(f"✅ SUCCESS: Closed {closed_count} total donation(s)")
         
         # Return summary
         return {
             "status": "success",
-            "expired": expired_count,
-            "funded": funded_count,
-            "total_closed": expired_count + funded_count,
+            "total_closed": closed_count,
             "timestamp": now.isoformat()
         }
         

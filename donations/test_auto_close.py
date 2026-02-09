@@ -24,8 +24,8 @@ class DonationAutoCloseTest(TestCase):
             created_by=self.user
         )
 
-    def test_signal_closes_donation(self):
-        """Test that a completed transaction reaching the target closes the donation"""
+    def test_signal_closes_donation_when_funded(self):
+        """Test that a completed transaction reaching the target completes the donation"""
         self.assertEqual(self.donation.status, "Active")
         
         # Create a completed transaction for the full amount
@@ -40,27 +40,60 @@ class DonationAutoCloseTest(TestCase):
         self.donation.refresh_from_db()
         self.assertEqual(self.donation.status, "Completed")
 
-    def test_script_closes_funded_donation(self):
-        """Test that run_donation_closure.py closes fully funded donations"""
-        # Create a completed transaction (without signal if possible, or just check script)
-        # We'll create it and if signal already closed it, we'll reopen it to test script
+    def test_auto_close_when_expired(self):
+        """Test that donation closes when remaining days < 0"""
+        # Set end_date to yesterday
+        self.donation.end_date = timezone.now() - timezone.timedelta(days=1)
+        self.donation.save()
+        
+        # Check logic
+        self.assertTrue(self.donation.is_expired())
+        self.assertTrue(self.donation.remaining_days < 0)
+        
+        # Re-save to trigger status update or call method
+        self.donation.status = "Active"
+        self.donation.auto_update_status()
+        
+        self.assertEqual(self.donation.status, "Closed")
+
+    def test_script_closes_funded_and_expired_donations(self):
+        """Test that run_donation_closure.py handles both cases"""
+        # 1. Funded case
+        donation_funded = Donations.objects.create(
+            title="Funded Donation",
+            target_amount=decimal.Decimal("100.00"),
+            end_date=timezone.now() + timezone.timedelta(days=10),
+            category=self.category,
+            created_by=self.user,
+            status="Active"
+        )
         Transactions.objects.create(
-            donation=self.donation,
-            amount=decimal.Decimal("1000.00"),
+            donation=donation_funded,
+            amount=decimal.Decimal("100.00"),
             payment_status="Completed",
             payment_method="M-Pesa"
         )
-        
-        # Manually set back to Active and disable signals for a moment if needed
-        # but let's just test if the script handles it.
-        self.donation.status = "Active"
-        self.donation.save()
-        
-        self.assertEqual(self.donation.status, "Active")
-        
+        # Manually reset to Active to test script
+        donation_funded.status = "Active"
+        donation_funded.save()
+
+        # 2. Expired case
+        donation_expired = Donations.objects.create(
+            title="Expired Donation",
+            target_amount=decimal.Decimal("1000.00"),
+            end_date=timezone.now() - timezone.timedelta(days=2),
+            category=self.category,
+            created_by=self.user,
+            status="Active"
+        )
+
         # Run the script logic
         result = close_expired_donations()
         
-        self.assertEqual(result["funded"], 1)
-        self.donation.refresh_from_db()
-        self.assertEqual(self.donation.status, "Completed")
+        self.assertEqual(result["total_closed"], 2)
+        
+        donation_funded.refresh_from_db()
+        donation_expired.refresh_from_db()
+        
+        self.assertEqual(donation_funded.status, "Completed")
+        self.assertEqual(donation_expired.status, "Closed")
