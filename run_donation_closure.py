@@ -11,9 +11,9 @@ import logging
 from datetime import datetime
 
 # ==================== CONFIGURATION ====================
-PROJECT_PATH = '/home/khalfan/Desktop/JMCDonations'
-VENV_PYTHON = '/home/khalfan/Desktop/JMCDonations/venv/bin/python'
-LOG_FILE = '/home/khalfan/donation_closure.log'
+PROJECT_PATH = '/home/ubuntu/JMCDonations'
+VENV_PYTHON = '/home/ubuntu/JMCDonations/venv/bin/python'
+LOG_FILE = '/home/ubuntu/donation_closure.log'
 # =======================================================
 
 # Add project to path
