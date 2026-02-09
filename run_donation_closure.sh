@@ -1,13 +1,13 @@
 #!/bin/bash
 # Wrapper script to run donation closure with virtual environment
 
-cd /home/khalfan/Desktop/JMCDonations
+cd /home/ubuntu/JMCDonations
 
 # Activate virtual environment
-if [ -f "venv/bin/activate" ]; then
-    source venv/bin/activate
+if [ -f ".venv/bin/activate" ]; then
+    source .venv/bin/activate
 else
-    echo "ERROR: Virtual environment not found at venv/bin/activate"
+    echo "ERROR: Virtual environment not found at .venv/bin/activate"
     exit 1
 fi
 
