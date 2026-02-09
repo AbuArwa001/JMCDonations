@@ -5,6 +5,9 @@ from .models import Transactions
 
 @receiver(post_save, sender=Transactions)
 def post_save_transaction(sender, instance, created, **kwargs):
-    if created:
-        # Logic to execute after a transaction is saved
-        pass
+    """
+    Auto-close donation if it reaches target amount when a transaction is completed.
+    """
+    if instance.payment_status == "Completed":
+        donation = instance.donation
+        donation.check_and_close_if_funded()

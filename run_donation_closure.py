@@ -72,36 +72,30 @@ def close_expired_donations():
         now = timezone.now()
         logger.info(f"System time: {now}")
         
-        # Find active donations that have expired
+        # 1. Close donations that have passed their end date
         expired_donations = Donations.objects.filter(
-            end_date__lt=now,  # End date is in the past
-            status='Active'    # Only active ones
-        ).order_by('end_date')
+            end_date__lt=now,
+            status='Active'
+        )
+        expired_count = expired_donations.update(status='Closed')
+        logger.info(f"✅ Closed {expired_count} expired donation(s)")
         
-        total_count = expired_donations.count()
+        # 2. Close donations that have reached their target amount
+        funded_count = 0
+        active_donations = Donations.objects.filter(status='Active')
+        for donation in active_donations:
+            if donation.check_and_close_if_funded():
+                funded_count += 1
+                logger.info(f"✅ Closed fully funded donation: {donation.title} (ID: {donation.id})")
         
-        if total_count == 0:
-            logger.info("✅ No expired donations found.")
-            logger.info("=" * 60)
-            return {"status": "success", "closed": 0}
-        
-        logger.info(f"📊 Found {total_count} expired donation(s):")
-        
-        # List all expired donations
-        for donation in expired_donations:
-            days_expired = (now - donation.end_date).days
-            logger.info(f"   • {donation.title} (ID: {donation.id})")
-            logger.info(f"     Ended: {donation.end_date}, Expired {days_expired} days ago")
-        
-        # Close all expired donations
-        updated_count = expired_donations.update(status='Closed')
-        
-        logger.info(f"✅ SUCCESS: Closed {updated_count} donation(s)")
+        logger.info(f"✅ SUCCESS: Closed {expired_count + funded_count} total donation(s)")
         
         # Return summary
         return {
             "status": "success",
-            "closed": updated_count,
+            "expired": expired_count,
+            "funded": funded_count,
+            "total_closed": expired_count + funded_count,
             "timestamp": now.isoformat()
         }
         

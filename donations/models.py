@@ -56,6 +56,23 @@ class Donations(models.Model):
     def is_expired(self):
         return self.end_date and self.end_date < timezone.now()
 
+    @property
+    def collected_amount(self):
+        """Calculate total from completed transactions only"""
+        total = self.transactions.filter(
+            payment_status="Completed"
+        ).aggregate(total=models.Sum('amount'))['total']
+        return total if total else 0
+
+    def check_and_close_if_funded(self, save=True):
+        """Close the donation if it has reached or exceeded its target amount"""
+        if self.status == 'Active' and self.collected_amount >= self.target_amount:
+            self.status = 'Completed' # Using 'Completed' as it fits better for fully funded
+            if save:
+                self.save(update_fields=['status'])
+            return True
+        return False
+
     def should_be_closed(self):
         """Check if donation should be closed (expired and still active)"""
         return self.is_expired() and self.status == 'Active'
