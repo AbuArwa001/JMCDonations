@@ -5,8 +5,8 @@ set -o errexit
 # Install dependencies
 pip install -r requirements.txt
 
-# Collect static files
-python manage.py collectstatic --no-input
+# # Collect static files
+# python manage.py collectstatic --no-input
 
 # rm db.sqlite3
 # Apply database migrations
@@ -33,3 +33,5 @@ python manage.py loaddata additional_user_data.json
 # Donor Emails: donor1@example.com through donor9@example.com
 
 # Password for ALL users: password123
+# Collect static files
+python manage.py collectstatic --no-input
