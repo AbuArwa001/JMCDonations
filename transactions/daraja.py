@@ -6,12 +6,12 @@ from datetime import datetime
 
 
 class MpesaClient:
-    def __init__(self):
-        self.consumer_key = settings.MPESA_CONSUMER_KEY
-        self.consumer_secret = settings.MPESA_CONSUMER_SECRET
-        self.api_url = settings.MPESA_API_URL
-        self.passkey = settings.MPESA_PASSKEY
-        self.shortcode = settings.MPESA_SHORTCODE
+    def __init__(self, consumer_key=None, consumer_secret=None, passkey=None, shortcode=None):
+        self.consumer_key = consumer_key or settings.MPESA_CONSUMER_KEY
+        self.consumer_secret = consumer_secret or settings.MPESA_CONSUMER_SECRET
+        self.api_url = getattr(settings, 'MPESA_API_URL', 'https://sandbox.safaricom.co.ke')
+        self.passkey = passkey or settings.MPESA_PASSKEY
+        self.shortcode = shortcode or settings.MPESA_SHORTCODE
 
     def get_access_token(self):
         url = f"{self.api_url}/oauth/v1/generate?grant_type=client_credentials"
@@ -79,9 +79,10 @@ class MpesaClient:
         # We will use settings.MPESA_SECURITY_CREDENTIAL.
 
         security_credential = getattr(settings, "MPESA_SECURITY_CREDENTIAL", "DUMMY_CREDENTIAL")
+        initiator_name = getattr(settings, "MPESA_INITIATOR_NAME", "testapi")
 
         payload = {
-            "Initiator": getattr(settings, "MPESA_INITIATOR_NAME", "testapi"),
+            "Initiator": initiator_name,
             "SecurityCredential": security_credential,
             "CommandID": command_id,
             "SenderIdentifierType": "4",  # 4 for Shortcode

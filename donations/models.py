@@ -27,6 +27,7 @@ class Donations(models.Model):
     description = models.TextField()
     paybill_number = models.CharField(max_length=50)
     account_name = models.CharField(max_length=100)
+    account_number = models.CharField(max_length=100, blank=True, null=True, help_text="Used for Bank Paybills to specify the actual bank account number")
     category = models.ForeignKey(
         "categories.Categories", on_delete=models.CASCADE, related_name="donations"
     )

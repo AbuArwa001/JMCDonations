@@ -65,6 +65,14 @@ class BankAccount(models.Model):
     paybill_number = models.CharField(max_length=50, blank=True, null=True, help_text="Paybill Business Number")
     account_number = models.CharField(max_length=50, help_text="Account Number/Reference")
     account_name = models.CharField(max_length=100)
+    
+    # Optional Daraja Credentials for M-Pesa Paybills
+    consumer_key = models.CharField(max_length=255, blank=True, null=True, help_text="Daraja Consumer Key for third-party Paybills")
+    consumer_secret = models.CharField(max_length=255, blank=True, null=True, help_text="Daraja Consumer Secret")
+    passkey = models.CharField(max_length=255, blank=True, null=True, help_text="Daraja Passkey")
+    initiator_name = models.CharField(max_length=100, blank=True, null=True, help_text="B2B/B2C Initiator Name")
+    security_credential = models.TextField(blank=True, null=True, help_text="B2B/B2C Security Credential")
+    
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

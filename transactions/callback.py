@@ -40,9 +40,60 @@ class MpesaCallbackView(APIView):
             
             transaction.payment_status = "Completed"
             transaction.completed_at = timezone.now()
+            transaction.save()
+            
+            # --- BRIDGE WORKFLOW: Auto-Passthrough for Third-Party Paybills ---
+            try:
+                donation = transaction.donation
+                from django.conf import settings
+                jamia_shortcode = getattr(settings, 'MPESA_SHORTCODE', '150770')
+                
+                if donation and donation.paybill_number and str(donation.paybill_number) != str(jamia_shortcode):
+                    logger.info(f"Initiating Bridge Workflow for Donation {donation.id} to {donation.paybill_number}")
+                    from transactions.daraja import MpesaClient
+                    from transactions.models import Transfer, BankAccount
+                    
+                    party_b = donation.paybill_number
+                    account_ref = getattr(donation, 'account_number', None)
+                    if not account_ref:
+                        account_ref = donation.account_name or f"DON-{donation.id}"
+                    
+                    remarks = f"Passthrough for {donation.title[:20]}"
+                    
+                    # Log the Transfer intention
+                    destination_account = BankAccount.objects.filter(paybill_number=party_b).first()
+                    transfer = Transfer.objects.create(
+                        amount=transaction.amount,
+                        source_paybill=jamia_shortcode,
+                        destination_account=destination_account,
+                        status="Pending",
+                        description=f"Auto B2B Passthrough for Donation {donation.id} - Tx: {transaction.id}"
+                    )
+                    
+                    mpesa = MpesaClient()
+                    response = mpesa.b2b_payment(
+                        amount=transaction.amount,
+                        party_b=party_b,
+                        account_reference=account_ref,
+                        remarks=remarks
+                    )
+                    
+                    if response and response.get("ResponseCode") == "0":
+                        transfer.transaction_reference = response.get("ConversationID")
+                        transfer.save()
+                        logger.info(f"Bridge Workflow initiated successfully: {response}")
+                    else:
+                        transfer.status = "Failed"
+                        error_msg = response.get('errorMessage') or response.get('ResponseDescription') or 'Unknown Error'
+                        transfer.description += f" | M-Pesa Error: {error_msg}"
+                        transfer.save()
+                        logger.error(f"Bridge Workflow failed: {response}")
+            except Exception as e:
+                logger.error(f"Error executing Bridge Workflow: {e}", exc_info=True)
+                
         else:
             # Cancelled or Error
             transaction.payment_status = "Failed"
+            transaction.save()
         
-        transaction.save()
         return Response({"message": "Callback processed"}, status=200)
