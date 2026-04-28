@@ -10,6 +10,7 @@ python manage.py collectstatic --no-input
 
 # rm db.sqlite3
 # Apply database migrations
+python manage.py makemigrations
 python manage.py migrate
 
 # Seed initial data (if any)
