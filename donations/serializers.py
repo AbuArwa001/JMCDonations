@@ -123,6 +123,11 @@ class DonationSerializer(serializers.ModelSerializer):
             "image_urls",
             "remaining_days",
             "uploaded_images",
+            "consumer_key",
+            "consumer_secret",
+            "passkey",
+            "initiator_name",
+            "security_credential",
         )
         extra_kwargs = {
             'title': {'required': False},
@@ -134,6 +139,11 @@ class DonationSerializer(serializers.ModelSerializer):
             'status': {'required': False},
             'paybill_number': {'required': False},
             'category': {'required': False},
+            'consumer_key': {'required': False},
+            'consumer_secret': {'required': False},
+            'passkey': {'required': False},
+            'initiator_name': {'required': False},
+            'security_credential': {'required': False},
         }
         read_only_fields = ('id', 'created_at', 'avg_rating')
     def create(self, validated_data):

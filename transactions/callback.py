@@ -54,40 +54,47 @@ class MpesaCallbackView(APIView):
                     from transactions.models import Transfer, BankAccount
                     
                     party_b = donation.paybill_number
-                    account_ref = getattr(donation, 'account_number', None)
-                    if not account_ref:
-                        account_ref = donation.account_name or f"DON-{donation.id}"
-                    
-                    remarks = f"Passthrough for {donation.title[:20]}"
                     
                     # Log the Transfer intention
                     destination_account = BankAccount.objects.filter(paybill_number=party_b).first()
-                    transfer = Transfer.objects.create(
-                        amount=transaction.amount,
-                        source_paybill=jamia_shortcode,
-                        destination_account=destination_account,
-                        status="Pending",
-                        description=f"Auto B2B Passthrough for Donation {donation.id} - Tx: {transaction.id}"
-                    )
                     
-                    mpesa = MpesaClient()
-                    response = mpesa.b2b_payment(
-                        amount=transaction.amount,
-                        party_b=party_b,
-                        account_reference=account_ref,
-                        remarks=remarks
-                    )
-                    
-                    if response and response.get("ResponseCode") == "0":
-                        transfer.transaction_reference = response.get("ConversationID")
-                        transfer.save()
-                        logger.info(f"Bridge Workflow initiated successfully: {response}")
+                    # If this account has Daraja credentials (either on the Donation or the BankAccount), it means STK push went DIRECTLY to them.
+                    # Therefore, no B2B bridge is needed.
+                    if (donation.consumer_key and donation.consumer_secret) or (destination_account and destination_account.consumer_key and destination_account.consumer_secret):
+                        logger.info(f"Donation {donation.id} was paid directly to Third-Party Paybill {party_b}. Skipping B2B Bridge.")
                     else:
-                        transfer.status = "Failed"
-                        error_msg = response.get('errorMessage') or response.get('ResponseDescription') or 'Unknown Error'
-                        transfer.description += f" | M-Pesa Error: {error_msg}"
-                        transfer.save()
-                        logger.error(f"Bridge Workflow failed: {response}")
+                        account_ref = getattr(donation, 'account_number', None)
+                        if not account_ref:
+                            account_ref = donation.account_name or f"DON-{donation.id}"
+                        
+                        remarks = f"Passthrough for {donation.title[:20]}"
+                        
+                        transfer = Transfer.objects.create(
+                            amount=transaction.amount,
+                            source_paybill=jamia_shortcode,
+                            destination_account=destination_account,
+                            status="Pending",
+                            description=f"Auto B2B Passthrough for Donation {donation.id} - Tx: {transaction.id}"
+                        )
+                        
+                        mpesa = MpesaClient()
+                        response = mpesa.b2b_payment(
+                            amount=transaction.amount,
+                            party_b=party_b,
+                            account_reference=account_ref,
+                            remarks=remarks
+                        )
+                        
+                        if response and response.get("ResponseCode") == "0":
+                            transfer.transaction_reference = response.get("ConversationID")
+                            transfer.save()
+                            logger.info(f"Bridge Workflow initiated successfully: {response}")
+                        else:
+                            transfer.status = "Failed"
+                            error_msg = response.get('errorMessage') or response.get('ResponseDescription') or 'Unknown Error'
+                            transfer.description += f" | M-Pesa Error: {error_msg}"
+                            transfer.save()
+                            logger.error(f"Bridge Workflow failed: {response}")
             except Exception as e:
                 logger.error(f"Error executing Bridge Workflow: {e}", exc_info=True)
                 

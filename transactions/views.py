@@ -51,8 +51,36 @@ class TransactionViewSet(viewsets.ModelViewSet):
             payment_status="Pending",
         )
 
-        # 2. Call M-Pesa
-        mpesa = MpesaClient()
+        # 2. Check for Custom Daraja Credentials
+        donation = transaction.donation
+        party_b = donation.paybill_number
+        
+        bank_account = BankAccount.objects.filter(paybill_number=party_b).first()
+        
+        consumer_key = None
+        consumer_secret = None
+        passkey = None
+        shortcode = None
+
+        if donation.consumer_key and donation.consumer_secret:
+            consumer_key = donation.consumer_key
+            consumer_secret = donation.consumer_secret
+            passkey = donation.passkey
+            shortcode = party_b
+        elif bank_account and bank_account.consumer_key and bank_account.consumer_secret:
+            consumer_key = bank_account.consumer_key
+            consumer_secret = bank_account.consumer_secret
+            passkey = bank_account.passkey
+            shortcode = party_b
+
+        # 3. Call M-Pesa
+        mpesa = MpesaClient(
+            consumer_key=consumer_key, 
+            consumer_secret=consumer_secret, 
+            passkey=passkey, 
+            shortcode=shortcode
+        )
+        
         # We use transaction.id as the AccountReference so we can identify it later
         response = mpesa.stk_push(
             phone_number=phone_number,

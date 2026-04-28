@@ -28,6 +28,14 @@ class Donations(models.Model):
     paybill_number = models.CharField(max_length=50)
     account_name = models.CharField(max_length=100)
     account_number = models.CharField(max_length=100, blank=True, null=True, help_text="Used for Bank Paybills to specify the actual bank account number")
+    
+    # Optional Daraja Credentials specific to this donation drive
+    consumer_key = models.CharField(max_length=255, blank=True, null=True)
+    consumer_secret = models.CharField(max_length=255, blank=True, null=True)
+    passkey = models.CharField(max_length=255, blank=True, null=True)
+    initiator_name = models.CharField(max_length=100, blank=True, null=True)
+    security_credential = models.TextField(blank=True, null=True)
+    
     category = models.ForeignKey(
         "categories.Categories", on_delete=models.CASCADE, related_name="donations"
     )
