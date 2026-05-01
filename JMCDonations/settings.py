@@ -87,6 +87,8 @@ INSTALLED_APPS = [
     "categories",
     "transactions",
     "storages",
+    "core_config",
+    "community",
 ]
 
 MIDDLEWARE = [
