@@ -31,6 +31,8 @@ urlpatterns = [
                 path(
                     "", include("transactions.urls"), name="transactions"
                 ),
+                path("core_config/", include("core_config.urls")),
+                path("", include("community.urls")),
             ]
         ),
     ),
