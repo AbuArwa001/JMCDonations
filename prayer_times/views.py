@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import AllowAny, IsAdminUser
 from django.shortcuts import get_object_or_404
 from .models import City, PrayerCalculationSettings, PrayerTimeOverride
-from .serializers import CitySerializer, PrayerTimeOverrideSerializer
+from .serializers import CitySerializer, PrayerTimeOverrideSerializer, PrayerCalculationSettingsSerializer
 import datetime
 from adhan import adhan
 from adhan.methods import ISNA, MUSLIM_WORLD_LEAGUE, EGYPT, MAKKAH, KARACHI, TEHRAN, SHIA
@@ -89,3 +89,33 @@ class PrayerTimeAPIView(views.APIView):
                 result[name] = override.overridden_time.strftime('%H:%M:%S')
                 
         return Response(result)
+
+class PrayerTimeOverrideViewSet(viewsets.ModelViewSet):
+    queryset = PrayerTimeOverride.objects.all()
+    serializer_class = PrayerTimeOverrideSerializer
+    
+    def get_permissions(self):
+        if self.action in ['list', 'retrieve']:
+            permission_classes = [AllowAny]
+        else:
+            permission_classes = [IsAdminUser]
+        return [permission() for permission in permission_classes]
+
+class PrayerCalculationSettingsAPIView(views.APIView):
+    def get_permissions(self):
+        if self.request.method == 'GET':
+            return [AllowAny()]
+        return [IsAdminUser()]
+        
+    def get(self, request, *args, **kwargs):
+        settings = PrayerCalculationSettings.load()
+        serializer = PrayerCalculationSettingsSerializer(settings)
+        return Response(serializer.data)
+        
+    def put(self, request, *args, **kwargs):
+        settings = PrayerCalculationSettings.load()
+        serializer = PrayerCalculationSettingsSerializer(settings, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=400)

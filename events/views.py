@@ -3,8 +3,8 @@ from rest_framework.response import Response
 from rest_framework.permissions import AllowAny, IsAdminUser
 from django_filters.rest_framework import DjangoFilterBackend
 from django.shortcuts import get_object_or_404
-from .models import EventCategory, Event
-from .serializers import EventCategorySerializer, EventSerializer
+from .models import EventCategory, Event, EventImage
+from .serializers import EventCategorySerializer, EventSerializer, EventImageSerializer
 from firebase_admin import messaging
 from khutba.models import DeviceToken, NotificationLog
 
@@ -86,3 +86,14 @@ class EventNotifyView(views.APIView):
             
         except Exception as e:
             return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+class EventImageViewSet(viewsets.ModelViewSet):
+    queryset = EventImage.objects.all()
+    serializer_class = EventImageSerializer
+    
+    def get_permissions(self):
+        if self.action in ['list', 'retrieve']:
+            permission_classes = [AllowAny]
+        else:
+            permission_classes = [IsAdminUser]
+        return [permission() for permission in permission_classes]
