@@ -34,6 +34,7 @@ class NotificationLog(models.Model):
     body = models.TextField()
     image_url = models.URLField(blank=True, null=True)
     related_khutba = models.ForeignKey(JumaKhutba, on_delete=models.SET_NULL, null=True, blank=True, related_name='notifications')
+    related_event = models.ForeignKey('events.Event', on_delete=models.SET_NULL, null=True, blank=True, related_name='notifications')
     sent_at = models.DateTimeField(auto_now_add=True)
     recipient_count = models.IntegerField(default=0)
     
