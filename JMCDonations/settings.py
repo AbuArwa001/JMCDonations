@@ -89,6 +89,12 @@ INSTALLED_APPS = [
     "storages",
     "core_config",
     "community",
+    "duas",
+    "quran",
+    "prayer_times",
+    "zakat",
+    "khutba",
+    "events",
 ]
 
 MIDDLEWARE = [
