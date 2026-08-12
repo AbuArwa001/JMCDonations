@@ -49,6 +49,7 @@ cors_origins = os.getenv("CORS_ALLOWED_ORIGINS", "")
 
 # Convert the string into a list, removing extra whitespace if any
 CORS_ALLOWED_ORIGINS = [origin.strip() for origin in cors_origins.split(",") if origin]
+CORS_ALLOW_ALL_ORIGINS = True  # Added to prevent CORS issues while switching environments
 
 
 # Application definition
