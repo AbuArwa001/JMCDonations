@@ -1,0 +1,1637 @@
+[
+  {
+    "model": "donations.donations",
+    "pk": "97f43d61-48ef-417e-acd1-60c09a82b153",
+    "fields": {
+      "title": "Historical Campaign 1",
+      "slug": "historical-campaign-1",
+      "description": "This is a historical campaign generated for analytics purposes to reflect past activities.",
+      "paybill_number": "123456",
+      "account_name": "JMC Account",
+      "category": "33333333-3333-3333-3333-333333330004",
+      "target_amount": "71990.00",
+      "start_date": "2026-07-02T08:00:00Z",
+      "end_date": "2026-07-22T23:59:59Z",
+      "status": "Closed",
+      "created_by": "22222222-2222-2222-2222-222222220001",
+      "created_at": "2026-07-02T08:00:00Z",
+      "updated_at": "2026-07-02T08:00:00Z"
+    }
+  },
+  {
+    "model": "transactions.transactions",
+    "pk": "ee54b074-4173-4499-af44-639c49f451fe",
+    "fields": {
+      "donation": "97f43d61-48ef-417e-acd1-60c09a82b153",
+      "user": "22222222-2222-2222-2222-222222220005",
+      "recorded_by_admin_id": "22222222-2222-2222-2222-222222220001",
+      "amount": "6621.00",
+      "transaction_reference": "HIST-97f4-0-9892",
+      "payment_method": "M-Pesa",
+      "payment_status": "Completed",
+      "donated_at": "2026-07-18T11:16:36Z",
+      "completed_at": "2026-07-18T11:16:36Z"
+    }
+  },
+  {
+    "model": "transactions.transactions",
+    "pk": "65086f54-f607-4139-bc2f-324684de2064",
+    "fields": {
+      "donation": "97f43d61-48ef-417e-acd1-60c09a82b153",
+      "user": "22222222-2222-2222-2222-222222220002",
+      "recorded_by_admin_id": null,
+      "amount": "4476.00",
+      "transaction_reference": "HIST-97f4-1-2357",
+      "payment_method": "Card",
+      "payment_status": "Completed",
+      "donated_at": "2026-07-03T12:01:38Z",
+      "completed_at": "2026-07-03T12:01:38Z"
+    }
+  },
+  {
+    "model": "transactions.transactions",
+    "pk": "73086247-20be-4b7a-85ae-90706dac3fe5",
+    "fields": {
+      "donation": "97f43d61-48ef-417e-acd1-60c09a82b153",
+      "user": "22222222-2222-2222-2222-222222220005",
+      "recorded_by_admin_id": null,
+      "amount": "9202.00",
+      "transaction_reference": "HIST-97f4-2-2814",
+      "payment_method": "Card",
+      "payment_status": "Completed",
+      "donated_at": "2026-07-15T12:57:15Z",
+      "completed_at": "2026-07-15T12:57:15Z"
+    }
+  },
+  {
+    "model": "transactions.transactions",
+    "pk": "aaeb3459-1508-4bfa-af90-db3ee08438ca",
+    "fields": {
+      "donation": "97f43d61-48ef-417e-acd1-60c09a82b153",
+      "user": "22222222-2222-2222-2222-222222220004",
+      "recorded_by_admin_id": null,
+      "amount": "2861.00",
+      "transaction_reference": "HIST-97f4-3-4808",
+      "payment_method": "Cash",
+      "payment_status": "Completed",
+      "donated_at": "2026-07-15T17:13:01Z",
+      "completed_at": "2026-07-15T17:13:01Z"
+    }
+  },
+  {
+    "model": "transactions.transactions",
+    "pk": "9a4bdc77-17bc-4633-af9a-3d926a1a9f78",
+    "fields": {
+      "donation": "97f43d61-48ef-417e-acd1-60c09a82b153",
+      "user": "22222222-2222-2222-2222-222222220005",
+      "recorded_by_admin_id": "22222222-2222-2222-2222-222222220001",
+      "amount": "5145.00",
+      "transaction_reference": "HIST-97f4-4-9811",
+      "payment_method": "M-Pesa",
+      "payment_status": "Completed",
+      "donated_at": "2026-07-08T17:49:15Z",
+      "completed_at": "2026-07-08T17:49:15Z"
+    }
+  },
+  {
+    "model": "transactions.transactions",
+    "pk": "48190aed-58a8-4615-aec8-24e92d4dc08a",
+    "fields": {
+      "donation": "97f43d61-48ef-417e-acd1-60c09a82b153",
+      "user": "22222222-2222-2222-2222-222222220003",
+      "recorded_by_admin_id": "22222222-2222-2222-2222-222222220001",
+      "amount": "8113.00",
+      "transaction_reference": "HIST-97f4-5-7509",
+      "payment_method": "M-Pesa",
+      "payment_status": "Completed",
+      "donated_at": "2026-07-05T10:50:53Z",
+      "completed_at": "2026-07-05T10:50:53Z"
+    }
+  },
+  {
+    "model": "transactions.transactions",
+    "pk": "4b07420d-ae43-4ed8-8a20-f00dafa2efa5",
+    "fields": {
+      "donation": "97f43d61-48ef-417e-acd1-60c09a82b153",
+      "user": "22222222-2222-2222-2222-222222220003",
+      "recorded_by_admin_id": "22222222-2222-2222-2222-222222220001",
+      "amount": "6898.00",
+      "transaction_reference": "HIST-97f4-6-2026",
+      "payment_method": "Card",
+      "payment_status": "Completed",
+      "donated_at": "2026-07-05T13:34:40Z",
+      "completed_at": "2026-07-05T13:34:40Z"
+    }
+  },
+  {
+    "model": "transactions.transactions",
+    "pk": "e97b9006-1d97-421b-a0cb-cec6a8dcc75c",
+    "fields": {
+      "donation": "97f43d61-48ef-417e-acd1-60c09a82b153",
+      "user": "22222222-2222-2222-2222-222222220005",
+      "recorded_by_admin_id": null,
+      "amount": "6909.00",
+      "transaction_reference": "HIST-97f4-7-7613",
+      "payment_method": "M-Pesa",
+      "payment_status": "Completed",
+      "donated_at": "2026-07-06T14:09:19Z",
+      "completed_at": "2026-07-06T14:09:19Z"
+    }
+  },
+  {
+    "model": "transactions.transactions",
+    "pk": "1c882a81-7d0b-4f7e-84ee-23592a68bec0",
+    "fields": {
+      "donation": "97f43d61-48ef-417e-acd1-60c09a82b153",
+      "user": "22222222-2222-2222-2222-222222220003",
+      "recorded_by_admin_id": null,
+      "amount": "4604.00",
+      "transaction_reference": "HIST-97f4-8-7220",
+      "payment_method": "M-Pesa",
+      "payment_status": "Completed",
+      "donated_at": "2026-07-20T20:49:53Z",
+      "completed_at": "2026-07-20T20:49:53Z"
+    }
+  },
+  {
+    "model": "transactions.transactions",
+    "pk": "339c71b0-db02-4f63-9d1b-aab4f94d0bf7",
+    "fields": {
+      "donation": "97f43d61-48ef-417e-acd1-60c09a82b153",
+      "user": "22222222-2222-2222-2222-222222220003",
+      "recorded_by_admin_id": null,
+      "amount": "1044.00",
+      "transaction_reference": "HIST-97f4-9-3156",
+      "payment_method": "Card",
+      "payment_status": "Completed",
+      "donated_at": "2026-07-12T13:58:30Z",
+      "completed_at": "2026-07-12T13:58:30Z"
+    }
+  },
+  {
+    "model": "transactions.transactions",
+    "pk": "88f26bc0-6378-4bb9-9169-63cc651210bf",
+    "fields": {
+      "donation": "97f43d61-48ef-417e-acd1-60c09a82b153",
+      "user": "22222222-2222-2222-2222-222222220005",
+      "recorded_by_admin_id": "22222222-2222-2222-2222-222222220001",
+      "amount": "8994.00",
+      "transaction_reference": "HIST-97f4-10-7940",
+      "payment_method": "Card",
+      "payment_status": "Completed",
+      "donated_at": "2026-07-04T17:57:04Z",
+      "completed_at": "2026-07-04T17:57:04Z"
+    }
+  },
+  {
+    "model": "transactions.transactions",
+    "pk": "6fdfdf9c-14fc-422e-ae59-2a0b889a2c18",
+    "fields": {
+      "donation": "97f43d61-48ef-417e-acd1-60c09a82b153",
+      "user": "22222222-2222-2222-2222-222222220004",
+      "recorded_by_admin_id": null,
+      "amount": "5502.00",
+      "transaction_reference": "HIST-97f4-11-7256",
+      "payment_method": "M-Pesa",
+      "payment_status": "Completed",
+      "donated_at": "2026-07-19T11:01:05Z",
+      "completed_at": "2026-07-19T11:01:05Z"
+    }
+  },
+  {
+    "model": "transactions.transactions",
+    "pk": "39405752-c89a-4507-a23a-fd704b276478",
+    "fields": {
+      "donation": "97f43d61-48ef-417e-acd1-60c09a82b153",
+      "user": "22222222-2222-2222-2222-222222220005",
+      "recorded_by_admin_id": null,
+      "amount": "8420.00",
+      "transaction_reference": "HIST-97f4-12-2707",
+      "payment_method": "M-Pesa",
+      "payment_status": "Completed",
+      "donated_at": "2026-07-05T13:55:05Z",
+      "completed_at": "2026-07-05T13:55:05Z"
+    }
+  },
+  {
+    "model": "transactions.transactions",
+    "pk": "d146577e-9886-4049-86b1-436999352b4f",
+    "fields": {
+      "donation": "97f43d61-48ef-417e-acd1-60c09a82b153",
+      "user": "22222222-2222-2222-2222-222222220002",
+      "recorded_by_admin_id": "22222222-2222-2222-2222-222222220001",
+      "amount": "5258.00",
+      "transaction_reference": "HIST-97f4-13-2390",
+      "payment_method": "M-Pesa",
+      "payment_status": "Completed",
+      "donated_at": "2026-07-10T20:25:47Z",
+      "completed_at": "2026-07-10T20:25:47Z"
+    }
+  },
+  {
+    "model": "transactions.transactions",
+    "pk": "b961547b-fea8-41cf-974a-c9aeb0042c93",
+    "fields": {
+      "donation": "97f43d61-48ef-417e-acd1-60c09a82b153",
+      "user": "22222222-2222-2222-2222-222222220004",
+      "recorded_by_admin_id": null,
+      "amount": "8482.00",
+      "transaction_reference": "HIST-97f4-14-8218",
+      "payment_method": "Cash",
+      "payment_status": "Completed",
+      "donated_at": "2026-07-05T13:55:32Z",
+      "completed_at": "2026-07-05T13:55:32Z"
+    }
+  },
+  {
+    "model": "transactions.transactions",
+    "pk": "81b0f92b-4f50-435d-98ad-23da8ae2ddec",
+    "fields": {
+      "donation": "97f43d61-48ef-417e-acd1-60c09a82b153",
+      "user": "22222222-2222-2222-2222-222222220003",
+      "recorded_by_admin_id": null,
+      "amount": "852.00",
+      "transaction_reference": "HIST-97f4-15-3746",
+      "payment_method": "Card",
+      "payment_status": "Completed",
+      "donated_at": "2026-07-21T17:46:42Z",
+      "completed_at": "2026-07-21T17:46:42Z"
+    }
+  },
+  {
+    "model": "transactions.transactions",
+    "pk": "34b91e85-6d88-445b-82f8-4af78c2be204",
+    "fields": {
+      "donation": "97f43d61-48ef-417e-acd1-60c09a82b153",
+      "user": "22222222-2222-2222-2222-222222220003",
+      "recorded_by_admin_id": null,
+      "amount": "8098.00",
+      "transaction_reference": "HIST-97f4-16-1439",
+      "payment_method": "Cash",
+      "payment_status": "Completed",
+      "donated_at": "2026-07-19T18:58:37Z",
+      "completed_at": "2026-07-19T18:58:37Z"
+    }
+  },
+  {
+    "model": "transactions.transactions",
+    "pk": "0fcd970b-85ac-4276-8206-ca4d22bfb9ca",
+    "fields": {
+      "donation": "97f43d61-48ef-417e-acd1-60c09a82b153",
+      "user": "22222222-2222-2222-2222-222222220002",
+      "recorded_by_admin_id": "22222222-2222-2222-2222-222222220001",
+      "amount": "6121.00",
+      "transaction_reference": "HIST-97f4-17-7244",
+      "payment_method": "Card",
+      "payment_status": "Completed",
+      "donated_at": "2026-07-17T18:45:28Z",
+      "completed_at": "2026-07-17T18:45:28Z"
+    }
+  },
+  {
+    "model": "transactions.transactions",
+    "pk": "eb8c45ef-473f-44b3-b013-0980483e5d03",
+    "fields": {
+      "donation": "97f43d61-48ef-417e-acd1-60c09a82b153",
+      "user": "22222222-2222-2222-2222-222222220002",
+      "recorded_by_admin_id": "22222222-2222-2222-2222-222222220001",
+      "amount": "9997.00",
+      "transaction_reference": "HIST-97f4-18-1124",
+      "payment_method": "Cash",
+      "payment_status": "Completed",
+      "donated_at": "2026-07-21T18:03:20Z",
+      "completed_at": "2026-07-21T18:03:20Z"
+    }
+  },
+  {
+    "model": "transactions.transactions",
+    "pk": "56501333-a953-427d-af19-71ebac4d6bbe",
+    "fields": {
+      "donation": "97f43d61-48ef-417e-acd1-60c09a82b153",
+      "user": "22222222-2222-2222-2222-222222220003",
+      "recorded_by_admin_id": null,
+      "amount": "6183.00",
+      "transaction_reference": "HIST-97f4-19-4365",
+      "payment_method": "Card",
+      "payment_status": "Completed",
+      "donated_at": "2026-07-12T17:24:11Z",
+      "completed_at": "2026-07-12T17:24:11Z"
+    }
+  },
+  {
+    "model": "transactions.transactions",
+    "pk": "4f82ffbd-8c13-4575-87dc-ca2d8f999d62",
+    "fields": {
+      "donation": "97f43d61-48ef-417e-acd1-60c09a82b153",
+      "user": "22222222-2222-2222-2222-222222220004",
+      "recorded_by_admin_id": null,
+      "amount": "9109.00",
+      "transaction_reference": "HIST-97f4-20-7463",
+      "payment_method": "Cash",
+      "payment_status": "Completed",
+      "donated_at": "2026-07-15T16:05:16Z",
+      "completed_at": "2026-07-15T16:05:16Z"
+    }
+  },
+  {
+    "model": "transactions.transactions",
+    "pk": "1e851a4e-8989-4a46-8863-210bc497ec62",
+    "fields": {
+      "donation": "97f43d61-48ef-417e-acd1-60c09a82b153",
+      "user": "22222222-2222-2222-2222-222222220002",
+      "recorded_by_admin_id": "22222222-2222-2222-2222-222222220001",
+      "amount": "7865.00",
+      "transaction_reference": "HIST-97f4-21-8400",
+      "payment_method": "Card",
+      "payment_status": "Completed",
+      "donated_at": "2026-07-04T20:37:42Z",
+      "completed_at": "2026-07-04T20:37:42Z"
+    }
+  },
+  {
+    "model": "transactions.transactions",
+    "pk": "37d4ab18-fb84-4104-b0dc-3073baf82c5d",
+    "fields": {
+      "donation": "97f43d61-48ef-417e-acd1-60c09a82b153",
+      "user": "22222222-2222-2222-2222-222222220005",
+      "recorded_by_admin_id": "22222222-2222-2222-2222-222222220001",
+      "amount": "1471.00",
+      "transaction_reference": "HIST-97f4-22-8506",
+      "payment_method": "Card",
+      "payment_status": "Completed",
+      "donated_at": "2026-07-07T12:21:13Z",
+      "completed_at": "2026-07-07T12:21:13Z"
+    }
+  },
+  {
+    "model": "transactions.transactions",
+    "pk": "551249d1-f562-498a-b5b8-ca9f85ec9bef",
+    "fields": {
+      "donation": "97f43d61-48ef-417e-acd1-60c09a82b153",
+      "user": "22222222-2222-2222-2222-222222220004",
+      "recorded_by_admin_id": null,
+      "amount": "2809.00",
+      "transaction_reference": "HIST-97f4-23-2825",
+      "payment_method": "M-Pesa",
+      "payment_status": "Completed",
+      "donated_at": "2026-07-17T11:19:05Z",
+      "completed_at": "2026-07-17T11:19:05Z"
+    }
+  },
+  {
+    "model": "transactions.transactions",
+    "pk": "582a16e4-f5b1-4555-b2d5-fd9ae0647995",
+    "fields": {
+      "donation": "97f43d61-48ef-417e-acd1-60c09a82b153",
+      "user": "22222222-2222-2222-2222-222222220004",
+      "recorded_by_admin_id": "22222222-2222-2222-2222-222222220001",
+      "amount": "5841.00",
+      "transaction_reference": "HIST-97f4-24-1872",
+      "payment_method": "Cash",
+      "payment_status": "Completed",
+      "donated_at": "2026-07-18T15:31:01Z",
+      "completed_at": "2026-07-18T15:31:01Z"
+    }
+  },
+  {
+    "model": "donations.donations",
+    "pk": "43a6cba0-c66f-4294-9b64-e1d33faf7270",
+    "fields": {
+      "title": "Historical Campaign 2",
+      "slug": "historical-campaign-2",
+      "description": "This is a historical campaign generated for analytics purposes to reflect past activities.",
+      "paybill_number": "123456",
+      "account_name": "JMC Account",
+      "category": "33333333-3333-3333-3333-333333330004",
+      "target_amount": "250392.00",
+      "start_date": "2026-10-23T08:00:00Z",
+      "end_date": "2026-11-09T23:59:59Z",
+      "status": "Active",
+      "created_by": "22222222-2222-2222-2222-222222220001",
+      "created_at": "2026-10-23T08:00:00Z",
+      "updated_at": "2026-10-23T08:00:00Z"
+    }
+  },
+  {
+    "model": "donations.donations",
+    "pk": "36e28427-1b16-4398-9261-65a35a6b3688",
+    "fields": {
+      "title": "Historical Campaign 3",
+      "slug": "historical-campaign-3",
+      "description": "This is a historical campaign generated for analytics purposes to reflect past activities.",
+      "paybill_number": "123456",
+      "account_name": "JMC Account",
+      "category": "33333333-3333-3333-3333-333333330004",
+      "target_amount": "483646.00",
+      "start_date": "2026-08-23T08:00:00Z",
+      "end_date": "2026-10-13T23:59:59Z",
+      "status": "Active",
+      "created_by": "22222222-2222-2222-2222-222222220001",
+      "created_at": "2026-08-23T08:00:00Z",
+      "updated_at": "2026-08-23T08:00:00Z"
+    }
+  },
+  {
+    "model": "donations.donations",
+    "pk": "fc68c118-5627-4899-9c8e-db1db3ff2fb3",
+    "fields": {
+      "title": "Historical Campaign 4",
+      "slug": "historical-campaign-4",
+      "description": "This is a historical campaign generated for analytics purposes to reflect past activities.",
+      "paybill_number": "123456",
+      "account_name": "JMC Account",
+      "category": "33333333-3333-3333-3333-333333330004",
+      "target_amount": "187909.00",
+      "start_date": "2026-11-29T08:00:00Z",
+      "end_date": "2026-12-26T23:59:59Z",
+      "status": "Active",
+      "created_by": "22222222-2222-2222-2222-222222220001",
+      "created_at": "2026-11-29T08:00:00Z",
+      "updated_at": "2026-11-29T08:00:00Z"
+    }
+  },
+  {
+    "model": "donations.donations",
+    "pk": "9b738aea-e6ce-4f86-a3f4-e7633b581e15",
+    "fields": {
+      "title": "Historical Campaign 5",
+      "slug": "historical-campaign-5",
+      "description": "This is a historical campaign generated for analytics purposes to reflect past activities.",
+      "paybill_number": "123456",
+      "account_name": "JMC Account",
+      "category": "33333333-3333-3333-3333-333333330004",
+      "target_amount": "93392.00",
+      "start_date": "2026-09-25T08:00:00Z",
+      "end_date": "2026-11-23T23:59:59Z",
+      "status": "Active",
+      "created_by": "22222222-2222-2222-2222-222222220001",
+      "created_at": "2026-09-25T08:00:00Z",
+      "updated_at": "2026-09-25T08:00:00Z"
+    }
+  },
+  {
+    "model": "donations.donations",
+    "pk": "4efa8fe6-6c67-475c-8184-a84bcebcb95b",
+    "fields": {
+      "title": "Historical Campaign 6",
+      "slug": "historical-campaign-6",
+      "description": "This is a historical campaign generated for analytics purposes to reflect past activities.",
+      "paybill_number": "123456",
+      "account_name": "JMC Account",
+      "category": "33333333-3333-3333-3333-333333330004",
+      "target_amount": "281939.00",
+      "start_date": "2026-09-09T08:00:00Z",
+      "end_date": "2026-10-20T23:59:59Z",
+      "status": "Active",
+      "created_by": "22222222-2222-2222-2222-222222220001",
+      "created_at": "2026-09-09T08:00:00Z",
+      "updated_at": "2026-09-09T08:00:00Z"
+    }
+  },
+  {
+    "model": "donations.donations",
+    "pk": "beb568b7-46db-44e6-8dca-38c6ec5fa671",
+    "fields": {
+      "title": "Historical Campaign 7",
+      "slug": "historical-campaign-7",
+      "description": "This is a historical campaign generated for analytics purposes to reflect past activities.",
+      "paybill_number": "123456",
+      "account_name": "JMC Account",
+      "category": "33333333-3333-3333-3333-333333330004",
+      "target_amount": "277636.00",
+      "start_date": "2026-07-16T08:00:00Z",
+      "end_date": "2026-08-22T23:59:59Z",
+      "status": "Active",
+      "created_by": "22222222-2222-2222-2222-222222220001",
+      "created_at": "2026-07-16T08:00:00Z",
+      "updated_at": "2026-07-16T08:00:00Z"
+    }
+  },
+  {
+    "model": "transactions.transactions",
+    "pk": "f3fe2f94-a256-4ba0-8788-7363dce17615",
+    "fields": {
+      "donation": "beb568b7-46db-44e6-8dca-38c6ec5fa671",
+      "user": "22222222-2222-2222-2222-222222220005",
+      "recorded_by_admin_id": null,
+      "amount": "6623.00",
+      "transaction_reference": "HIST-beb5-0-8903",
+      "payment_method": "Card",
+      "payment_status": "Completed",
+      "donated_at": "2026-07-19T11:25:04Z",
+      "completed_at": "2026-07-19T11:25:04Z"
+    }
+  },
+  {
+    "model": "transactions.transactions",
+    "pk": "26a86dac-842b-475b-a9f4-985bb399b43f",
+    "fields": {
+      "donation": "beb568b7-46db-44e6-8dca-38c6ec5fa671",
+      "user": "22222222-2222-2222-2222-222222220004",
+      "recorded_by_admin_id": "22222222-2222-2222-2222-222222220001",
+      "amount": "2566.00",
+      "transaction_reference": "HIST-beb5-3-4627",
+      "payment_method": "Card",
+      "payment_status": "Completed",
+      "donated_at": "2026-07-28T11:06:41Z",
+      "completed_at": "2026-07-28T11:06:41Z"
+    }
+  },
+  {
+    "model": "transactions.transactions",
+    "pk": "288431cb-3759-492f-b3b1-257437e16cfe",
+    "fields": {
+      "donation": "beb568b7-46db-44e6-8dca-38c6ec5fa671",
+      "user": "22222222-2222-2222-2222-222222220005",
+      "recorded_by_admin_id": null,
+      "amount": "8003.00",
+      "transaction_reference": "HIST-beb5-4-5216",
+      "payment_method": "Card",
+      "payment_status": "Completed",
+      "donated_at": "2026-08-10T19:10:35Z",
+      "completed_at": "2026-08-10T19:10:35Z"
+    }
+  },
+  {
+    "model": "transactions.transactions",
+    "pk": "40b0f2d9-d48f-46db-aa7a-28e5f268c1f5",
+    "fields": {
+      "donation": "beb568b7-46db-44e6-8dca-38c6ec5fa671",
+      "user": "22222222-2222-2222-2222-222222220004",
+      "recorded_by_admin_id": null,
+      "amount": "8691.00",
+      "transaction_reference": "HIST-beb5-5-7343",
+      "payment_method": "M-Pesa",
+      "payment_status": "Completed",
+      "donated_at": "2026-07-17T16:17:01Z",
+      "completed_at": "2026-07-17T16:17:01Z"
+    }
+  },
+  {
+    "model": "transactions.transactions",
+    "pk": "2f8b31a8-9669-4f8f-a4c0-2c92e7a591fe",
+    "fields": {
+      "donation": "beb568b7-46db-44e6-8dca-38c6ec5fa671",
+      "user": "22222222-2222-2222-2222-222222220002",
+      "recorded_by_admin_id": null,
+      "amount": "1929.00",
+      "transaction_reference": "HIST-beb5-6-5491",
+      "payment_method": "Card",
+      "payment_status": "Completed",
+      "donated_at": "2026-08-07T13:22:57Z",
+      "completed_at": "2026-08-07T13:22:57Z"
+    }
+  },
+  {
+    "model": "transactions.transactions",
+    "pk": "dbdeef66-628d-4ec5-a361-e94d9374fa66",
+    "fields": {
+      "donation": "beb568b7-46db-44e6-8dca-38c6ec5fa671",
+      "user": "22222222-2222-2222-2222-222222220002",
+      "recorded_by_admin_id": null,
+      "amount": "8452.00",
+      "transaction_reference": "HIST-beb5-7-2150",
+      "payment_method": "M-Pesa",
+      "payment_status": "Completed",
+      "donated_at": "2026-07-28T16:10:23Z",
+      "completed_at": "2026-07-28T16:10:23Z"
+    }
+  },
+  {
+    "model": "transactions.transactions",
+    "pk": "4492296f-51eb-41c6-865a-895de90b1ab5",
+    "fields": {
+      "donation": "beb568b7-46db-44e6-8dca-38c6ec5fa671",
+      "user": "22222222-2222-2222-2222-222222220003",
+      "recorded_by_admin_id": null,
+      "amount": "150.00",
+      "transaction_reference": "HIST-beb5-9-7952",
+      "payment_method": "Cash",
+      "payment_status": "Completed",
+      "donated_at": "2026-07-30T13:47:07Z",
+      "completed_at": "2026-07-30T13:47:07Z"
+    }
+  },
+  {
+    "model": "transactions.transactions",
+    "pk": "10fe9fd6-e73c-4bff-b317-1cf502b4685e",
+    "fields": {
+      "donation": "beb568b7-46db-44e6-8dca-38c6ec5fa671",
+      "user": "22222222-2222-2222-2222-222222220003",
+      "recorded_by_admin_id": null,
+      "amount": "3190.00",
+      "transaction_reference": "HIST-beb5-10-8697",
+      "payment_method": "Cash",
+      "payment_status": "Completed",
+      "donated_at": "2026-08-07T11:52:44Z",
+      "completed_at": "2026-08-07T11:52:44Z"
+    }
+  },
+  {
+    "model": "transactions.transactions",
+    "pk": "3035a780-6055-4be8-a3b8-750634fd4d47",
+    "fields": {
+      "donation": "beb568b7-46db-44e6-8dca-38c6ec5fa671",
+      "user": "22222222-2222-2222-2222-222222220003",
+      "recorded_by_admin_id": "22222222-2222-2222-2222-222222220001",
+      "amount": "8727.00",
+      "transaction_reference": "HIST-beb5-11-3515",
+      "payment_method": "M-Pesa",
+      "payment_status": "Completed",
+      "donated_at": "2026-08-01T15:29:39Z",
+      "completed_at": "2026-08-01T15:29:39Z"
+    }
+  },
+  {
+    "model": "transactions.transactions",
+    "pk": "88368ecb-b5b2-418a-bbb8-d8e7456947e3",
+    "fields": {
+      "donation": "beb568b7-46db-44e6-8dca-38c6ec5fa671",
+      "user": "22222222-2222-2222-2222-222222220004",
+      "recorded_by_admin_id": null,
+      "amount": "3625.00",
+      "transaction_reference": "HIST-beb5-13-8651",
+      "payment_method": "M-Pesa",
+      "payment_status": "Completed",
+      "donated_at": "2026-07-29T11:31:09Z",
+      "completed_at": "2026-07-29T11:31:09Z"
+    }
+  },
+  {
+    "model": "transactions.transactions",
+    "pk": "d990c036-c04a-4bc2-b213-5b838175db39",
+    "fields": {
+      "donation": "beb568b7-46db-44e6-8dca-38c6ec5fa671",
+      "user": "22222222-2222-2222-2222-222222220003",
+      "recorded_by_admin_id": "22222222-2222-2222-2222-222222220001",
+      "amount": "2385.00",
+      "transaction_reference": "HIST-beb5-14-9157",
+      "payment_method": "M-Pesa",
+      "payment_status": "Completed",
+      "donated_at": "2026-07-16T10:48:12Z",
+      "completed_at": "2026-07-16T10:48:12Z"
+    }
+  },
+  {
+    "model": "transactions.transactions",
+    "pk": "64e26cfc-da11-40f6-b8f1-e15ad0cef4b0",
+    "fields": {
+      "donation": "beb568b7-46db-44e6-8dca-38c6ec5fa671",
+      "user": "22222222-2222-2222-2222-222222220004",
+      "recorded_by_admin_id": "22222222-2222-2222-2222-222222220001",
+      "amount": "8140.00",
+      "transaction_reference": "HIST-beb5-15-3182",
+      "payment_method": "Card",
+      "payment_status": "Completed",
+      "donated_at": "2026-08-03T17:01:46Z",
+      "completed_at": "2026-08-03T17:01:46Z"
+    }
+  },
+  {
+    "model": "transactions.transactions",
+    "pk": "7f3f216a-bcd7-4c33-a67b-cb4d4bafa90e",
+    "fields": {
+      "donation": "beb568b7-46db-44e6-8dca-38c6ec5fa671",
+      "user": "22222222-2222-2222-2222-222222220004",
+      "recorded_by_admin_id": null,
+      "amount": "1805.00",
+      "transaction_reference": "HIST-beb5-17-8980",
+      "payment_method": "M-Pesa",
+      "payment_status": "Completed",
+      "donated_at": "2026-07-26T14:05:58Z",
+      "completed_at": "2026-07-26T14:05:58Z"
+    }
+  },
+  {
+    "model": "transactions.transactions",
+    "pk": "b1f1ac7b-a6be-449c-a7da-fb915def1b74",
+    "fields": {
+      "donation": "beb568b7-46db-44e6-8dca-38c6ec5fa671",
+      "user": "22222222-2222-2222-2222-222222220003",
+      "recorded_by_admin_id": null,
+      "amount": "9202.00",
+      "transaction_reference": "HIST-beb5-18-9647",
+      "payment_method": "M-Pesa",
+      "payment_status": "Completed",
+      "donated_at": "2026-08-02T15:18:26Z",
+      "completed_at": "2026-08-02T15:18:26Z"
+    }
+  },
+  {
+    "model": "transactions.transactions",
+    "pk": "f86edeaa-1f10-4522-86c7-d2bea8394f26",
+    "fields": {
+      "donation": "beb568b7-46db-44e6-8dca-38c6ec5fa671",
+      "user": "22222222-2222-2222-2222-222222220003",
+      "recorded_by_admin_id": null,
+      "amount": "8592.00",
+      "transaction_reference": "HIST-beb5-21-1810",
+      "payment_method": "Cash",
+      "payment_status": "Completed",
+      "donated_at": "2026-07-30T09:55:57Z",
+      "completed_at": "2026-07-30T09:55:57Z"
+    }
+  },
+  {
+    "model": "transactions.transactions",
+    "pk": "365c0712-ec41-4f7d-a1f6-59c2174bc895",
+    "fields": {
+      "donation": "beb568b7-46db-44e6-8dca-38c6ec5fa671",
+      "user": "22222222-2222-2222-2222-222222220002",
+      "recorded_by_admin_id": "22222222-2222-2222-2222-222222220001",
+      "amount": "7351.00",
+      "transaction_reference": "HIST-beb5-22-1724",
+      "payment_method": "Card",
+      "payment_status": "Completed",
+      "donated_at": "2026-08-07T18:29:59Z",
+      "completed_at": "2026-08-07T18:29:59Z"
+    }
+  },
+  {
+    "model": "transactions.transactions",
+    "pk": "cf135559-de58-48f7-b906-7e0b382f53f0",
+    "fields": {
+      "donation": "beb568b7-46db-44e6-8dca-38c6ec5fa671",
+      "user": "22222222-2222-2222-2222-222222220005",
+      "recorded_by_admin_id": null,
+      "amount": "380.00",
+      "transaction_reference": "HIST-beb5-24-7666",
+      "payment_method": "Cash",
+      "payment_status": "Completed",
+      "donated_at": "2026-08-11T11:41:35Z",
+      "completed_at": "2026-08-11T11:41:35Z"
+    }
+  },
+  {
+    "model": "transactions.transactions",
+    "pk": "6158c80e-58b4-4a71-a1e3-ebdfc3ce2c19",
+    "fields": {
+      "donation": "beb568b7-46db-44e6-8dca-38c6ec5fa671",
+      "user": "22222222-2222-2222-2222-222222220003",
+      "recorded_by_admin_id": null,
+      "amount": "3595.00",
+      "transaction_reference": "HIST-beb5-25-2871",
+      "payment_method": "Cash",
+      "payment_status": "Completed",
+      "donated_at": "2026-07-22T08:02:40Z",
+      "completed_at": "2026-07-22T08:02:40Z"
+    }
+  },
+  {
+    "model": "transactions.transactions",
+    "pk": "781fd5f0-6b79-4d09-b40a-b20352bcd8a0",
+    "fields": {
+      "donation": "beb568b7-46db-44e6-8dca-38c6ec5fa671",
+      "user": "22222222-2222-2222-2222-222222220002",
+      "recorded_by_admin_id": "22222222-2222-2222-2222-222222220001",
+      "amount": "4729.00",
+      "transaction_reference": "HIST-beb5-26-8627",
+      "payment_method": "M-Pesa",
+      "payment_status": "Completed",
+      "donated_at": "2026-07-19T20:06:15Z",
+      "completed_at": "2026-07-19T20:06:15Z"
+    }
+  },
+  {
+    "model": "transactions.transactions",
+    "pk": "2b30aeb6-bd42-4ff2-b253-3e05cb7bc3bd",
+    "fields": {
+      "donation": "beb568b7-46db-44e6-8dca-38c6ec5fa671",
+      "user": "22222222-2222-2222-2222-222222220004",
+      "recorded_by_admin_id": null,
+      "amount": "6388.00",
+      "transaction_reference": "HIST-beb5-27-9758",
+      "payment_method": "M-Pesa",
+      "payment_status": "Completed",
+      "donated_at": "2026-07-29T12:14:31Z",
+      "completed_at": "2026-07-29T12:14:31Z"
+    }
+  },
+  {
+    "model": "transactions.transactions",
+    "pk": "6f2f23f9-41cd-4014-9dc3-892bc9d8a13a",
+    "fields": {
+      "donation": "beb568b7-46db-44e6-8dca-38c6ec5fa671",
+      "user": "22222222-2222-2222-2222-222222220003",
+      "recorded_by_admin_id": "22222222-2222-2222-2222-222222220001",
+      "amount": "626.00",
+      "transaction_reference": "HIST-beb5-28-4617",
+      "payment_method": "Cash",
+      "payment_status": "Completed",
+      "donated_at": "2026-08-03T15:46:55Z",
+      "completed_at": "2026-08-03T15:46:55Z"
+    }
+  },
+  {
+    "model": "donations.donations",
+    "pk": "6b1fbaeb-8430-4c30-95d1-3eb84c6caa66",
+    "fields": {
+      "title": "Historical Campaign 8",
+      "slug": "historical-campaign-8",
+      "description": "This is a historical campaign generated for analytics purposes to reflect past activities.",
+      "paybill_number": "123456",
+      "account_name": "JMC Account",
+      "category": "33333333-3333-3333-3333-333333330004",
+      "target_amount": "494044.00",
+      "start_date": "2026-07-09T08:00:00Z",
+      "end_date": "2026-08-26T23:59:59Z",
+      "status": "Active",
+      "created_by": "22222222-2222-2222-2222-222222220001",
+      "created_at": "2026-07-09T08:00:00Z",
+      "updated_at": "2026-07-09T08:00:00Z"
+    }
+  },
+  {
+    "model": "transactions.transactions",
+    "pk": "36d390f5-7ff4-4f00-9fd2-b6ed83a24a2d",
+    "fields": {
+      "donation": "6b1fbaeb-8430-4c30-95d1-3eb84c6caa66",
+      "user": "22222222-2222-2222-2222-222222220005",
+      "recorded_by_admin_id": "22222222-2222-2222-2222-222222220001",
+      "amount": "3574.00",
+      "transaction_reference": "HIST-6b1f-0-7534",
+      "payment_method": "Cash",
+      "payment_status": "Completed",
+      "donated_at": "2026-07-18T09:25:41Z",
+      "completed_at": "2026-07-18T09:25:41Z"
+    }
+  },
+  {
+    "model": "transactions.transactions",
+    "pk": "ef15e6af-d199-4c31-9992-e4b0b3cd5fba",
+    "fields": {
+      "donation": "6b1fbaeb-8430-4c30-95d1-3eb84c6caa66",
+      "user": "22222222-2222-2222-2222-222222220004",
+      "recorded_by_admin_id": "22222222-2222-2222-2222-222222220001",
+      "amount": "4479.00",
+      "transaction_reference": "HIST-6b1f-1-4582",
+      "payment_method": "M-Pesa",
+      "payment_status": "Completed",
+      "donated_at": "2026-08-02T19:08:53Z",
+      "completed_at": "2026-08-02T19:08:53Z"
+    }
+  },
+  {
+    "model": "transactions.transactions",
+    "pk": "e05224bc-bb54-4c7c-9c32-3510e1ed608f",
+    "fields": {
+      "donation": "6b1fbaeb-8430-4c30-95d1-3eb84c6caa66",
+      "user": "22222222-2222-2222-2222-222222220004",
+      "recorded_by_admin_id": null,
+      "amount": "4253.00",
+      "transaction_reference": "HIST-6b1f-2-5982",
+      "payment_method": "Card",
+      "payment_status": "Completed",
+      "donated_at": "2026-08-05T13:38:57Z",
+      "completed_at": "2026-08-05T13:38:57Z"
+    }
+  },
+  {
+    "model": "transactions.transactions",
+    "pk": "0dd25e78-c2d8-43e1-9155-d9adcf3564e6",
+    "fields": {
+      "donation": "6b1fbaeb-8430-4c30-95d1-3eb84c6caa66",
+      "user": "22222222-2222-2222-2222-222222220003",
+      "recorded_by_admin_id": null,
+      "amount": "3286.00",
+      "transaction_reference": "HIST-6b1f-3-2356",
+      "payment_method": "Cash",
+      "payment_status": "Completed",
+      "donated_at": "2026-07-31T08:33:36Z",
+      "completed_at": "2026-07-31T08:33:36Z"
+    }
+  },
+  {
+    "model": "transactions.transactions",
+    "pk": "9f885ff3-c2db-43d9-aa14-e7692e2784b6",
+    "fields": {
+      "donation": "6b1fbaeb-8430-4c30-95d1-3eb84c6caa66",
+      "user": "22222222-2222-2222-2222-222222220003",
+      "recorded_by_admin_id": null,
+      "amount": "7711.00",
+      "transaction_reference": "HIST-6b1f-4-3507",
+      "payment_method": "M-Pesa",
+      "payment_status": "Completed",
+      "donated_at": "2026-08-01T20:16:56Z",
+      "completed_at": "2026-08-01T20:16:56Z"
+    }
+  },
+  {
+    "model": "transactions.transactions",
+    "pk": "795f7f7c-ebdf-4418-92da-8e8d400a4ef6",
+    "fields": {
+      "donation": "6b1fbaeb-8430-4c30-95d1-3eb84c6caa66",
+      "user": "22222222-2222-2222-2222-222222220003",
+      "recorded_by_admin_id": null,
+      "amount": "2190.00",
+      "transaction_reference": "HIST-6b1f-6-8863",
+      "payment_method": "M-Pesa",
+      "payment_status": "Completed",
+      "donated_at": "2026-08-12T18:55:52Z",
+      "completed_at": "2026-08-12T18:55:52Z"
+    }
+  },
+  {
+    "model": "transactions.transactions",
+    "pk": "a180a72b-a076-493f-a2b6-16aa1dfd6277",
+    "fields": {
+      "donation": "6b1fbaeb-8430-4c30-95d1-3eb84c6caa66",
+      "user": "22222222-2222-2222-2222-222222220005",
+      "recorded_by_admin_id": "22222222-2222-2222-2222-222222220001",
+      "amount": "7034.00",
+      "transaction_reference": "HIST-6b1f-7-7004",
+      "payment_method": "Card",
+      "payment_status": "Completed",
+      "donated_at": "2026-07-20T19:53:32Z",
+      "completed_at": "2026-07-20T19:53:32Z"
+    }
+  },
+  {
+    "model": "transactions.transactions",
+    "pk": "fa841eb2-f2a1-4494-8a62-3d1e2ac3b8c5",
+    "fields": {
+      "donation": "6b1fbaeb-8430-4c30-95d1-3eb84c6caa66",
+      "user": "22222222-2222-2222-2222-222222220003",
+      "recorded_by_admin_id": "22222222-2222-2222-2222-222222220001",
+      "amount": "9279.00",
+      "transaction_reference": "HIST-6b1f-8-1218",
+      "payment_method": "Cash",
+      "payment_status": "Completed",
+      "donated_at": "2026-07-23T18:28:44Z",
+      "completed_at": "2026-07-23T18:28:44Z"
+    }
+  },
+  {
+    "model": "transactions.transactions",
+    "pk": "451145e2-0378-42c6-b91f-3ac6f108a457",
+    "fields": {
+      "donation": "6b1fbaeb-8430-4c30-95d1-3eb84c6caa66",
+      "user": "22222222-2222-2222-2222-222222220003",
+      "recorded_by_admin_id": null,
+      "amount": "3401.00",
+      "transaction_reference": "HIST-6b1f-10-6660",
+      "payment_method": "Card",
+      "payment_status": "Completed",
+      "donated_at": "2026-07-12T12:00:51Z",
+      "completed_at": "2026-07-12T12:00:51Z"
+    }
+  },
+  {
+    "model": "transactions.transactions",
+    "pk": "e4023501-f188-405a-bbe7-4c7da82531a8",
+    "fields": {
+      "donation": "6b1fbaeb-8430-4c30-95d1-3eb84c6caa66",
+      "user": "22222222-2222-2222-2222-222222220002",
+      "recorded_by_admin_id": null,
+      "amount": "169.00",
+      "transaction_reference": "HIST-6b1f-11-5141",
+      "payment_method": "M-Pesa",
+      "payment_status": "Completed",
+      "donated_at": "2026-07-29T17:45:19Z",
+      "completed_at": "2026-07-29T17:45:19Z"
+    }
+  },
+  {
+    "model": "transactions.transactions",
+    "pk": "7829072d-01f0-4dce-aa2c-9771ce498593",
+    "fields": {
+      "donation": "6b1fbaeb-8430-4c30-95d1-3eb84c6caa66",
+      "user": "22222222-2222-2222-2222-222222220005",
+      "recorded_by_admin_id": "22222222-2222-2222-2222-222222220001",
+      "amount": "2371.00",
+      "transaction_reference": "HIST-6b1f-12-4193",
+      "payment_method": "Cash",
+      "payment_status": "Completed",
+      "donated_at": "2026-08-11T09:05:39Z",
+      "completed_at": "2026-08-11T09:05:39Z"
+    }
+  },
+  {
+    "model": "transactions.transactions",
+    "pk": "e1eaf20d-984c-4a38-bf77-d60edd65132a",
+    "fields": {
+      "donation": "6b1fbaeb-8430-4c30-95d1-3eb84c6caa66",
+      "user": "22222222-2222-2222-2222-222222220004",
+      "recorded_by_admin_id": null,
+      "amount": "8041.00",
+      "transaction_reference": "HIST-6b1f-13-3418",
+      "payment_method": "Card",
+      "payment_status": "Completed",
+      "donated_at": "2026-07-10T14:40:22Z",
+      "completed_at": "2026-07-10T14:40:22Z"
+    }
+  },
+  {
+    "model": "transactions.transactions",
+    "pk": "2051f981-d1f7-4a0c-b5bb-03ef10536bbd",
+    "fields": {
+      "donation": "6b1fbaeb-8430-4c30-95d1-3eb84c6caa66",
+      "user": "22222222-2222-2222-2222-222222220003",
+      "recorded_by_admin_id": null,
+      "amount": "6871.00",
+      "transaction_reference": "HIST-6b1f-14-4758",
+      "payment_method": "Cash",
+      "payment_status": "Completed",
+      "donated_at": "2026-08-08T10:35:55Z",
+      "completed_at": "2026-08-08T10:35:55Z"
+    }
+  },
+  {
+    "model": "transactions.transactions",
+    "pk": "705df93f-1090-4cd3-8b64-931a06f97615",
+    "fields": {
+      "donation": "6b1fbaeb-8430-4c30-95d1-3eb84c6caa66",
+      "user": "22222222-2222-2222-2222-222222220002",
+      "recorded_by_admin_id": "22222222-2222-2222-2222-222222220001",
+      "amount": "5811.00",
+      "transaction_reference": "HIST-6b1f-15-2501",
+      "payment_method": "Card",
+      "payment_status": "Completed",
+      "donated_at": "2026-07-29T12:10:40Z",
+      "completed_at": "2026-07-29T12:10:40Z"
+    }
+  },
+  {
+    "model": "transactions.transactions",
+    "pk": "badd2405-3f83-42d2-b406-29d3a445922d",
+    "fields": {
+      "donation": "6b1fbaeb-8430-4c30-95d1-3eb84c6caa66",
+      "user": "22222222-2222-2222-2222-222222220005",
+      "recorded_by_admin_id": null,
+      "amount": "7784.00",
+      "transaction_reference": "HIST-6b1f-16-5060",
+      "payment_method": "Cash",
+      "payment_status": "Completed",
+      "donated_at": "2026-08-07T15:26:06Z",
+      "completed_at": "2026-08-07T15:26:06Z"
+    }
+  },
+  {
+    "model": "transactions.transactions",
+    "pk": "8a33501b-7579-4a73-acd4-9c9802d7c90b",
+    "fields": {
+      "donation": "6b1fbaeb-8430-4c30-95d1-3eb84c6caa66",
+      "user": "22222222-2222-2222-2222-222222220005",
+      "recorded_by_admin_id": null,
+      "amount": "1779.00",
+      "transaction_reference": "HIST-6b1f-17-5259",
+      "payment_method": "M-Pesa",
+      "payment_status": "Completed",
+      "donated_at": "2026-08-07T11:09:31Z",
+      "completed_at": "2026-08-07T11:09:31Z"
+    }
+  },
+  {
+    "model": "transactions.transactions",
+    "pk": "1297b0c5-fa1f-423a-b9a7-ead56fc21500",
+    "fields": {
+      "donation": "6b1fbaeb-8430-4c30-95d1-3eb84c6caa66",
+      "user": "22222222-2222-2222-2222-222222220004",
+      "recorded_by_admin_id": "22222222-2222-2222-2222-222222220001",
+      "amount": "1965.00",
+      "transaction_reference": "HIST-6b1f-18-3431",
+      "payment_method": "Cash",
+      "payment_status": "Completed",
+      "donated_at": "2026-07-31T13:57:12Z",
+      "completed_at": "2026-07-31T13:57:12Z"
+    }
+  },
+  {
+    "model": "transactions.transactions",
+    "pk": "c3061843-1fca-4683-af16-164ab41a37b4",
+    "fields": {
+      "donation": "6b1fbaeb-8430-4c30-95d1-3eb84c6caa66",
+      "user": "22222222-2222-2222-2222-222222220002",
+      "recorded_by_admin_id": "22222222-2222-2222-2222-222222220001",
+      "amount": "8538.00",
+      "transaction_reference": "HIST-6b1f-19-2734",
+      "payment_method": "M-Pesa",
+      "payment_status": "Completed",
+      "donated_at": "2026-07-13T19:39:23Z",
+      "completed_at": "2026-07-13T19:39:23Z"
+    }
+  },
+  {
+    "model": "transactions.transactions",
+    "pk": "2205e096-1713-4da8-8ff0-d2c51cf47d18",
+    "fields": {
+      "donation": "6b1fbaeb-8430-4c30-95d1-3eb84c6caa66",
+      "user": "22222222-2222-2222-2222-222222220004",
+      "recorded_by_admin_id": "22222222-2222-2222-2222-222222220001",
+      "amount": "2206.00",
+      "transaction_reference": "HIST-6b1f-20-7866",
+      "payment_method": "Cash",
+      "payment_status": "Completed",
+      "donated_at": "2026-07-21T16:33:33Z",
+      "completed_at": "2026-07-21T16:33:33Z"
+    }
+  },
+  {
+    "model": "transactions.transactions",
+    "pk": "f8fa42ad-143b-49a6-972c-d9e95bf0ffa0",
+    "fields": {
+      "donation": "6b1fbaeb-8430-4c30-95d1-3eb84c6caa66",
+      "user": "22222222-2222-2222-2222-222222220002",
+      "recorded_by_admin_id": "22222222-2222-2222-2222-222222220001",
+      "amount": "224.00",
+      "transaction_reference": "HIST-6b1f-21-9538",
+      "payment_method": "Cash",
+      "payment_status": "Completed",
+      "donated_at": "2026-08-05T14:22:00Z",
+      "completed_at": "2026-08-05T14:22:00Z"
+    }
+  },
+  {
+    "model": "transactions.transactions",
+    "pk": "fa3cf9da-b868-43a1-a8e7-11756a537034",
+    "fields": {
+      "donation": "6b1fbaeb-8430-4c30-95d1-3eb84c6caa66",
+      "user": "22222222-2222-2222-2222-222222220004",
+      "recorded_by_admin_id": null,
+      "amount": "5573.00",
+      "transaction_reference": "HIST-6b1f-22-3924",
+      "payment_method": "Cash",
+      "payment_status": "Completed",
+      "donated_at": "2026-08-09T08:06:52Z",
+      "completed_at": "2026-08-09T08:06:52Z"
+    }
+  },
+  {
+    "model": "transactions.transactions",
+    "pk": "ce6384e0-4d85-46ad-8096-2678f1e8ce56",
+    "fields": {
+      "donation": "6b1fbaeb-8430-4c30-95d1-3eb84c6caa66",
+      "user": "22222222-2222-2222-2222-222222220004",
+      "recorded_by_admin_id": "22222222-2222-2222-2222-222222220001",
+      "amount": "3067.00",
+      "transaction_reference": "HIST-6b1f-23-3412",
+      "payment_method": "Cash",
+      "payment_status": "Completed",
+      "donated_at": "2026-07-14T12:30:52Z",
+      "completed_at": "2026-07-14T12:30:52Z"
+    }
+  },
+  {
+    "model": "transactions.transactions",
+    "pk": "f1f41a74-45ca-4dbf-912e-055bc1355d51",
+    "fields": {
+      "donation": "6b1fbaeb-8430-4c30-95d1-3eb84c6caa66",
+      "user": "22222222-2222-2222-2222-222222220005",
+      "recorded_by_admin_id": null,
+      "amount": "4748.00",
+      "transaction_reference": "HIST-6b1f-24-5799",
+      "payment_method": "Cash",
+      "payment_status": "Completed",
+      "donated_at": "2026-07-31T12:41:34Z",
+      "completed_at": "2026-07-31T12:41:34Z"
+    }
+  },
+  {
+    "model": "donations.donations",
+    "pk": "57ae3fa3-1601-4a21-ad1e-cd54cf48fefb",
+    "fields": {
+      "title": "Historical Campaign 9",
+      "slug": "historical-campaign-9",
+      "description": "This is a historical campaign generated for analytics purposes to reflect past activities.",
+      "paybill_number": "123456",
+      "account_name": "JMC Account",
+      "category": "33333333-3333-3333-3333-333333330004",
+      "target_amount": "421828.00",
+      "start_date": "2026-10-07T08:00:00Z",
+      "end_date": "2026-12-04T23:59:59Z",
+      "status": "Active",
+      "created_by": "22222222-2222-2222-2222-222222220001",
+      "created_at": "2026-10-07T08:00:00Z",
+      "updated_at": "2026-10-07T08:00:00Z"
+    }
+  },
+  {
+    "model": "donations.donations",
+    "pk": "5235039f-cdf3-4061-ad21-a239fd56b40a",
+    "fields": {
+      "title": "Historical Campaign 10",
+      "slug": "historical-campaign-10",
+      "description": "This is a historical campaign generated for analytics purposes to reflect past activities.",
+      "paybill_number": "123456",
+      "account_name": "JMC Account",
+      "category": "33333333-3333-3333-3333-333333330004",
+      "target_amount": "203341.00",
+      "start_date": "2026-07-02T08:00:00Z",
+      "end_date": "2026-07-21T23:59:59Z",
+      "status": "Closed",
+      "created_by": "22222222-2222-2222-2222-222222220001",
+      "created_at": "2026-07-02T08:00:00Z",
+      "updated_at": "2026-07-02T08:00:00Z"
+    }
+  },
+  {
+    "model": "transactions.transactions",
+    "pk": "3b2ad187-9069-4faf-8729-d2f15f65f57e",
+    "fields": {
+      "donation": "5235039f-cdf3-4061-ad21-a239fd56b40a",
+      "user": "22222222-2222-2222-2222-222222220005",
+      "recorded_by_admin_id": null,
+      "amount": "1876.00",
+      "transaction_reference": "HIST-5235-0-8861",
+      "payment_method": "M-Pesa",
+      "payment_status": "Completed",
+      "donated_at": "2026-07-07T10:10:23Z",
+      "completed_at": "2026-07-07T10:10:23Z"
+    }
+  },
+  {
+    "model": "transactions.transactions",
+    "pk": "b6966a3a-d432-44cf-8658-a56bfe6af5ac",
+    "fields": {
+      "donation": "5235039f-cdf3-4061-ad21-a239fd56b40a",
+      "user": "22222222-2222-2222-2222-222222220003",
+      "recorded_by_admin_id": null,
+      "amount": "5508.00",
+      "transaction_reference": "HIST-5235-1-2828",
+      "payment_method": "M-Pesa",
+      "payment_status": "Completed",
+      "donated_at": "2026-07-11T12:41:47Z",
+      "completed_at": "2026-07-11T12:41:47Z"
+    }
+  },
+  {
+    "model": "transactions.transactions",
+    "pk": "1e543155-1c9f-427f-ac3f-437ef30d02f6",
+    "fields": {
+      "donation": "5235039f-cdf3-4061-ad21-a239fd56b40a",
+      "user": "22222222-2222-2222-2222-222222220005",
+      "recorded_by_admin_id": "22222222-2222-2222-2222-222222220001",
+      "amount": "2304.00",
+      "transaction_reference": "HIST-5235-2-5447",
+      "payment_method": "Card",
+      "payment_status": "Completed",
+      "donated_at": "2026-07-05T08:40:13Z",
+      "completed_at": "2026-07-05T08:40:13Z"
+    }
+  },
+  {
+    "model": "transactions.transactions",
+    "pk": "b4840659-21d7-4096-a8d8-f8981c76d92e",
+    "fields": {
+      "donation": "5235039f-cdf3-4061-ad21-a239fd56b40a",
+      "user": "22222222-2222-2222-2222-222222220002",
+      "recorded_by_admin_id": "22222222-2222-2222-2222-222222220001",
+      "amount": "2626.00",
+      "transaction_reference": "HIST-5235-3-8624",
+      "payment_method": "Cash",
+      "payment_status": "Completed",
+      "donated_at": "2026-07-21T09:23:41Z",
+      "completed_at": "2026-07-21T09:23:41Z"
+    }
+  },
+  {
+    "model": "transactions.transactions",
+    "pk": "4a0eeb14-2c9b-4f0d-a6e0-e34dd8156041",
+    "fields": {
+      "donation": "5235039f-cdf3-4061-ad21-a239fd56b40a",
+      "user": "22222222-2222-2222-2222-222222220002",
+      "recorded_by_admin_id": "22222222-2222-2222-2222-222222220001",
+      "amount": "9746.00",
+      "transaction_reference": "HIST-5235-4-8917",
+      "payment_method": "M-Pesa",
+      "payment_status": "Completed",
+      "donated_at": "2026-07-17T20:28:38Z",
+      "completed_at": "2026-07-17T20:28:38Z"
+    }
+  },
+  {
+    "model": "transactions.transactions",
+    "pk": "36a40855-3701-4925-8560-7c7142de51a9",
+    "fields": {
+      "donation": "5235039f-cdf3-4061-ad21-a239fd56b40a",
+      "user": "22222222-2222-2222-2222-222222220004",
+      "recorded_by_admin_id": "22222222-2222-2222-2222-222222220001",
+      "amount": "200.00",
+      "transaction_reference": "HIST-5235-5-2708",
+      "payment_method": "M-Pesa",
+      "payment_status": "Completed",
+      "donated_at": "2026-07-02T18:52:05Z",
+      "completed_at": "2026-07-02T18:52:05Z"
+    }
+  },
+  {
+    "model": "transactions.transactions",
+    "pk": "30c9dff8-f262-49ae-bba3-95ba735afddc",
+    "fields": {
+      "donation": "5235039f-cdf3-4061-ad21-a239fd56b40a",
+      "user": "22222222-2222-2222-2222-222222220002",
+      "recorded_by_admin_id": "22222222-2222-2222-2222-222222220001",
+      "amount": "3491.00",
+      "transaction_reference": "HIST-5235-6-9087",
+      "payment_method": "M-Pesa",
+      "payment_status": "Completed",
+      "donated_at": "2026-07-11T13:40:20Z",
+      "completed_at": "2026-07-11T13:40:20Z"
+    }
+  },
+  {
+    "model": "transactions.transactions",
+    "pk": "f1f67df2-f61b-4b0d-acdf-184aafd47d19",
+    "fields": {
+      "donation": "5235039f-cdf3-4061-ad21-a239fd56b40a",
+      "user": "22222222-2222-2222-2222-222222220003",
+      "recorded_by_admin_id": null,
+      "amount": "4153.00",
+      "transaction_reference": "HIST-5235-7-4137",
+      "payment_method": "Cash",
+      "payment_status": "Completed",
+      "donated_at": "2026-07-08T19:22:38Z",
+      "completed_at": "2026-07-08T19:22:38Z"
+    }
+  },
+  {
+    "model": "transactions.transactions",
+    "pk": "35dc3d55-e7a1-48e4-a0a9-76c63e740b99",
+    "fields": {
+      "donation": "5235039f-cdf3-4061-ad21-a239fd56b40a",
+      "user": "22222222-2222-2222-2222-222222220002",
+      "recorded_by_admin_id": "22222222-2222-2222-2222-222222220001",
+      "amount": "3722.00",
+      "transaction_reference": "HIST-5235-8-5562",
+      "payment_method": "Card",
+      "payment_status": "Completed",
+      "donated_at": "2026-07-20T20:42:34Z",
+      "completed_at": "2026-07-20T20:42:34Z"
+    }
+  },
+  {
+    "model": "transactions.transactions",
+    "pk": "791a5674-6686-4e74-a12a-cf85dc0b151d",
+    "fields": {
+      "donation": "5235039f-cdf3-4061-ad21-a239fd56b40a",
+      "user": "22222222-2222-2222-2222-222222220005",
+      "recorded_by_admin_id": "22222222-2222-2222-2222-222222220001",
+      "amount": "8590.00",
+      "transaction_reference": "HIST-5235-9-4757",
+      "payment_method": "M-Pesa",
+      "payment_status": "Completed",
+      "donated_at": "2026-07-15T17:07:38Z",
+      "completed_at": "2026-07-15T17:07:38Z"
+    }
+  },
+  {
+    "model": "transactions.transactions",
+    "pk": "34f93a04-b063-4ede-83a0-079114e51315",
+    "fields": {
+      "donation": "5235039f-cdf3-4061-ad21-a239fd56b40a",
+      "user": "22222222-2222-2222-2222-222222220002",
+      "recorded_by_admin_id": "22222222-2222-2222-2222-222222220001",
+      "amount": "3478.00",
+      "transaction_reference": "HIST-5235-10-2674",
+      "payment_method": "M-Pesa",
+      "payment_status": "Completed",
+      "donated_at": "2026-07-02T18:37:33Z",
+      "completed_at": "2026-07-02T18:37:33Z"
+    }
+  },
+  {
+    "model": "transactions.transactions",
+    "pk": "946c8ee1-7a8f-4f39-b3d6-4135767dc9e5",
+    "fields": {
+      "donation": "5235039f-cdf3-4061-ad21-a239fd56b40a",
+      "user": "22222222-2222-2222-2222-222222220002",
+      "recorded_by_admin_id": "22222222-2222-2222-2222-222222220001",
+      "amount": "9338.00",
+      "transaction_reference": "HIST-5235-11-5201",
+      "payment_method": "Cash",
+      "payment_status": "Completed",
+      "donated_at": "2026-07-21T17:30:36Z",
+      "completed_at": "2026-07-21T17:30:36Z"
+    }
+  },
+  {
+    "model": "transactions.transactions",
+    "pk": "a69f3dde-3d94-42d9-85ec-f4f0686ec642",
+    "fields": {
+      "donation": "5235039f-cdf3-4061-ad21-a239fd56b40a",
+      "user": "22222222-2222-2222-2222-222222220003",
+      "recorded_by_admin_id": "22222222-2222-2222-2222-222222220001",
+      "amount": "2061.00",
+      "transaction_reference": "HIST-5235-12-4293",
+      "payment_method": "Card",
+      "payment_status": "Completed",
+      "donated_at": "2026-07-05T13:15:49Z",
+      "completed_at": "2026-07-05T13:15:49Z"
+    }
+  },
+  {
+    "model": "donations.donations",
+    "pk": "ee1e748b-b4d2-4845-9c2e-2574d2fc29cb",
+    "fields": {
+      "title": "Historical Campaign 11",
+      "slug": "historical-campaign-11",
+      "description": "This is a historical campaign generated for analytics purposes to reflect past activities.",
+      "paybill_number": "123456",
+      "account_name": "JMC Account",
+      "category": "33333333-3333-3333-3333-333333330004",
+      "target_amount": "277316.00",
+      "start_date": "2026-12-13T08:00:00Z",
+      "end_date": "2027-01-10T23:59:59Z",
+      "status": "Active",
+      "created_by": "22222222-2222-2222-2222-222222220001",
+      "created_at": "2026-12-13T08:00:00Z",
+      "updated_at": "2026-12-13T08:00:00Z"
+    }
+  },
+  {
+    "model": "donations.donations",
+    "pk": "e303d67a-6a6f-4257-8a72-a24330b5b5dc",
+    "fields": {
+      "title": "Historical Campaign 12",
+      "slug": "historical-campaign-12",
+      "description": "This is a historical campaign generated for analytics purposes to reflect past activities.",
+      "paybill_number": "123456",
+      "account_name": "JMC Account",
+      "category": "33333333-3333-3333-3333-333333330004",
+      "target_amount": "343268.00",
+      "start_date": "2026-12-03T08:00:00Z",
+      "end_date": "2027-01-17T23:59:59Z",
+      "status": "Active",
+      "created_by": "22222222-2222-2222-2222-222222220001",
+      "created_at": "2026-12-03T08:00:00Z",
+      "updated_at": "2026-12-03T08:00:00Z"
+    }
+  },
+  {
+    "model": "donations.donations",
+    "pk": "81097785-091f-4ffc-a4c9-80202e056c25",
+    "fields": {
+      "title": "Historical Campaign 13",
+      "slug": "historical-campaign-13",
+      "description": "This is a historical campaign generated for analytics purposes to reflect past activities.",
+      "paybill_number": "123456",
+      "account_name": "JMC Account",
+      "category": "33333333-3333-3333-3333-333333330004",
+      "target_amount": "203643.00",
+      "start_date": "2026-07-26T08:00:00Z",
+      "end_date": "2026-08-29T23:59:59Z",
+      "status": "Active",
+      "created_by": "22222222-2222-2222-2222-222222220001",
+      "created_at": "2026-07-26T08:00:00Z",
+      "updated_at": "2026-07-26T08:00:00Z"
+    }
+  },
+  {
+    "model": "transactions.transactions",
+    "pk": "aef62eb0-b3ff-4649-b8bb-7f49878bf4a9",
+    "fields": {
+      "donation": "81097785-091f-4ffc-a4c9-80202e056c25",
+      "user": "22222222-2222-2222-2222-222222220005",
+      "recorded_by_admin_id": "22222222-2222-2222-2222-222222220001",
+      "amount": "774.00",
+      "transaction_reference": "HIST-8109-6-9643",
+      "payment_method": "Card",
+      "payment_status": "Completed",
+      "donated_at": "2026-07-29T08:56:00Z",
+      "completed_at": "2026-07-29T08:56:00Z"
+    }
+  },
+  {
+    "model": "transactions.transactions",
+    "pk": "b792cc85-8a32-4137-bbff-60c5ce3152d3",
+    "fields": {
+      "donation": "81097785-091f-4ffc-a4c9-80202e056c25",
+      "user": "22222222-2222-2222-2222-222222220005",
+      "recorded_by_admin_id": "22222222-2222-2222-2222-222222220001",
+      "amount": "2544.00",
+      "transaction_reference": "HIST-8109-7-8066",
+      "payment_method": "Card",
+      "payment_status": "Completed",
+      "donated_at": "2026-08-07T10:53:00Z",
+      "completed_at": "2026-08-07T10:53:00Z"
+    }
+  },
+  {
+    "model": "transactions.transactions",
+    "pk": "364d1801-6394-4f17-8aa2-6e66c44ed8ea",
+    "fields": {
+      "donation": "81097785-091f-4ffc-a4c9-80202e056c25",
+      "user": "22222222-2222-2222-2222-222222220005",
+      "recorded_by_admin_id": "22222222-2222-2222-2222-222222220001",
+      "amount": "7287.00",
+      "transaction_reference": "HIST-8109-8-8529",
+      "payment_method": "Cash",
+      "payment_status": "Completed",
+      "donated_at": "2026-08-03T13:54:09Z",
+      "completed_at": "2026-08-03T13:54:09Z"
+    }
+  },
+  {
+    "model": "transactions.transactions",
+    "pk": "3592db11-a156-4542-bacd-d67da3ae06f7",
+    "fields": {
+      "donation": "81097785-091f-4ffc-a4c9-80202e056c25",
+      "user": "22222222-2222-2222-2222-222222220005",
+      "recorded_by_admin_id": null,
+      "amount": "5258.00",
+      "transaction_reference": "HIST-8109-9-9488",
+      "payment_method": "Card",
+      "payment_status": "Completed",
+      "donated_at": "2026-08-06T09:28:24Z",
+      "completed_at": "2026-08-06T09:28:24Z"
+    }
+  },
+  {
+    "model": "transactions.transactions",
+    "pk": "a7ba8c39-17db-4368-9123-497116f1a1af",
+    "fields": {
+      "donation": "81097785-091f-4ffc-a4c9-80202e056c25",
+      "user": "22222222-2222-2222-2222-222222220004",
+      "recorded_by_admin_id": "22222222-2222-2222-2222-222222220001",
+      "amount": "9767.00",
+      "transaction_reference": "HIST-8109-12-5497",
+      "payment_method": "M-Pesa",
+      "payment_status": "Completed",
+      "donated_at": "2026-08-06T11:07:18Z",
+      "completed_at": "2026-08-06T11:07:18Z"
+    }
+  },
+  {
+    "model": "transactions.transactions",
+    "pk": "8801faf2-d073-4d44-a248-e6ebd74381c8",
+    "fields": {
+      "donation": "81097785-091f-4ffc-a4c9-80202e056c25",
+      "user": "22222222-2222-2222-2222-222222220004",
+      "recorded_by_admin_id": null,
+      "amount": "972.00",
+      "transaction_reference": "HIST-8109-15-2951",
+      "payment_method": "Cash",
+      "payment_status": "Completed",
+      "donated_at": "2026-07-31T09:02:54Z",
+      "completed_at": "2026-07-31T09:02:54Z"
+    }
+  },
+  {
+    "model": "transactions.transactions",
+    "pk": "3e0801ae-523d-4c09-8f22-1f012a30039a",
+    "fields": {
+      "donation": "81097785-091f-4ffc-a4c9-80202e056c25",
+      "user": "22222222-2222-2222-2222-222222220005",
+      "recorded_by_admin_id": "22222222-2222-2222-2222-222222220001",
+      "amount": "2106.00",
+      "transaction_reference": "HIST-8109-16-5645",
+      "payment_method": "M-Pesa",
+      "payment_status": "Completed",
+      "donated_at": "2026-08-10T16:52:21Z",
+      "completed_at": "2026-08-10T16:52:21Z"
+    }
+  },
+  {
+    "model": "transactions.transactions",
+    "pk": "b72497cf-74b4-45c5-94c8-443e227595fe",
+    "fields": {
+      "donation": "81097785-091f-4ffc-a4c9-80202e056c25",
+      "user": "22222222-2222-2222-2222-222222220004",
+      "recorded_by_admin_id": null,
+      "amount": "2350.00",
+      "transaction_reference": "HIST-8109-17-8376",
+      "payment_method": "Card",
+      "payment_status": "Completed",
+      "donated_at": "2026-08-10T14:05:03Z",
+      "completed_at": "2026-08-10T14:05:03Z"
+    }
+  },
+  {
+    "model": "donations.donations",
+    "pk": "8faa05b9-58f2-4c73-806d-382d20db4c58",
+    "fields": {
+      "title": "Historical Campaign 14",
+      "slug": "historical-campaign-14",
+      "description": "This is a historical campaign generated for analytics purposes to reflect past activities.",
+      "paybill_number": "123456",
+      "account_name": "JMC Account",
+      "category": "33333333-3333-3333-3333-333333330004",
+      "target_amount": "164500.00",
+      "start_date": "2026-12-12T08:00:00Z",
+      "end_date": "2027-02-03T23:59:59Z",
+      "status": "Active",
+      "created_by": "22222222-2222-2222-2222-222222220001",
+      "created_at": "2026-12-12T08:00:00Z",
+      "updated_at": "2026-12-12T08:00:00Z"
+    }
+  },
+  {
+    "model": "donations.donations",
+    "pk": "13ba718e-52a7-4901-b1d7-34a771fe9e4b",
+    "fields": {
+      "title": "Historical Campaign 15",
+      "slug": "historical-campaign-15",
+      "description": "This is a historical campaign generated for analytics purposes to reflect past activities.",
+      "paybill_number": "123456",
+      "account_name": "JMC Account",
+      "category": "33333333-3333-3333-3333-333333330004",
+      "target_amount": "409599.00",
+      "start_date": "2026-08-21T08:00:00Z",
+      "end_date": "2026-10-16T23:59:59Z",
+      "status": "Active",
+      "created_by": "22222222-2222-2222-2222-222222220001",
+      "created_at": "2026-08-21T08:00:00Z",
+      "updated_at": "2026-08-21T08:00:00Z"
+    }
+  }
+]
