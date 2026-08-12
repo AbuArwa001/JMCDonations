@@ -13,7 +13,6 @@ import os
 from dotenv import load_dotenv
 # dj_database_url is optional; install 'python-dj-database-url' if you need it.
 # import dj_database_url
-from decouple import config
 load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -42,7 +41,7 @@ DEBUG = True
 # the project uses the later sqlite DATABASES default defined further below.
 # To enable DATABASE_URL parsing, install 'python-dj-database-url' and restore this block.
 
-ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS").split(" ")
+ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "*").split(" ")
 
 AUTH_USER_MODEL = 'users.User'
 # Get the string from .env, default to empty string if not found
