@@ -47,7 +47,12 @@ class KhutbaNotifyView(views.APIView):
         khutba = get_object_or_404(JumaKhutba, pk=pk)
         
         # Send FCM notification
-        tokens = list(DeviceToken.objects.values_list('fcm_token', flat=True))
+        from django.contrib.auth import get_user_model
+        User = get_user_model()
+        device_tokens = list(DeviceToken.objects.values_list('fcm_token', flat=True))
+        user_tokens = list(User.objects.exclude(fcm_token__isnull=True).exclude(fcm_token='').values_list('fcm_token', flat=True))
+        tokens = list(set(device_tokens + user_tokens))
+        
         if not tokens:
             return Response({"status": "No devices registered"}, status=status.HTTP_200_OK)
             

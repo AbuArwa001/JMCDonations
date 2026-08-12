@@ -8,8 +8,12 @@ from .models import DeviceToken, NotificationLog
 @receiver(post_save, sender=JumaKhutba)
 def auto_notify_khutba(sender, instance, created, **kwargs):
     if created and instance.published:
-        # Check if we should auto notify (we could check a setting, but for now we just notify on publish if it's new)
-        tokens = list(DeviceToken.objects.values_list('fcm_token', flat=True))
+        from django.contrib.auth import get_user_model
+        User = get_user_model()
+        device_tokens = list(DeviceToken.objects.values_list('fcm_token', flat=True))
+        user_tokens = list(User.objects.exclude(fcm_token__isnull=True).exclude(fcm_token='').values_list('fcm_token', flat=True))
+        tokens = list(set(device_tokens + user_tokens))
+        
         if tokens:
             title = f"Friday Khutba: {instance.title}"
             body = f"Join us this Friday. Imam: {instance.imam_name} at {instance.khutba_time.strftime('%I:%M %p')}"

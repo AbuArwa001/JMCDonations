@@ -7,7 +7,12 @@ from khutba.models import DeviceToken, NotificationLog
 @receiver(post_save, sender=Event)
 def auto_notify_event(sender, instance, created, **kwargs):
     if created and instance.published:
-        tokens = list(DeviceToken.objects.values_list('fcm_token', flat=True))
+        from django.contrib.auth import get_user_model
+        User = get_user_model()
+        device_tokens = list(DeviceToken.objects.values_list('fcm_token', flat=True))
+        user_tokens = list(User.objects.exclude(fcm_token__isnull=True).exclude(fcm_token='').values_list('fcm_token', flat=True))
+        tokens = list(set(device_tokens + user_tokens))
+        
         if tokens:
             title = f"Upcoming Event: {instance.title}"
             body = f"Join us on {instance.event_date.strftime('%B %d, %Y')} at {instance.venue_name}."
