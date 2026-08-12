@@ -55,6 +55,7 @@ class UserSerializer(BaseUserSerializer):
     payment_accounts = UserPaymentAccountSerializer(many=True, read_only=True)
     total_donations = serializers.ReadOnlyField()
     total_impact = serializers.ReadOnlyField()
+    role_name = serializers.ReadOnlyField(source='role.role_name')
 
     class Meta(BaseUserSerializer.Meta):
         model = Users
@@ -67,6 +68,7 @@ class UserSerializer(BaseUserSerializer):
             "phone_number",
             "is_admin",
             "role",
+            "role_name",
             "fcm_token",
             "profile_image",
             "profile_image_url",
