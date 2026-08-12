@@ -90,6 +90,80 @@ class PrayerTimeAPIView(views.APIView):
                 
         return Response(result)
 
+class TodayPrayerTimeAPIView(views.APIView):
+    permission_classes = [AllowAny]
+    
+    def get(self, request, *args, **kwargs):
+        city = City.objects.first()
+        if not city:
+            return Response({"error": "No cities configured"}, status=500)
+            
+        # Optional date query parameter to allow fetching specific dates 
+        # using the today endpoint structure if needed. Defaults to today.
+        date_str = request.query_params.get('date')
+        if date_str:
+            try:
+                date_obj = datetime.datetime.strptime(date_str, '%Y-%m-%d').date()
+            except ValueError:
+                return Response({"error": "Invalid date format. Use YYYY-MM-DD"}, status=400)
+        else:
+            date_obj = datetime.datetime.now().date()
+            
+        settings = PrayerCalculationSettings.load()
+        method_str = settings.calculation_method
+        
+        methods_map = {
+            'MUSLIM_WORLD_LEAGUE': MUSLIM_WORLD_LEAGUE,
+            'ISLAMIC_SOCIETY_OF_NORTH_AMERICA': ISNA,
+            'NORTH_AMERICA': ISNA,
+            'EGYPTIAN': EGYPT,
+            'UMM_AL_QURA': MAKKAH,
+            'GULF': MAKKAH,
+            'KARACHI': KARACHI,
+            'TEHRAN': TEHRAN,
+            'SHIA': SHIA,
+            'OTHER': MUSLIM_WORLD_LEAGUE,
+        }
+        
+        method_params = methods_map.get(method_str, MUSLIM_WORLD_LEAGUE).copy()
+        method_params['asr_multiplier'] = 1
+        
+        import pytz
+        tz = pytz.timezone(city.timezone)
+        dt = datetime.datetime.combine(date_obj, datetime.time.min)
+        offset_seconds = tz.utcoffset(dt).total_seconds()
+        offset_hours = offset_seconds / 3600.0
+        
+        pt = adhan(
+            day=date_obj,
+            location=(city.latitude, city.longitude),
+            parameters=method_params,
+            timezone_offset=offset_hours
+        )
+        
+        def format_time(t):
+            if not t: return None
+            return t.strftime('%H:%M:%S')
+            
+        result = {
+            'date': date_obj.isoformat(),
+            'fajr': format_time(pt.get('fajr')),
+            'sunrise': format_time(pt.get('shuruq')),
+            'dhuhr': format_time(pt.get('zuhr')),
+            'asr': format_time(pt.get('asr')),
+            'maghrib': format_time(pt.get('maghrib')),
+            'isha': format_time(pt.get('isha')),
+            'hijri_date': None,
+        }
+        
+        overrides = PrayerTimeOverride.objects.filter(city=city, date=date_obj)
+        for override in overrides:
+            name = override.prayer_name.lower()
+            if name in result:
+                result[name] = override.overridden_time.strftime('%H:%M:%S')
+                
+        return Response(result)
+
 class PrayerTimeOverrideViewSet(viewsets.ModelViewSet):
     queryset = PrayerTimeOverride.objects.all()
     serializer_class = PrayerTimeOverrideSerializer
