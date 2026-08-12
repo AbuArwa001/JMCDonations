@@ -20,7 +20,11 @@ python manage.py loaddata additional_transactions.json
 python manage.py loaddata additional_donation_data.json
 python manage.py loaddata ratings_additional_data.json
 python manage.py loaddata additional_user_data.json
-# python set_admin_claims.py
+
+# Seed data using management commands
+python manage.py seed_new_apps
+python manage.py seed_historical_data
+
 
 # python manage.py loaddata initial_data.json
 # Bash
