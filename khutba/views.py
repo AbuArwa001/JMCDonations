@@ -88,3 +88,8 @@ class KhutbaNotifyView(views.APIView):
             
         except Exception as e:
             return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+class NotificationLogViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = NotificationLog.objects.all().order_by('-sent_at')
+    serializer_class = NotificationLogSerializer
+    permission_classes = [IsAdminUser]
