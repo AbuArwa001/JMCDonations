@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import City, PrayerTimeOverride
+from .models import City, PrayerTimeOverride, PrayerCalculationSettings
 
 class CitySerializer(serializers.ModelSerializer):
     class Meta:
