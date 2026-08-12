@@ -22,3 +22,6 @@ class NisabRateAPIView(views.APIView):
             serializer.save(updated_by=request.user)
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def put(self, request, *args, **kwargs):
+        return self.patch(request, *args, **kwargs)
