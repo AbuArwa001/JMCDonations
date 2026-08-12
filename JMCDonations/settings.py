@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv("DJANGO_SECRET_KEY")
+SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "django-insecure-default-key-for-local-dev-only-do-not-use-in-prod")
 # SERVICE_ACCOUNT_KEY_PATH = os.path.join(BASE_DIR, 'config/jmcdonations.json')
 # cred = credentials.Certificate(SERVICE_ACCOUNT_KEY_PATH)
 # firebase_admin.initialize_app(cred, {

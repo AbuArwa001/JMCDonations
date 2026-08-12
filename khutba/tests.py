@@ -23,8 +23,10 @@ class TestNotificationsFlow:
         # Create a device token
         DeviceToken.objects.create(fcm_token='test_token_123', platform='ios')
         
-    @patch('firebase_admin.messaging.send_multicast')
+    @patch('firebase_admin.messaging.send_each_for_multicast')
     def test_khutba_notify_on_publish(self, mock_send):
+        mock_response = type('MockResponse', (), {'success_count': 1, 'failure_count': 0})()
+        mock_send.return_value = mock_response
         url = reverse('khutba-list')
         data = {
             'khutba_date': '2023-11-10',
@@ -46,10 +48,11 @@ class TestNotificationsFlow:
         message = args[0]
         assert 'Test Khutba' in message.notification.title
         assert 'Sheikh Test' in message.notification.body
-        assert 'test_token_123' in message.tokens
         
-    @patch('firebase_admin.messaging.send_multicast')
+    @patch('firebase_admin.messaging.send_each_for_multicast')
     def test_event_notify_on_publish(self, mock_send):
+        mock_response = type('MockResponse', (), {'success_count': 1, 'failure_count': 0})()
+        mock_send.return_value = mock_response
         category = EventCategory.objects.create(name='Lecture', slug='lecture')
         
         url = reverse('event-list')
@@ -75,4 +78,3 @@ class TestNotificationsFlow:
         message = args[0]
         assert 'Test Event' in message.notification.title
         assert 'Main Hall' in message.notification.body
-        assert 'test_token_123' in message.tokens

@@ -6,7 +6,7 @@ from .models import City, PrayerCalculationSettings, PrayerTimeOverride
 from .serializers import CitySerializer, PrayerTimeOverrideSerializer
 import datetime
 from adhan import adhan
-from adhan.methods import ISNA, MUSLIM_WORLD_LEAGUE, EGYPT, UMM_AL_QURA, GULF, MOONSIGHTING_COMMITTEE, KUWAIT, QATAR, SINGAPORE, TEHRAN, TURKEY, OTHER
+from adhan.methods import ISNA, MUSLIM_WORLD_LEAGUE, EGYPT, MAKKAH, KARACHI, TEHRAN, SHIA
 
 class CityViewSet(viewsets.ModelViewSet):
     queryset = City.objects.all()
@@ -43,46 +43,42 @@ class PrayerTimeAPIView(views.APIView):
             'ISLAMIC_SOCIETY_OF_NORTH_AMERICA': ISNA,
             'NORTH_AMERICA': ISNA,
             'EGYPTIAN': EGYPT,
-            'UMM_AL_QURA': UMM_AL_QURA,
-            'GULF': GULF,
-            'MOONSIGHTING_COMMITTEE': MOONSIGHTING_COMMITTEE,
-            'KUWAIT': KUWAIT,
-            'QATAR': QATAR,
-            'SINGAPORE': SINGAPORE,
+            'UMM_AL_QURA': MAKKAH,
+            'GULF': MAKKAH,
+            'KARACHI': KARACHI,
             'TEHRAN': TEHRAN,
-            'TURKEY': TURKEY,
-            'OTHER': OTHER,
+            'SHIA': SHIA,
+            'OTHER': MUSLIM_WORLD_LEAGUE,
         }
         
-        method_params = methods_map.get(method_str, MUSLIM_WORLD_LEAGUE)
-        
-        coordinates = adhan.Coordinates(city.latitude, city.longitude)
-        
-        # Get prayer times
-        pt = adhan.PrayerTimes(coordinates, date_obj, method_params)
-        
-        # Calculate times based on timezone (simplification here, ideally we'd use pytz with the city.timezone)
-        # the adhan package returns datetime objects in UTC, we can convert it to the local timezone.
-        # But wait, python adhan package returns time in UTC or local?
-        # Actually, python's adhan package by default computes time based on timezone offset.
+        method_params = methods_map.get(method_str, MUSLIM_WORLD_LEAGUE).copy()
+        method_params['asr_multiplier'] = 1
         
         import pytz
         tz = pytz.timezone(city.timezone)
+        dt = datetime.datetime.combine(date_obj, datetime.time.min)
+        offset_seconds = tz.utcoffset(dt).total_seconds()
+        offset_hours = offset_seconds / 3600.0
+        
+        pt = adhan(
+            day=date_obj,
+            location=(city.latitude, city.longitude),
+            parameters=method_params,
+            timezone_offset=offset_hours
+        )
         
         # Get times and format them
         def format_time(t):
             if not t: return None
-            # Convert UTC datetime to the city timezone
-            t_local = t.astimezone(tz)
-            return t_local.strftime('%H:%M:%S')
+            return t.strftime('%H:%M:%S')
             
         result = {
-            'fajr': format_time(pt.fajr),
-            'sunrise': format_time(pt.sunrise),
-            'dhuhr': format_time(pt.dhuhr),
-            'asr': format_time(pt.asr),
-            'maghrib': format_time(pt.maghrib),
-            'isha': format_time(pt.isha),
+            'fajr': format_time(pt.get('fajr')),
+            'sunrise': format_time(pt.get('shuruq')),
+            'dhuhr': format_time(pt.get('zuhr')),
+            'asr': format_time(pt.get('asr')),
+            'maghrib': format_time(pt.get('maghrib')),
+            'isha': format_time(pt.get('isha')),
         }
         
         # Apply overrides

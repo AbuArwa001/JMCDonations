@@ -15,8 +15,10 @@ class TestFeatureToggles:
         
         assert response.status_code == 200
         data = response.json()
-        assert len(data) >= 2
         
-        features = {f['name']: f['is_active'] for f in data}
+        results = data.get('results', data) if isinstance(data, dict) else data
+        assert len(results) >= 2
+        
+        features = {f['name']: f['is_active'] for f in results}
         assert features.get('khutba') is True
         assert features.get('events') is False

@@ -68,7 +68,7 @@ class EventNotifyView(views.APIView):
         )
         
         try:
-            response = messaging.send_multicast(message)
+            response = messaging.send_each_for_multicast(message)
             
             NotificationLog.objects.create(
                 title=title,

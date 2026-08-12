@@ -24,7 +24,7 @@ def auto_notify_event(sender, instance, created, **kwargs):
                 tokens=tokens,
             )
             try:
-                response = messaging.send_multicast(message)
+                response = messaging.send_each_for_multicast(message)
                 NotificationLog.objects.create(
                     title=title,
                     body=body,

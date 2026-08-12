@@ -69,7 +69,7 @@ class KhutbaNotifyView(views.APIView):
         )
         
         try:
-            response = messaging.send_multicast(message)
+            response = messaging.send_each_for_multicast(message)
             
             # Log it
             NotificationLog.objects.create(
