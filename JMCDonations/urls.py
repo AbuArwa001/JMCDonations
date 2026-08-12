@@ -32,7 +32,15 @@ urlpatterns = [
                     "", include("transactions.urls"), name="transactions"
                 ),
                 path("core_config/", include("core_config.urls")),
+                path("feature-toggles/", include("core_config.urls")), # Assuming core_config handles toggles
                 path("", include("community.urls")),
+                path("duas/", include("duas.urls")),
+                path("quran/", include("quran.urls")),
+                path("prayer-times/", include("prayer_times.urls")),
+                path("zakat/", include("zakat.urls")),
+                path("khutba/", include("khutba.urls")),
+                path("events/", include("events.urls")),
+                path("notifications/", include("khutba.urls")), # Register endpoint mapping
             ]
         ),
     ),
