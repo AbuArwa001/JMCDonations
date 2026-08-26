@@ -76,6 +76,17 @@ class KhutbaNotifyView(views.APIView):
         try:
             response = messaging.send_each_for_multicast(message)
             
+            # Clean up invalid tokens if any failures
+            if response.failure_count > 0:
+                failed_tokens = []
+                for idx, resp in enumerate(response.responses):
+                    if not resp.success:
+                        failed_tokens.append(tokens[idx])
+                
+                if failed_tokens:
+                    DeviceToken.objects.filter(fcm_token__in=failed_tokens).delete()
+                    User.objects.filter(fcm_token__in=failed_tokens).update(fcm_token=None)
+            
             # Log it
             NotificationLog.objects.create(
                 title=title,
