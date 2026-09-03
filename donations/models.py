@@ -27,6 +27,7 @@ class Donations(models.Model):
     description = models.TextField()
     paybill_number = models.CharField(max_length=50)
     account_name = models.CharField(max_length=100)
+    organization_name = models.CharField(max_length=255, default="Jamia Mosque Committee", blank=True)
     account_number = models.CharField(max_length=100, blank=True, null=True, help_text="Used for Bank Paybills to specify the actual bank account number")
     
     # Optional Daraja Credentials specific to this donation drive

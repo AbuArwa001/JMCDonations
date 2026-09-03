@@ -25,7 +25,7 @@ class DonationViewSet(viewsets.ModelViewSet):
     authentication_classes = [FirebaseDRFAuthentication]
     filterset_class = DonationFilterSet
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
-    search_fields = ['title', 'description', 'organization_name']
+    search_fields = ['title', 'description', 'organization_name', 'account_name', 'category__category_name']
     ordering_fields = ['target_amount', 'avg_rating', 'created_at']
     ordering = ['-created_at']
 
